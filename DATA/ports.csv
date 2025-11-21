@@ -1,0 +1,11 @@
+system_id,port_name,type,services
+1,Sol Prime Orbital,Core Hub,trade|missions|shipyard|outfit|refuel
+2,Centauri Freeport,Industrial,trade|missions|refuel
+3,Barnard Station,Frontier,trade|missions|refuel|outfit
+4,Sirius Nexus Spire,Tech,trade|missions|outfit|research
+5,Eridani Guild Refinery,Refinery,trade|refuel
+6,Procyon Command,Military,trade|missions|shipyard|refuel
+7,Velanthi Gate,Alien,trade|research
+8,Cinder Haven,Black Market,trade|missions|refuel
+9,Tau Ceti AgriHub,Agricultural,trade|missions|refuel
+10,Lacaille Stripmine,Mining,trade|refuel

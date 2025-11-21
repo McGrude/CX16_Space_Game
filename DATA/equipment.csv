@@ -1,0 +1,8 @@
+id,name,slot,type,cost,bonus,faction_lock,description
+1,Light Armor,Defense,Plating,1500,+10 hull,N,Basic armor upgrade for small craft.
+2,Shield Booster Mk I,Defense,Shield,2500,+15 shields,N,Improved capacitor array for shield recharge.
+3,Turbo Thrusters,Engine,Drive,3000,+1 speed,N,Enhanced maneuvering thrusters for faster transits.
+4,Long-Range Scanner,Sensors,Utility,2200,+10 detection,Nexus,Advanced sensor suite favored by the Nexus Collective.
+5,Cargo Expansion,Utility,Hold,1800,+20 cargo,N,Modular cargo racks for haulers and couriers.
+6,Particle Lance,Weapon,Energy,4200,+2 hardpoints,Velanthi,Exotic energy weapon requiring alien interfaces.
+7,Military Targeting Suite,Sensors,Utility,2600,+5 accuracy,Hegemony,Combat computer issued to Hegemony patrol craft.

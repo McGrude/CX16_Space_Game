@@ -1,0 +1,11 @@
+id,name,x,y,faction_id,economy,tech_level,security,contested,description
+1,SOL,0,0,1,Core,9,High,N,Capital of the Hegemony and safest trade hub in known space.
+2,ALPHA CENTAURI,3,-1,2,Industrial,7,High,Y,Coalition stronghold overseeing contested border lanes.
+3,BARNARDS STAR,-2,4,3,Frontier,4,Medium,N,Gateway frontier world with frequent escort contracts.
+4,SIRIUS,5,2,4,Technology,9,High,N,Nexus enclave famed for experimental tech.
+5,EPSILON ERIDANI,-4,-3,7,Refinery,6,Medium,N,Guild refinery system exporting refined metals and fuel.
+6,PROCYON,1,6,1,Military,8,Very High,Y,Hegemony naval base protecting Sol approaches.
+7,VELANTHI,8,-5,5,Unknown,10,High,N,Secretive Velanthi system with limited docking rights.
+8,WOLF 359,-6,-4,6,Frontier,3,Low,N,Cartel staging ground with black market opportunities.
+9,TAU CETI,-1,7,2,Agricultural,5,Medium,N,Coalition breadbasket feeding nearby stations.
+10,LACAILLE 9352,-5,2,7,Mining,4,Medium,N,Guild strip-mining operation with limited services.

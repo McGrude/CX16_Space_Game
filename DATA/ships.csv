@@ -1,0 +1,10 @@
+id,name,faction_id,class,role,cost,hull,shields,cargo,fuel,speed,hardpoints,description
+1,Scout Cutter,3,Corvette,Starter,25000,60,30,30,80,6,2,Light frontier-ready starter ship.
+2,Hegemony Interceptor,1,Fighter,Patrol,32000,55,25,15,90,8,3,Fast customs craft for enforcing blockades.
+3,Coalition Courier,2,Corvette,Trade,42000,70,40,40,110,7,2,Balanced courier favored by Coalition traders.
+4,Nexus Seeker,4,Frigate,Science,60000,75,60,25,100,7,3,Research vessel with advanced sensors and energy grid.
+5,Guild Hauler,7,Freighter,Cargo,55000,80,20,80,120,5,2,Heavy freighter optimized for bulk ore transport.
+6,Cartel Raider,6,Frigate,Raid,48000,65,35,25,95,7,3,Well-armed pirate vessel built for boarding actions.
+7,Velanthi Whisper,5,Skiff,Special,75000,50,80,20,130,9,2,Stealthy alien craft with exceptional shielding.
+8,Union Wayfarer,8,Corvette,Trade,36000,65,30,45,100,6,2,Reliable free trader hull with modular holds.
+9,Concord Surveyor,9,Science,Exploration,40000,60,35,30,105,6,2,Outfitted for artifact recovery and planetary surveys.
