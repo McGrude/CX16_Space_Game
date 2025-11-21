@@ -1,8 +1,30 @@
-id,name,slot,type,cost,bonus,faction_lock,description
-1,Light Armor,Defense,Plating,1500,+10 hull,N,Basic armor upgrade for small craft.
-2,Shield Booster Mk I,Defense,Shield,2500,+15 shields,N,Improved capacitor array for shield recharge.
-3,Turbo Thrusters,Engine,Drive,3000,+1 speed,N,Enhanced maneuvering thrusters for faster transits.
-4,Long-Range Scanner,Sensors,Utility,2200,+10 detection,Nexus,Advanced sensor suite favored by the Nexus Collective.
-5,Cargo Expansion,Utility,Hold,1800,+20 cargo,N,Modular cargo racks for haulers and couriers.
-6,Particle Lance,Weapon,Energy,4200,+2 hardpoints,Velanthi,Exotic energy weapon requiring alien interfaces.
-7,Military Targeting Suite,Sensors,Utility,2600,+5 accuracy,Hegemony,Combat computer issued to Hegemony patrol craft.
+equipment_id,name,type,cost,tech_level_required,stat1_name,stat1_value,stat2_name,stat2_value,special
+1,Laser Mk I,weapon,2000,3,damage,15,accuracy,5,"power_cost=5,range=3"
+2,Laser Mk II,weapon,8000,5,damage,25,accuracy,10,"power_cost=8,range=4"
+3,Laser Mk III,weapon,25000,7,damage,40,accuracy,15,"power_cost=12,range=5"
+4,Missile Launcher Mk I,weapon,12000,4,damage,50,accuracy,20,"ammo=10,range=6"
+5,Missile Launcher Mk II,weapon,30000,6,damage,80,accuracy,25,"ammo=15,range=7"
+6,Railgun,weapon,18000,6,damage,35,accuracy,-5,"armor_pierce=50,power_cost=15"
+7,Plasma Cannon,weapon,45000,8,damage,60,accuracy,0,"shield_damage=20,power_cost=25"
+8,Shield Generator I,shield,5000,3,max_shields,50,regen,5,
+9,Shield Generator II,shield,15000,5,max_shields,100,regen,10,
+10,Shield Generator III,shield,40000,7,max_shields,150,regen,15,
+11,Armor Plating I,armor,3000,2,armor,10,,0,
+12,Armor Plating II,armor,10000,4,armor,20,,0,
+13,Armor Plating III,armor,25000,6,armor,30,,0,
+14,ECM Suite I,ecm,6000,4,evasion,10,,0,
+15,ECM Suite II,ecm,18000,6,evasion,20,,0,
+16,Targeting Computer I,targeting,8000,4,accuracy,10,,0,
+17,Targeting Computer II,targeting,20000,6,accuracy,15,,0,
+18,Advanced Sensors,sensors,12000,5,accuracy,5,,0,reveal_stats=1
+19,Cargo Expansion I,cargo,5000,2,cargo,20,,0,
+20,Cargo Expansion II,cargo,15000,4,cargo,40,,0,
+21,Fuel Scoop,utility,10000,5,,0,,0,free_refuel=1
+22,Fire Control System,utility,15000,5,damage,10,,0,
+23,Repair Droid,utility,20000,6,,0,,0,auto_repair=5
+24,Trade Computer I,trade,5000,4,,0,,0,show_nearby_prices=1
+25,Trade Computer II,trade,15000,6,,0,,0,"show_all_prices=1,suggest_routes=1"
+26,Cargo Scanner,trade,8000,5,,0,,0,detect_contraband=1
+27,Nav Computer I,navigation,5000,3,time_reduction,5,,0,
+28,Nav Computer II,navigation,15000,5,time_reduction,10,,0,
+29,Advanced Nav,navigation,35000,7,time_reduction,25,,0,

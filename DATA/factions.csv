@@ -1,10 +1,10 @@
-id,name,type,home_system,summary
-1,Terran Hegemony,Major,SOL,Militaristic human empire guarding the core worlds.
-2,Free Systems Coalition,Major,ALPHA CENTAURI,Democratic alliance championing independence and free trade.
-3,Frontier Alliance,Major,BARNARDS STAR,Loosely connected frontier worlds focused on survival and mutual aid.
-4,Nexus Collective,Major,SIRIUS,Post-human technocracy led by advanced AI councils.
-5,Velanthi Commonwealth,Major,VELANTHI,Enigmatic alien power with advanced technology and limited contact.
-6,Crimson Cartel,Minor,WOLF 359,Pirate confederation controlling smuggling routes and staging raids.
-7,Nova Mining Guild,Minor,EPSILON ERIDANI,Corporate monopoly supplying refined ores and fuel across factions.
-8,Free Traders Union,Minor,INDEPENDENT,Neutral merchant guild offering contracts and safe harbors.
-9,Archaeological Concord,Minor,INDEPENDENT,Academic consortium funding artifact recovery and research missions.
+faction_id,name,short_name,type,home_system_id,description
+1,Terran Hegemony,Hegemony,major,1,"Protectionist colonial empire centered on Sol. Authoritarian, militaristic, and human-supremacist."
+2,Free Systems Coalition,Coalition,major,19,"Rebel independence movement fighting Hegemony control. Democratic, diverse, and liberty-focused."
+3,Frontier Alliance,Frontier,major,73,"Loose association of remote colonies. Neutral, pragmatic, survival-oriented."
+4,The Nexus Collective,Nexus,major,6,"Technocratic AI-human hybrid society. Cybernetic augmentation, hive-mind tendencies, mysterious goals."
+5,Velanthi Commonwealth,Velanthi,alien,78,"Enigmatic alien civilization. Rarely encountered, technologically advanced, unclear motives."
+6,Crimson Cartel,Cartel,minor,4,"Pirate confederation controlling key trade routes. Organized crime, smuggling."
+7,Nova Mining Guild,Guild,minor,10,Corporate mining monopoly. Controls resource-rich systems.
+8,Free Traders Union,Free Traders Union,mission_only,0,Merchant guild offering trade missions and contracts. No political territory.
+9,Archaeological Concord,Archaeological Concord,mission_only,0,Academic organization seeking ancient artifacts. Offers research missions.

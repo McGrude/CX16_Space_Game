@@ -1,11 +1,93 @@
-id,name,x,y,faction_id,economy,tech_level,security,contested,description
-1,SOL,0,0,1,Core,9,High,N,Capital of the Hegemony and safest trade hub in known space.
-2,ALPHA CENTAURI,3,-1,2,Industrial,7,High,Y,Coalition stronghold overseeing contested border lanes.
-3,BARNARDS STAR,-2,4,3,Frontier,4,Medium,N,Gateway frontier world with frequent escort contracts.
-4,SIRIUS,5,2,4,Technology,9,High,N,Nexus enclave famed for experimental tech.
-5,EPSILON ERIDANI,-4,-3,7,Refinery,6,Medium,N,Guild refinery system exporting refined metals and fuel.
-6,PROCYON,1,6,1,Military,8,Very High,Y,Hegemony naval base protecting Sol approaches.
-7,VELANTHI,8,-5,5,Unknown,10,High,N,Secretive Velanthi system with limited docking rights.
-8,WOLF 359,-6,-4,6,Frontier,3,Low,N,Cartel staging ground with black market opportunities.
-9,TAU CETI,-1,7,2,Agricultural,5,Medium,N,Coalition breadbasket feeding nearby stations.
-10,LACAILLE 9352,-5,2,7,Mining,4,Medium,N,Guild strip-mining operation with limited services.
+system_id,name,x,y,spectral_type,real_distance_ly,faction_id,faction_strength,tech_level,port_count,is_capital,contested
+1,Sol,0,0,G2V,0,independent,0,7,1,0,0
+2,Alpha Centauri,-12,-3,G2V/K1V,4.37,independent,0,7,3,0,0
+3,Barnard's Star,20,-2,M4V,5.96,independent,0,5,3,0,0
+4,Wolf 359,24,3,M6V,7.78,independent,0,5,1,0,0
+5,Lalande 21185,-15,18,M2V,8.29,independent,0,5,1,0,0
+6,Sirius,-29,10,A1V,8.59,independent,0,8,1,0,0
+7,Luyten 726-8,29,-3,M5.5V,8.73,independent,0,5,1,0,0
+8,Ross 154,-16,-30,M3.5V,9.68,independent,0,5,1,0,0
+9,Ross 248,-31,8,M5.5V,10.32,independent,0,5,3,0,0
+10,Epsilon Eridani,9,-32,K2V,10.52,independent,0,6,1,0,0
+11,Lacaille 9352,-4,-24,M1.5V,10.74,independent,0,5,3,0,0
+12,Ross 128,31,-9,M4V,11.03,independent,0,5,3,0,0
+13,EZ Aquarii,15,-31,M5V,11.27,independent,0,5,1,0,0
+14,Procyon,-32,6,F5IV-V,11.46,independent,0,7,1,0,0
+15,61 Cygni,33,28,K5V/K7V,11.41,independent,0,6,1,0,0
+16,Struve 2398,-15,35,M3V,11.64,independent,0,5,1,0,0
+17,Groombridge 34,17,29,M1.5V,11.62,independent,0,5,2,0,0
+18,Epsilon Indi,-1,-27,K5V,11.87,independent,0,6,3,0,0
+19,Tau Ceti,38,-9,G8V,11.89,independent,0,7,1,0,0
+20,YZ Ceti,40,-4,M4.5V,12.13,independent,0,5,1,0,0
+21,Luyten's Star,-3,39,M3.5V,12.37,independent,0,5,1,0,0
+22,Teegarden's Star,-8,39,M6.5V,12.51,independent,0,5,3,0,0
+23,Kapteyn's Star,-6,-19,M1.5V,12.78,independent,0,5,1,0,0
+24,Lacaille 8760,0,-34,M0V,12.87,independent,0,5,1,0,0
+25,Kruger 60,28,37,M3V,13.15,independent,0,5,1,0,0
+26,Ross 614,37,-16,M4.5V,13.35,independent,0,5,2,0,0
+27,Wolf 1061,-15,-38,M3V,13.93,independent,0,5,1,0,0
+28,Van Maanen's Star,-44,9,DZ8,14.07,independent,0,5,1,0,0
+29,BD+5 1668,40,6,M3.5V,14.25,independent,0,5,1,0,0
+30,Gliese 1,16,45,M1.5V,14.23,independent,0,5,1,0,0
+31,CD-37 15492,4,-35,M2V,14.25,independent,0,5,1,0,0
+32,TZ Arietis,45,13,M4.5V,14.62,independent,0,5,3,0,0
+33,Gliese 674,-20,-38,M3V,14.8,independent,0,5,3,0,0
+34,Gliese 687,14,40,M3V,14.84,independent,0,5,2,0,0
+35,Gliese 876,35,-40,M4V,15.34,independent,0,5,1,0,0
+36,82 Eridani,61,-16,G8V,19.77,independent,0,7,3,0,0
+37,Delta Pavonis,7,-54,G8V,19.92,independent,0,7,2,0,0
+38,Gliese 832,-17,-28,M1.5V,16.16,independent,0,5,1,0,0
+39,Eta Cassiopeiae,47,54,G3V,19.42,independent,0,7,2,0,0
+40,36 Ophiuchi,-19,62,K1V,19.48,independent,0,6,1,0,0
+41,70 Ophiuchi,33,47,K0V,16.58,independent,0,6,1,0,0
+42,Altair,-38,41,A7V,16.73,independent,0,8,1,0,0
+43,Sigma Draconis,-49,22,K0V,18.77,independent,0,6,1,0,0
+44,Gliese 570,-27,-52,K4V,19.2,independent,0,6,1,0,0
+45,Gliese 581,-53,-22,M3V,20.37,independent,0,5,1,0,0
+46,Gliese 682,34,-44,M4.5V,16.33,independent,0,5,3,0,0
+47,Gliese 433,-77,37,M1.5V,29.87,independent,0,5,1,0,0
+48,Beta Hydri,17,-64,G2IV,24.36,independent,0,7,1,0,0
+49,Gliese 412,-29,40,M1V,15.83,independent,0,5,1,0,0
+50,Gliese 445,60,-6,M3.5V,17.6,independent,0,5,2,0,0
+51,Gliese 526,12,48,M1.5V,17.73,independent,0,5,1,0,0
+52,Wolf 424,-28,39,M5.5V,14.31,independent,0,5,2,0,0
+53,Gliese 83.1,49,4,M4.5V,17.81,independent,0,5,1,0,0
+54,Gliese 229,-34,54,M1V,18.8,independent,0,5,1,0,0
+55,Gliese 251,45,16,M3V,18.21,independent,0,5,1,0,0
+56,Zeta Tucanae,22,-74,F9.5V,28.0,independent,0,7,2,0,0
+57,Gliese 156,-57,31,M2.5V,19.3,independent,0,5,3,0,0
+58,Gliese 205,53,-38,M1.5V,18.62,independent,0,5,3,0,0
+59,Gliese 588,-21,60,M2.5V,19.28,independent,0,5,2,0,0
+60,Gliese 628,30,-30,M3.5V,13.81,independent,0,5,1,0,0
+61,Gliese 393,72,-16,M2V,22.8,independent,0,5,2,0,0
+62,Gliese 809,-34,-50,M1V,20.85,independent,0,5,1,0,0
+63,Gliese 447,33,-18,M4V,10.7,independent,0,5,1,0,0
+64,Gliese 754,-43,47,M4.5V,19.3,independent,0,5,1,0,0
+65,Gliese 625,64,36,M1.5V,21.2,independent,0,5,2,0,0
+66,HD 102365,-72,48,G2V,30.5,independent,0,7,2,0,0
+67,Gliese 317,87,-39,M2.5V,29.9,independent,0,5,1,0,0
+68,Gliese 357,-54,75,M2.5V,30.8,independent,0,5,1,0,0
+69,Gliese 849,64,-63,M3.5V,28.85,independent,0,5,1,0,0
+70,HD 69830,123,-41,K0V,40.6,independent,0,6,1,0,0
+71,Gliese 176,76,32,M2V,30.9,independent,0,5,1,0,0
+72,Gliese 649,-68,88,M1.5V,33.7,independent,0,5,1,0,0
+73,Gliese 163,148,-59,M3.5V,49.4,independent,0,5,1,0,0
+74,HD 217014,-78,104,G8V,42.1,independent,0,7,1,0,0
+75,Gliese 667C,-53,57,M1.5V,22.7,independent,0,5,2,0,0
+76,HD 40307,108,-59,K2.5V,42.2,independent,0,6,2,0,0
+77,Gliese 180,90,50,M2V,38.5,independent,0,5,2,0,0
+78,Vega,-52,65,A0V,25.04,independent,0,8,1,0,0
+79,Fomalhaut,31,-76,A3V,25.13,independent,0,8,2,0,0
+80,Pollux,100,50,K0III,33.78,independent,0,6,1,0,0
+81,Arcturus,-70,98,K1.5III,36.7,independent,0,6,1,0,0
+82,Gliese 3293,41,48,M1V,19.55,independent,0,5,1,0,0
+83,Gliese 440,-27,45,M0V,15.12,independent,0,5,1,0,0
+84,Gliese 86,87,-49,K1V,35.3,independent,0,6,3,0,0
+85,Gliese 179,-91,81,M3.5V,40.4,independent,0,5,1,0,0
+86,Gliese 221,-48,35,M2V,21.0,independent,0,5,1,0,0
+87,Gliese 514,59,39,M1V,25.8,independent,0,5,1,0,0
+88,Gliese 408,-42,62,M2.5V,22.25,independent,0,5,1,0,0
+89,Gliese 9,55,-45,M3V,23.4,independent,0,5,1,0,0
+90,Gliese 784,-47,52,K2V,19.75,independent,0,6,1,0,0
+91,Gliese 465,101,-52,M2V,33.8,independent,0,5,1,0,0
+92,Gliese 433,-68,72,M1.5V,29.87,independent,0,5,1,0,0

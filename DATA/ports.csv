@@ -1,11 +1,137 @@
-system_id,port_name,type,services
-1,Sol Prime Orbital,Core Hub,trade|missions|shipyard|outfit|refuel
-2,Centauri Freeport,Industrial,trade|missions|refuel
-3,Barnard Station,Frontier,trade|missions|refuel|outfit
-4,Sirius Nexus Spire,Tech,trade|missions|outfit|research
-5,Eridani Guild Refinery,Refinery,trade|refuel
-6,Procyon Command,Military,trade|missions|shipyard|refuel
-7,Velanthi Gate,Alien,trade|research
-8,Cinder Haven,Black Market,trade|missions|refuel
-9,Tau Ceti AgriHub,Agricultural,trade|missions|refuel
-10,Lacaille Stripmine,Mining,trade|refuel
+port_id,system_id,name,type,services
+1,1,Sol Prime,Moon,3
+2,2,Alpha Centauri Prime,Mining Colony,3
+3,2,Alpha Centauri Alpha,Space Station,127
+4,2,Alpha Centauri Beta,Military Base,127
+5,3,Barnard's Star Prime,Military Base,127
+6,3,Barnard's Star Alpha,Trade Hub,127
+7,3,Barnard's Star Beta,Military Base,127
+8,4,Wolf 359 Space Station,Research Outpost,3
+9,5,Lalande 21185 Prime,Moon,3
+10,6,Sirius Prime,Orbital Platform,75
+11,7,Luyten 726-8 Prime,Trade Hub,127
+12,8,Ross 154 Research Outpost,Research Outpost,3
+13,9,Ross 248 Prime,Mining Colony,3
+14,9,Ross 248 Alpha,Planet,55
+15,9,Ross 248 Beta,Mining Colony,3
+16,10,Epsilon Eridani Prime,Moon,3
+17,11,Lacaille 9352 Prime,Mining Colony,3
+18,11,Lacaille 9352 Alpha,Moon,3
+19,11,Lacaille 9352 Beta,Planet,55
+20,12,Ross 128 Prime,Planet,55
+21,12,Ross 128 Alpha,Space Station,127
+22,12,Ross 128 Beta,Planet,55
+23,13,EZ Aquarii Prime,Space Station,127
+24,14,Procyon Mining Colony,Space Station,127
+25,15,61 Cygni Prime,Trade Hub,127
+26,16,Struve 2398 Military Base,Military Base,127
+27,17,Groombridge 34 Prime,Orbital Platform,75
+28,17,Groombridge 34 Alpha,Moon,3
+29,18,Epsilon Indi Prime,Orbital Platform,75
+30,18,Epsilon Indi Alpha,Moon,3
+31,18,Epsilon Indi Beta,Planet,55
+32,19,Tau Ceti Prime,Moon,3
+33,20,YZ Ceti Moon,Mining Colony,3
+34,21,Luyten's Star Prime,Planet,55
+35,22,Teegarden's Star Prime,Mining Colony,3
+36,22,Teegarden's Star Alpha,Mining Colony,3
+37,22,Teegarden's Star Beta,Moon,3
+38,23,Kapteyn's Star Research Outpost,Orbital Platform,75
+39,24,Lacaille 8760 Prime,Military Base,127
+40,25,Kruger 60 Mining Colony,Orbital Platform,75
+41,26,Ross 614 Prime,Mining Colony,3
+42,26,Ross 614 Alpha,Moon,3
+43,27,Wolf 1061 Prime,Mining Colony,3
+44,28,Van Maanen's Star Prime,Military Base,127
+45,29,BD+5 1668 Prime,Space Station,127
+46,30,Gliese 1 Trade Hub,Military Base,127
+47,31,CD-37 15492 Prime,Military Base,127
+48,32,TZ Arietis Prime,Orbital Platform,75
+49,32,TZ Arietis Alpha,Moon,3
+50,32,TZ Arietis Beta,Research Outpost,3
+51,33,Gliese 674 Prime,Research Outpost,3
+52,33,Gliese 674 Alpha,Planet,55
+53,33,Gliese 674 Beta,Trade Hub,127
+54,34,Gliese 687 Prime,Trade Hub,127
+55,34,Gliese 687 Alpha,Trade Hub,127
+56,35,Gliese 876 Prime,Research Outpost,3
+57,36,82 Eridani Prime,Trade Hub,127
+58,36,82 Eridani Alpha,Trade Hub,127
+59,36,82 Eridani Beta,Orbital Platform,75
+60,37,Delta Pavonis Prime,Research Outpost,3
+61,37,Delta Pavonis Alpha,Orbital Platform,75
+62,38,Gliese 832 Moon,Orbital Platform,75
+63,39,Eta Cassiopeiae Prime,Moon,3
+64,39,Eta Cassiopeiae Alpha,Moon,3
+65,40,36 Ophiuchi Prime,Research Outpost,3
+66,41,70 Ophiuchi Prime,Military Base,127
+67,42,Altair Military Base,Space Station,127
+68,43,Sigma Draconis Prime,Moon,3
+69,44,Gliese 570 Research Outpost,Orbital Platform,75
+70,45,Gliese 581 Prime,Research Outpost,3
+71,46,Gliese 682 Prime,Space Station,127
+72,46,Gliese 682 Alpha,Mining Colony,3
+73,46,Gliese 682 Beta,Mining Colony,3
+74,47,Gliese 433 Prime,Moon,3
+75,48,Beta Hydri Military Base,Research Outpost,3
+76,49,Gliese 412 Moon,Planet,55
+77,50,Gliese 445 Prime,Orbital Platform,75
+78,50,Gliese 445 Alpha,Moon,3
+79,51,Gliese 526 Prime,Moon,3
+80,52,Wolf 424 Prime,Orbital Platform,75
+81,52,Wolf 424 Alpha,Space Station,127
+82,53,Gliese 83.1 Prime,Mining Colony,3
+83,54,Gliese 229 Prime,Military Base,127
+84,55,Gliese 251 Prime,Military Base,127
+85,56,Zeta Tucanae Prime,Moon,3
+86,56,Zeta Tucanae Alpha,Mining Colony,3
+87,57,Gliese 156 Prime,Mining Colony,3
+88,57,Gliese 156 Alpha,Mining Colony,3
+89,57,Gliese 156 Beta,Military Base,127
+90,58,Gliese 205 Prime,Orbital Platform,75
+91,58,Gliese 205 Alpha,Mining Colony,3
+92,58,Gliese 205 Beta,Orbital Platform,75
+93,59,Gliese 588 Prime,Orbital Platform,75
+94,59,Gliese 588 Alpha,Military Base,127
+95,60,Gliese 628 Prime,Research Outpost,3
+96,61,Gliese 393 Prime,Military Base,127
+97,61,Gliese 393 Alpha,Military Base,127
+98,62,Gliese 809 Orbital Platform,Planet,55
+99,63,Gliese 447 Moon,Space Station,127
+100,64,Gliese 754 Military Base,Space Station,127
+101,65,Gliese 625 Prime,Trade Hub,127
+102,65,Gliese 625 Alpha,Orbital Platform,75
+103,66,HD 102365 Prime,Trade Hub,127
+104,66,HD 102365 Alpha,Research Outpost,3
+105,67,Gliese 317 Prime,Orbital Platform,75
+106,68,Gliese 357 Prime,Military Base,127
+107,69,Gliese 849 Prime,Planet,55
+108,70,HD 69830 Moon,Space Station,127
+109,71,Gliese 176 Military Base,Moon,3
+110,72,Gliese 649 Prime,Space Station,127
+111,73,Gliese 163 Prime,Trade Hub,127
+112,74,HD 217014 Prime,Orbital Platform,75
+113,75,Gliese 667C Prime,Mining Colony,3
+114,75,Gliese 667C Alpha,Trade Hub,127
+115,76,HD 40307 Prime,Trade Hub,127
+116,76,HD 40307 Alpha,Space Station,127
+117,77,Gliese 180 Prime,Military Base,127
+118,77,Gliese 180 Alpha,Research Outpost,3
+119,78,Vega Prime,Moon,3
+120,79,Fomalhaut Prime,Military Base,127
+121,79,Fomalhaut Alpha,Research Outpost,3
+122,80,Pollux Planet,Moon,3
+123,81,Arcturus Orbital Platform,Orbital Platform,75
+124,82,Gliese 3293 Prime,Trade Hub,127
+125,83,Gliese 440 Prime,Research Outpost,3
+126,84,Gliese 86 Prime,Planet,55
+127,84,Gliese 86 Alpha,Research Outpost,3
+128,84,Gliese 86 Beta,Military Base,127
+129,85,Gliese 179 Space Station,Trade Hub,127
+130,86,Gliese 221 Space Station,Trade Hub,127
+131,87,Gliese 514 Prime,Orbital Platform,75
+132,88,Gliese 408 Moon,Planet,55
+133,89,Gliese 9 Planet,Planet,55
+134,90,Gliese 784 Prime,Military Base,127
+135,91,Gliese 465 Prime,Orbital Platform,75
+136,92,Gliese 433 Space Station,Orbital Platform,75
