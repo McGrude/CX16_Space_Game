@@ -26,6 +26,160 @@
 
 ---
 
+## Program Architecture
+
+### Modular Design with Chain Loading
+
+The game uses **multiple separate BASIC programs** that chain load between major interface changes. Each program handles one primary screen/mode, with game state persisted to disk between transitions.
+
+**Core Modules:**
+- **MAIN.BAS** - Title screen, new game setup, load game
+- **DOCKED.BAS** - Station interface (trade, missions, hiring, outfitting)
+- **SPACE.BAS** - Space travel, navigation, random encounters
+- **COMBAT.BAS** - Turn-based combat sequences
+- **MISSION.BAS** - Mission briefing and completion screens
+
+### State Persistence
+
+**GAMESTATE.DAT File:**
+Contains all player/universe state that must persist across program transitions:
+```
+Player Core (50 bytes):
+  - Credits (4 bytes)
+  - Current System ID (1 byte)
+  - Current Day (2 bytes)
+  - Attributes: Piloting, Combat, Engineering, Navigation, Leadership (5 bytes)
+  - Total XP (2 bytes)
+  - Current Ship ID (1 byte)
+
+Faction Data (20 bytes):
+  - Reputation array (10 factions × 2 bytes = -100 to +100)
+
+Ship State (50 bytes):
+  - Hull/Shields current values
+  - Installed equipment flags
+  - Weapon slots
+  - Cargo current
+  - Fuel current
+
+Crew Data (65 bytes):
+  - 5 crew slots × 13 bytes each
+
+Escort Data (100 bytes):
+  - 2 escort slots × 50 bytes each
+
+Cargo Inventory (40 bytes):
+  - 10-20 commodity quantities
+
+Mission State (100 bytes):
+  - Active mission IDs and progress flags
+
+Flags/Progress (100 bytes):
+  - Story progression markers
+  - Discovered systems
+  - Unlocked content
+```
+
+**State Management Pattern:**
+```basic
+' At end of DOCKED.BAS
+1000 GOSUB SAVE_STATE: ' Write GAMESTATE.DAT
+1010 RUN "SPACE.BAS"
+
+' At start of SPACE.BAS  
+100 GOSUB LOAD_STATE: ' Read GAMESTATE.DAT
+110 REM Continue with space interface
+```
+
+**Save/Load Implementation:**
+```basic
+8000 REM === SAVE STATE ===
+8010 OPEN 1,8,2,"SAVES/GAMESTATE.DAT,S,W"
+8020 PRINT#1, CREDITS
+8030 PRINT#1, CURRENT_SYSTEM
+8040 PRINT#1, CURRENT_DAY
+8050 PRINT#1, PILOT_SKILL
+8060 REM ... save all state variables
+8100 CLOSE 1
+8110 RETURN
+
+9000 REM === LOAD STATE ===
+9010 OPEN 1,8,2,"SAVES/GAMESTATE.DAT,S,R"
+9020 INPUT#1, CREDITS
+9030 INPUT#1, CURRENT_SYSTEM
+9040 INPUT#1, CURRENT_DAY
+9050 INPUT#1, PILOT_SKILL
+9060 REM ... load all state variables
+9100 CLOSE 1
+9110 RETURN
+```
+
+### Shared Code Strategy
+
+**No native #include in BASIC**, so shared code is handled via:
+
+**Build-Time Assembly:**
+Cross-development on modern machine (Mac/Linux) allows build scripts:
+```makefile
+# Makefile
+COMMON := common.bas
+
+DOCKED.BAS: $(COMMON) docked_main.bas
+	cat $(COMMON) docked_main.bas > DOCKED.BAS
+
+SPACE.BAS: $(COMMON) space_main.bas
+	cat $(COMMON) space_main.bas > SPACE.BAS
+
+COMBAT.BAS: $(COMMON) combat_main.bas
+	cat $(COMMON) combat_main.bas > COMBAT.BAS
+```
+
+**Common Subroutines (in COMMON.BAS):**
+- SAVE_STATE / LOAD_STATE
+- CSV parser (PARSE_CSV)
+- Data file loaders (FIND_SHIP, FIND_SYSTEM, etc.)
+- Screen drawing helpers (DRAW_HEADER, DRAW_BORDER)
+- Input validation routines
+- Combat calculation helpers
+- RNG utilities
+
+**Code Tier Strategy:**
+- **Tier 1 (Critical):** Copied into all modules - SAVE/LOAD state, file I/O
+- **Tier 2 (Moderate):** Copied where needed - UI helpers, calculations  
+- **Tier 3 (Specific):** Module-only - Combat AI, station menus
+
+**Future Optimization:**
+If performance becomes critical, frequently-used routines can be rewritten in assembly and loaded as machine language library (COMMON.ML).
+
+### Development Workflow
+
+**Cross-Development Setup:**
+1. Edit source files on Mac/PC (VSCode, etc.)
+2. Run Make to assemble final .BAS files
+3. Transfer to X16 SD card image
+4. Test on emulator or hardware
+5. Iterate
+
+**Source Structure:**
+```
+/SOURCE/
+  common.bas          (shared subroutines)
+  docked_main.bas     (docked-specific code)
+  space_main.bas      (space-specific code)
+  combat_main.bas     (combat-specific code)
+  Makefile           (build automation)
+  
+/BUILD/
+  DOCKED.BAS         (assembled output)
+  SPACE.BAS
+  COMBAT.BAS
+```
+
+**Version Control:**
+Source files (.bas) in git, assembled output (.BAS) generated at build time.
+
+---
+
 ## Technical Specifications
 
 ### Hardware
@@ -1058,6 +1212,15 @@ Cargo Scanner:
 
 ## Memory Organization
 
+### Design Philosophy
+With modular chain-loaded programs and external data files, RAM usage is dramatically reduced. Each program module only needs:
+- Its own code (~6-10KB)
+- Current game state variables (~2-3KB)
+- Cached data for current context (ship, system, etc.) (~1-2KB)
+- UI buffers (~2KB)
+
+**Most data lives on SD card**, loaded on-demand.
+
 ### Low RAM Layout ($0000-$9EFF)
 ```
 $0000-$00FF: Zero Page (256 bytes)
@@ -1099,21 +1262,14 @@ $8000-$9EFF: Buffer space (~7KB)
 ```
 
 ### Banked RAM Layout ($A000-$BFFF via banks)
-```
-Banks 0-5: Galaxy Data (48KB)
-  Bank 0: Systems 0-9 + commodity base prices
-  Bank 1: Systems 10-19
-  Bank 2: Systems 20-29
-  Bank 3: Systems 30-39
-  Bank 4: Special/hidden systems
-  Bank 5: Faction data, mission templates
 
-Banks 6-10: Ship & Equipment (40KB)
-  Bank 6: Player ship templates (20 types)
-  Bank 7: Enemy ship templates
-  Bank 8: Equipment/weapons database
-  Bank 9: Crew templates, NPC data
-  Bank 10: Upgrade definitions
+**Note:** With CSV data files on SD card, banked RAM usage is significantly reduced. Banks primarily used for:
+- Graphics data (tiles, sprites)
+- Pre-loaded mission/dialog text
+- Save game slots
+- Future expansion
+```
+Banks 0-10: Reserved for BASIC system use
 
 Banks 11-20: Graphics Data (80KB)
   Bank 11: UI tiles (borders, buttons, icons)
@@ -1125,12 +1281,14 @@ Banks 11-20: Graphics Data (80KB)
   Bank 17-20: Additional graphics/animation
 
 Banks 21-25: Mission & Event Data (40KB)
-  Bank 21-23: Mission scripts and text
+  Bank 21-23: Pre-loaded mission scripts and text
   Bank 24: Random events table
-  Bank 25: Dialog text
+  Bank 25: Dialog text cache
 
 Banks 26-31: Reserved (48KB)
   Future expansion
+  Sound data
+  Additional content
 
 Banks 32-63: Save Game Slots (256KB)
   Each save: ~4-5KB
@@ -1140,29 +1298,195 @@ Banks 32-63: Save Game Slots (256KB)
   etc.
 ```
 
-### Banking Access Pattern
+**Data Access Pattern:**
+Most game data (ships, systems, equipment, factions, commodities) is stored as CSV files on SD card and loaded on-demand via file I/O. This eliminates the need for large data tables in banked RAM.
 
-**Efficient Data Access:**
+### Primary Data Access: SD Card Files
+
+With the shift to CSV data files, the primary data access pattern is:
+1. Open file on SD card
+2. Search sequentially for desired record
+3. Parse CSV into BASIC variables
+4. Close file
+5. Work with cached variables
+
+See **Data Files & External Storage** section for complete implementation details.
+
+---
+
+---
+
+## Data Files & External Storage
+
+### Overview
+To minimize RAM usage, large data tables are stored as CSV files on SD card and loaded on-demand. This approach allows for:
+- Easy external editing of game data
+- No RAM overhead for unused data
+- Simple balancing and content updates
+- Potential for modding support
+
+### Data File Strategy
+
+**Access Pattern:**
 ```basic
-REM EXAMPLE: Load system data from bank to low RAM
-
-1000 REM === LOAD SYSTEM DATA ===
-1010 REM INPUT: SYS = SYSTEM ID (0-39)
-1020 REM OUTPUT: Data copied to $2000-$2064
-1030 REM
-1040 BK = INT(SYS/10): REM Calculate bank (10 systems per bank)
-1050 BANK BK: REM Select appropriate bank
-1060 OFFS = (SYS MOD 10) * 100: REM Offset within bank
-1070 BASE = $A000 + OFFS
-1080 REM
-1090 REM Copy 100 bytes from bank to low RAM
-1100 FOR I=0 TO 99
-1110   POKE $2000+I, PEEK(BASE+I)
-1120 NEXT I
-1130 REM
-1140 REM Now data is in fast low RAM at $2000
-1150 RETURN
+1. Open data file (e.g., SHIPS.DAT)
+2. Search for specific record by ID
+3. Parse CSV into working variables
+4. Close file
+5. Use variables until next lookup needed
 ```
+
+**Caching Strategy:**
+- Frequently accessed data (current ship, current system) stays in BASIC variables
+- Lookup only when changing context (buying new ship, jumping systems)
+- Faction names/basic info loaded at game start, kept resident
+
+### File Organization
+```
+/GAME/
+  MAIN.BAS
+  DOCKED.BAS
+  SPACE.BAS
+  COMBAT.BAS
+  DATA/
+    SHIPS.DAT       (60-80 records: 6-8 ships × 6-10 factions)
+    SYSTEMS.DAT     (40-60 records)
+    PLANETS.DAT     (60-150 records)
+    EQUIPMENT.DAT   (20-40 records)
+    FACTIONS.DAT    (6-10 records)
+    COMMODITIES.DAT (10-20 records)
+    MISSIONS.DAT    (mission templates)
+  SAVES/
+    GAMESTATE.DAT
+```
+
+### CSV Format Specification
+
+**SHIPS.DAT Format:**
+```csv
+ID,NAME,FACTION,COST,CARGO,FUEL,ARMOR,SHIELDS,WEAPONS,ACCEL,TURN
+1,SHUTTLE,1,15000,50,100,10,0,1,8,9
+2,SCOUT,1,35000,20,150,15,10,2,12,11
+3,COURIER,1,45000,30,200,20,25,2,10,10
+```
+
+**SYSTEMS.DAT Format:**
+```csv
+ID,NAME,X,Y,FACTION,TECH_LEVEL,GOVT,POPULATION
+1,SOL,0,0,1,8,2,9
+2,ALPHA CENTAURI,4,3,1,7,2,7
+3,SIRIUS,8,-5,2,6,1,5
+```
+
+**FACTIONS.DAT Format:**
+```csv
+ID,NAME,HOMEWORLD,ALLIED_TO,ENEMY_OF,GOVT_TYPE
+1,TERRAN FEDERATION,1,2,5,DEMOCRACY
+2,MARS COLLECTIVE,3,1,5,REPUBLIC
+3,OUTER RIM PIRATES,0,0,0,ANARCHY
+```
+
+**COMMODITIES.DAT Format:**
+```csv
+ID,NAME,BASE_PRICE,VARIANCE,ILLEGAL
+1,FOOD,20,5,0
+2,MINERALS,45,15,0
+3,ELECTRONICS,120,30,0
+4,WEAPONS,200,50,1
+```
+
+**EQUIPMENT.DAT Format:**
+```csv
+ID,NAME,TYPE,COST,TECH_REQ,STAT1,STAT2,STAT3
+1,LASER MK I,WEAPON,2000,3,15,5,3
+2,SHIELD GEN I,SHIELD,5000,4,50,5,0
+3,ARMOR PLATE I,ARMOR,3000,2,10,0,0
+```
+
+### CSV Parsing in BASIC
+
+**Generic CSV Parser:**
+```basic
+10000 REM === PARSE CSV LINE ===
+10010 REM INPUT: L$ = CSV line
+10020 REM OUTPUT: F$(1-N) = fields array
+10030 C = 1: P = 1
+10040 FOR I = 1 TO LEN(L$)
+10050   IF MID$(L$,I,1) = "," THEN F$(C) = MID$(L$,P,I-P): C=C+1: P=I+1
+10060 NEXT I
+10070 F$(C) = MID$(L$,P) : REM Last field
+10080 RETURN
+```
+
+**Find Record by ID Pattern:**
+```basic
+2000 REM === FIND SHIP BY ID ===
+2010 REM INPUT: FIND_ID = ship to find
+2020 REM OUTPUT: F$() array with ship data, or FOUND=0
+2030 OPEN 1,8,2,"DATA/SHIPS.DAT,S,R"
+2040 INPUT#1, L$ : REM Skip header
+2050 FOUND = 0
+2060 IF ST<>0 THEN 2120 : REM EOF check
+2070 INPUT#1, L$
+2080 GOSUB 10000 : REM Parse CSV
+2090 IF VAL(F$(1)) = FIND_ID THEN FOUND=1: GOTO 2110
+2100 GOTO 2060 : REM Keep searching
+2110 CLOSE 1
+2120 RETURN
+```
+
+**Usage Example:**
+```basic
+1000 REM Load player's ship data
+1010 FIND_ID = PLAYER_SHIP_ID
+1020 GOSUB 2000 : REM Find ship in SHIPS.DAT
+1030 IF FOUND = 0 THEN PRINT "ERROR: SHIP NOT FOUND": END
+1040 REM Cache in variables
+1050 SHIP_NAME$ = F$(2)
+1060 SHIP_FACTION = VAL(F$(3))
+1070 SHIP_COST = VAL(F$(4))
+1080 SHIP_CARGO = VAL(F$(5))
+1090 REM ... etc
+```
+
+### Performance Characteristics
+
+**Search Performance:**
+- 60-80 ships: ~40 comparisons average (linear search)
+- Estimated time: 100-200ms on X16 (imperceptible)
+- No indexing needed at this scale
+
+**Optimization Strategies if Needed:**
+1. **Sorted files + binary search** - Reduces comparisons to ~6-7
+2. **Index file** - Maps ID→byte offset for direct seek
+3. **Faction-segregated files** - Search only relevant subset
+4. **Caching** - Keep frequently accessed records in memory
+
+**When to Optimize:**
+- Only if file searches feel sluggish in playtesting
+- If dataset exceeds ~100 records per file
+- If same record looked up repeatedly (use caching first)
+
+### Alternative Format: Fixed-Width
+
+If CSV parsing proves too slow, fixed-width format is faster but less editable:
+```
+01SHUTTLE    00150000050010000100001080911
+02SCOUT      00350000020015001000210121112
+03COURIER    00450000030020002502210101013
+```
+
+**Parsing (faster - no loops):**
+```basic
+10000 REM === PARSE FIXED WIDTH ===
+10010 SHIP_ID = VAL(MID$(L$,1,2))
+10020 SHIP_NAME$ = MID$(L$,3,12)
+10030 SHIP_COST = VAL(MID$(L$,15,8))
+10040 SHIP_CARGO = VAL(MID$(L$,23,3))
+10050 RETURN
+```
+
+**Recommendation:** Start with CSV, switch only if performance requires it.
 
 ---
 
@@ -1266,32 +1590,41 @@ Flags             500 B   Story progression, discoveries
 
 ## Development Roadmap
 
-### Phase 1: Core Mechanics (Pure BASIC)
-**Goal:** Playable prototype with basic loop
+### Phase 1: Core Mechanics & Architecture (Pure BASIC)
+**Goal:** Playable prototype with modular architecture
 
 **Deliverables:**
-- [ ] Navigation system between 5-10 test systems
-- [ ] Simple trading (3-4 commodities)
+- [ ] Build system setup (Makefile for assembling modules)
+- [ ] Common library (COMMON.BAS with shared routines)
+- [ ] State persistence (SAVE_STATE / LOAD_STATE routines)
+- [ ] CSV data file system (parser, loaders)
+- [ ] Create initial data files (5 ships, 5 systems, 3 commodities)
+- [ ] Navigation system between test systems
+- [ ] Simple trading (buy/sell 3-4 commodities)
 - [ ] Basic turn-based combat (1v1)
 - [ ] Player stats and leveling
-- [ ] Save/Load functionality
 - [ ] Basic UI screens (station, navigation, trading)
+- [ ] Program module transitions (MAIN→DOCKED→SPACE)
 
-**Estimated Effort:** 4-6 weeks
+**Estimated Effort:** 5-7 weeks
 
 ### Phase 2: Content Expansion (Pure BASIC)
-**Goal:** Full game content
+**Goal:** Full game content in data files
 
 **Deliverables:**
-- [ ] Complete galaxy (30-40 systems)
-- [ ] All commodities and pricing
+- [ ] Complete galaxy data (30-40 systems in SYSTEMS.DAT)
+- [ ] All factions (6-10 in FACTIONS.DAT)
+- [ ] All ships (60-80 in SHIPS.DAT: 6-8 per faction)
+- [ ] All equipment types (20-40 in EQUIPMENT.DAT)
+- [ ] All commodities (10-20 in COMMODITIES.DAT)
+- [ ] Complete pricing and trade system
 - [ ] Crew system fully implemented
 - [ ] Escort hiring and management
 - [ ] Multi-ship combat (up to 7 ships)
-- [ ] Mission system (3 tiers)
+- [ ] Mission system (3 tiers, stored in MISSIONS.DAT)
 - [ ] Faction reputation system
-- [ ] All ship types and equipment
-- [ ] Complete UI screens
+- [ ] Complete UI screens (all modules)
+- [ ] Dynamic events system
 
 **Estimated Effort:** 8-12 weeks
 
@@ -1342,22 +1675,74 @@ Flags             500 B   Story progression, discoveries
 
 ## Technical Notes
 
-### BASIC Banking Example
+### CSV Data File Example
 ```basic
-1000 REM === BANKING HELPER ROUTINE ===
-1010 REM
-1020 REM SELECT BANK
-1030 TARGETBANK = 5
-1040 BANK TARGETBANK
-1050 REM
-1060 REM READ FROM BANKED RAM
-1070 ADDR = $A000
-1080 VALUE = PEEK(ADDR)
-1090 REM
-1100 REM WRITE TO BANKED RAM
-1110 POKE ADDR, 42
-1120 REM
-1130 RETURN
+REM === EXAMPLE: Load a ship from SHIPS.DAT ===
+
+1000 REM Request ship ID 5
+1010 FIND_ID = 5
+1020 GOSUB 2000: REM Find ship
+1030 IF FOUND = 0 THEN PRINT "SHIP NOT FOUND": END
+1040 REM
+1050 REM Data now in F$() array
+1060 SHIP_NAME$ = F$(2)
+1070 SHIP_COST = VAL(F$(4))
+1080 SHIP_CARGO = VAL(F$(5))
+1090 PRINT "LOADED: ";SHIP_NAME$
+1100 END
+
+2000 REM === FIND SHIP BY ID ===
+2010 OPEN 1,8,2,"DATA/SHIPS.DAT,S,R"
+2020 INPUT#1, L$ : REM Skip header
+2030 FOUND = 0
+2040 IF ST<>0 THEN 2090
+2050 INPUT#1, L$
+2060 GOSUB 10000 : REM Parse CSV
+2070 IF VAL(F$(1)) = FIND_ID THEN FOUND=1: GOTO 2090
+2080 GOTO 2040
+2090 CLOSE 1
+2100 RETURN
+
+10000 REM === PARSE CSV LINE ===
+10010 REM INPUT: L$
+10020 REM OUTPUT: F$(1-N)
+10030 DIM F$(20): C=1: P=1
+10040 FOR I=1 TO LEN(L$)
+10050   IF MID$(L$,I,1)="," THEN F$(C)=MID$(L$,P,I-P): C=C+1: P=I+1
+10060 NEXT I
+10070 F$(C) = MID$(L$,P)
+10080 RETURN
+```
+
+### State Persistence Example
+```basic
+8000 REM === SAVE STATE ===
+8010 OPEN 1,8,2,"SAVES/GAMESTATE.DAT,S,W"
+8020 PRINT#1, CREDITS
+8030 PRINT#1, CURRENT_SYSTEM
+8040 PRINT#1, CURRENT_DAY
+8050 PRINT#1, PILOT_SKILL
+8060 PRINT#1, COMBAT_SKILL
+8070 PRINT#1, ENGINEER_SKILL
+8080 PRINT#1, NAV_SKILL
+8090 PRINT#1, LEADER_SKILL
+8100 REM ... continue for all state variables
+8200 CLOSE 1
+8210 RETURN
+
+9000 REM === LOAD STATE ===
+9010 OPEN 1,8,2,"SAVES/GAMESTATE.DAT,S,R"
+9020 INPUT#1, CREDITS
+9030 INPUT#1, CURRENT_SYSTEM
+9040 INPUT#1, CURRENT_DAY
+9050 INPUT#1, PILOT_SKILL
+9060 INPUT#1, COMBAT_SKILL
+9070 INPUT#1, ENGINEER_SKILL
+9080 INPUT#1, NAV_SKILL
+9090 INPUT#1, LEADER_SKILL
+9100 REM ... continue for all state variables
+9200 CLOSE 1
+9210 RETURN
 ```
 
 ### Combat Resolution BASIC Pseudocode
@@ -1387,14 +1772,14 @@ Flags             500 B   Story progression, discoveries
 REM MINIMIZE PRINT STATEMENTS
 REM Bad: Multiple PRINTs
 PRINT "╔"
-PRINT "═"
+PRINT "║"
 PRINT "╗"
 
 REM Good: Single PRINT with concatenation
-PRINT "╔═══════════════════╗"
+PRINT "╔════════════════════╗"
 
 REM Better: Pre-build strings
-A$ = "╔═══════════════════╗"
+A$ = "╔════════════════════╗"
 PRINT A$
 ```
 
