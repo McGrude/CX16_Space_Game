@@ -1,2 +1,5 @@
 .DS_Store
 ~*
+BUILD/*.BAS
+BUILD/*.PRG
+BUILD/*.BIN
