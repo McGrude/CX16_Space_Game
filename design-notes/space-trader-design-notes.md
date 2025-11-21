@@ -2,7 +2,7 @@
 **Platform:** Commander X16  
 **Genre:** Turn-Based Space Trading/Combat RPG  
 **Inspiration:** Escape Velocity series (Ambrosia Software)  
-**Version:** 0.1 - Initial Design  
+**Version:** 0.2 - Galaxy & Factions Update  
 **Last Updated:** November 21, 2024
 
 ---
@@ -23,6 +23,8 @@
 13. [Memory Organization](#memory-organization)
 14. [Data Structures](#data-structures)
 15. [Development Roadmap](#development-roadmap)
+16. [Galaxy Data](#galaxy-data)
+17. [Faction Details](#faction-details)
 
 ---
 
@@ -207,7 +209,7 @@ Source files (.bas) in git, assembled output (.BAS) generated at build time.
 ## Core Concept
 
 ### Game Overview
-A sandbox space exploration and trading game with RPG elements, turn-based tactical combat, and faction-based storylines. Players start with a small ship and build their reputation, wealth, and fleet through trading, combat, and missions.
+A sandbox space exploration and trading game with RPG elements, turn-based tactical combat, and faction-based storylines. Players start with a small ship in the Sol system and build their reputation, wealth, and fleet through trading, combat, and missions across 92 real star systems within 50 light years of Earth.
 
 ### Core Gameplay Loop
 1. Accept missions or plan trade routes
@@ -223,7 +225,8 @@ A sandbox space exploration and trading game with RPG elements, turn-based tacti
 - **Meaningful choices:** Faction alignment locks out opposing paths
 - **Deep but accessible:** Complex systems with intuitive interface
 - **Replayability:** Multiple faction paths and ship progressions
-- ** 8-bit appropriate:** Design within technical constraints
+- **Authentic setting:** Real stellar neighborhood with actual star names and positions
+- **8-bit appropriate:** Design within technical constraints
 
 ---
 
@@ -533,29 +536,187 @@ Level Benefits:
 
 ## Faction System
 
-### Major Factions
-**Recommended Structure:** 3-4 major factions
+### Overview
+The stellar neighborhood is divided among 9 factions: 5 major political powers with territory, 2 minor factions controlling key systems, and 2 mission-only organizations.
 
-**Example Faction Setup:**
-1. **Core Worlds Federation**
-   - Lawful, military-focused
-   - Controls central systems
-   - Technology: Heavy shields, energy weapons
+### Major Factions (Territorial Control)
 
-2. **Outer Colonies Alliance**
-   - Independent, frontier justice
-   - Controls outer rim systems
-   - Technology: Fast ships, missiles
+#### 1. Terran Hegemony
+**Capital:** Sol  
+**Territory:** 20 systems, 32 ports  
+**Government:** Authoritarian colonial empire
 
-3. **Merchant Guild**
-   - Neutral traders
-   - Economic power
-   - Technology: Cargo expansion, trade computers
+**Description:** 
+The Terran Hegemony is a protectionist, militaristic human-supremacist government centered on Earth (Sol). They control the core systems of human space through military force and colonial administration. The Hegemony views itself as the rightful ruler of humanity and is deeply suspicious of AI technology and alien civilizations.
 
-4. **Pirates/Outlaws**
-   - Hostile to most
-   - Hidden bases
-   - Technology: Cloaking, boarding
+**Traits:** Colonial, militaristic, protectionist, authoritarian, xenophobic
+
+**Technology Focus:**
+- Heavy shields and armor
+- Energy weapons (lasers, plasma)
+- Military-grade equipment
+- Patrol and battleship designs
+
+**Relations:**
+- **At WAR with:** Free Systems Coalition (-50)
+- **Cold War with:** Frontier Alliance (-20)
+- **Hostile to:** Velanthi Commonwealth (-40), Nexus Collective (-30)
+- **Enemy of:** Crimson Cartel (-60)
+- **Allied with:** Nova Mining Guild (+40)
+
+#### 2. Free Systems Coalition
+**Capital:** Tau Ceti  
+**Territory:** 15 systems, 24 ports  
+**Government:** Democratic federation
+
+**Description:**
+The Free Systems Coalition is a rebel independence movement fighting to break free from Hegemony control. They advocate for democratic governance, cultural diversity, and individual liberty. The Coalition is more open to alien contact and cautiously accepting of AI technology, though internal debate on these issues continues.
+
+**Traits:** Rebel, democratic, independent, freedom-focused, diverse
+
+**Technology Focus:**
+- Fast, agile ships
+- Missile systems and torpedoes
+- Guerrilla warfare equipment
+- Stealth and evasion tech
+
+**Relations:**
+- **At WAR with:** Terran Hegemony (-50)
+- **Friendly with:** Frontier Alliance (+30)
+- **Curious about:** Velanthi Commonwealth (+10)
+- **Uneasy with:** Nexus Collective (-10)
+- **Complicated with:** Crimson Cartel (-15)
+- **Neutral with:** Nova Mining Guild (0)
+
+#### 3. Frontier Alliance
+**Capital:** Gliese 163  
+**Territory:** 24 systems, 33 ports (largest territory)  
+**Government:** Loose confederation
+
+**Description:**
+The Frontier Alliance is a pragmatic association of remote colonies focused on survival and self-sufficiency. They maintain neutrality in the Hegemony-Coalition war, though they sympathize with the Coalition's cause. Frontier systems trade with anyone and prioritize practical considerations over ideology.
+
+**Traits:** Neutral, remote, independent, survivalist, pragmatic
+
+**Technology Focus:**
+- Utilitarian designs
+- Mining and industrial equipment
+- Long-range fuel systems
+- Reliable, repairable tech
+
+**Relations:**
+- **Friendly with:** Free Systems Coalition (+30), Nova Mining Guild (+20)
+- **Cold with:** Terran Hegemony (-20)
+- **Cautious with:** Velanthi Commonwealth (+5)
+- **Tolerates:** Crimson Cartel (-5)
+- **Neutral with:** Nexus Collective (0)
+
+#### 4. The Nexus Collective
+**Capital:** Sirius  
+**Territory:** 9 systems, 16 ports (scattered, non-contiguous)  
+**Government:** Technocratic AI-human synthesis
+
+**Description:**
+The Nexus Collective is a mysterious technocratic society where humans have merged with AI through cybernetic augmentation. They display hive-mind tendencies and pursue goals that other factions find difficult to understand. The Hegemony fears them as an existential threat to human individuality.
+
+**Traits:** Technocratic, AI, cyberpunk, mysterious, transhumanist
+
+**Technology Focus:**
+- Advanced AI systems
+- Cybernetic implants
+- Drone technology
+- Experimental weapons
+- Neural interfaces
+
+**Relations:**
+- **Fascinated by:** Velanthi Commonwealth (+25)
+- **Partners with:** Nova Mining Guild (+35)
+- **Views as opportunity:** Crimson Cartel (+10)
+- **Suspected by:** Terran Hegemony (-30), Free Systems Coalition (-10)
+- **Neutral with:** Frontier Alliance (0)
+
+#### 5. Velanthi Commonwealth
+**Capital:** Vega  
+**Territory:** 7 systems, 8 ports (isolated, distant)  
+**Government:** Alien civilization
+
+**Description:**
+The Velanthi are an enigmatic alien species with technology that rivals or exceeds humanity's. They are rarely encountered and their motives remain unclear. The Velanthi view the Hegemony's xenophobia as primitive and are curious about human diversity in the Coalition and Nexus.
+
+**Traits:** Alien, advanced, mysterious, rare, non-interventionist
+
+**Technology Focus:**
+- Exotic alien technology
+- Unique propulsion systems
+- Unknown weapon types
+- Advanced sensors
+- Biological tech integration
+
+**Relations:**
+- **Fascinated by:** Nexus Collective (+25)
+- **Hostile to:** Terran Hegemony (-40)
+- **Curious about:** Free Systems Coalition (+10)
+- **Cautious with:** Frontier Alliance (+5)
+- **Disdains:** Crimson Cartel (-25)
+- **Indifferent to:** Nova Mining Guild (0)
+
+### Minor Factions
+
+#### 6. Crimson Cartel
+**Home System:** Wolf 359  
+**Territory:** 2 systems (Wolf 359, Luyten 726-8)  
+**Type:** Pirate confederation
+
+**Description:**
+An organized crime syndicate controlling key trade routes. They engage in piracy, smuggling, and extortion. The Cartel is the enemy of the Hegemony and tolerated (or secretly supported) by some Frontier and Coalition systems.
+
+**Relations:**
+- Enemy of Hegemony (-60), Guild (-30)
+- Complicated with Coalition (-15)
+- Tolerated by Frontier (-5)
+- Opportunity for Nexus (+10)
+- Disdained by Velanthi (-25)
+
+#### 7. Nova Mining Guild
+**Home System:** Epsilon Eridani  
+**Territory:** 2 systems (Epsilon Eridani, Lacaille 9352)  
+**Type:** Corporate mining monopoly
+
+**Description:**
+A powerful corporation controlling resource-rich systems. They supply minerals and rare materials to multiple factions, maintaining a delicate neutrality while being formally allied with the Hegemony.
+
+**Relations:**
+- Allied with Hegemony (+40)
+- Partners with Nexus (+35)
+- Cooperative with Frontier (+20)
+- Neutral with Coalition (0)
+- Extorted by Cartel (-30)
+
+### Mission-Only Factions
+
+#### 8. Free Traders Union
+**Type:** Merchant guild (no territory)
+
+**Description:**
+A galaxy-spanning merchant organization offering trade missions, commodity contracts, and market information. They maintain strict neutrality and deal with all factions.
+
+**Gameplay Role:**
+- Trade missions and contracts
+- Market intelligence
+- Cargo transport jobs
+- No reputation effects on other factions
+
+#### 9. Archaeological Concord
+**Type:** Academic organization (no territory)
+
+**Description:**
+A multi-species academic society dedicated to discovering and preserving ancient artifacts and historical sites throughout the galaxy.
+
+**Gameplay Role:**
+- Artifact recovery missions
+- Archaeological site surveys
+- Research expeditions
+- Ancient technology quests
 
 ### Reputation System
 
@@ -563,19 +724,19 @@ Level Benefits:
 
 | Range | Status | Effects |
 |-------|--------|---------|
-| -100 to -25 | **Hostile** | Attacked on sight, can't dock, bounty hunters |
+| -100 to -25 | **Hostile** | Attacked on sight, can't dock, bounty hunters, no trade |
 | -24 to +24 | **Neutral** | Basic trading, limited missions, standard prices |
-| +25 to +74 | **Friendly** | Better equipment, faction missions, 10% discount, assistance in combat |
-| +75 to +100 | **Allied** | Unique ships, story missions, 20% discount, access to restricted systems |
+| +25 to +74 | **Friendly** | Better equipment, faction missions, 10% discount, combat assistance |
+| +75 to +100 | **Allied** | Unique ships, story missions, 20% discount, restricted system access |
 
 ### Reputation Changes
 
 **Actions Affecting Reputation:**
 ```
 POSITIVE:
-+ Complete faction mission: +5 to +15 (mission dependent)
++ Complete faction mission: +5 to +15
 + Destroy faction enemies: +2 to +10
-+ Trade regularly: +1 per transaction (slow build)
++ Trade regularly: +1 per transaction
 + Protect faction ships: +5
 
 NEGATIVE:
@@ -585,10 +746,19 @@ NEGATIVE:
 - Illegal actions in faction space: -10 to -30
 
 CROSS-FACTION EFFECTS:
-- Helping Federation: Rebels -5
-- Helping Pirates: Federation -10, Merchants -5
-- Neutral trade: Minimal impact
+Example: Destroying Hegemony ship
+  - Terran Hegemony: -15
+  - Free Systems Coalition: +10
+  - Frontier Alliance: +2
+  - Nexus Collective: 0
+  - Velanthi Commonwealth: +5
 ```
+
+### Contested Systems
+
+**5 systems are actively contested** between Terran Hegemony and Free Systems Coalition, representing active war zones with increased military presence and combat encounters.
+
+**13 independent systems** remain unaligned, offering neutral trading posts and refuge for those wanted by major factions.
 
 ### Mission System
 
@@ -721,25 +891,23 @@ Event Propagation: News spreads over time to nearby systems
 ```
 Distance = sqrt((x2 - x1)² + (y2 - y1)²)
 
-Travel Time (Days) = ceil(Distance) + 1
+Travel Time (Days) = ceil(Distance / 10) + 1
+
+Note: Distance compression factor of 10 applied to real stellar distances
 
 Example:
-Sol (5,5) → Alpha Centauri (6,6)
-Distance = sqrt(1² + 1²) = 1.414
-Travel Time = ceil(1.414) + 1 = 3 days
-
-Sol (5,5) → Sirius (10,8)
-Distance = sqrt(25 + 9) = 5.831
-Travel Time = ceil(5.831) + 1 = 7 days
+Sol (0,0) → Alpha Centauri (-12,-3)
+Distance = sqrt(144 + 9) = 12.4 compressed units
+Travel Time = ceil(12.4 / 10) + 1 = 3 days
 ```
 
 **Fuel Consumption:**
 ```
-Fuel Cost = ceil(Distance × 3) units
+Fuel Cost = Distance × 2 units
 
-Adjacent system: ~3-6 fuel units
-Medium jump: ~15-24 fuel units
-Long haul: ~45-60 fuel units
+Adjacent system: ~6-10 fuel units
+Medium jump: ~15-30 fuel units
+Long haul: ~50-100 fuel units
 
 Fuel Price: 10 credits per unit
 Tank Capacity: 50-200 units (ship dependent)
@@ -749,10 +917,10 @@ Tank Capacity: 50-200 units (ship dependent)
 
 | Equipment | Effect | Cost |
 |-----------|--------|------|
-| Standard Nav | Distance + 1 days | Included |
-| Nav Computer I | Distance + 0.5 days | 5,000 cr |
-| Nav Computer II | Distance × 0.9 + 0.5 days | 15,000 cr |
-| Advanced Nav | Distance × 0.75 days (min 1) | 35,000 cr |
+| Standard Nav | Distance / 10 + 1 days | Included |
+| Nav Computer I | Distance / 10 + 0.5 days | 5,000 cr |
+| Nav Computer II | Distance / 10 × 0.9 + 0.5 days | 15,000 cr |
+| Advanced Nav | Distance / 10 × 0.75 days (min 1) | 35,000 cr |
 
 **Navigator Crew Bonus:**
 - Navigation skill 10: -10% travel time
@@ -762,13 +930,13 @@ Tank Capacity: 50-200 units (ship dependent)
 **Pre-Jump Display:**
 ```
 Current System: Sol
-Destination: Betelgeuse
-Distance: 8.2 light-years
-Travel Time: 9 days
+Destination: Tau Ceti
+Distance: 11.9 compressed units
+Travel Time: 3 days
 Fuel Required: 24 units
 Arrival Date: Day 136
 
-Current Day: Day 127
+Current Day: Day 133
 Next Payroll Due: Day 150 (14 days after arrival)
 
 [JUMP] [CANCEL]
@@ -813,43 +981,138 @@ If skipped:
 
 ### Galaxy Layout
 
-**Type:** Hand-crafted galaxy with fixed systems  
-**Size:** 30-40 star systems  
-**Coordinates:** Cartesian grid (0-30 on X and Y axes)
+**Type:** Real stellar neighborhood  
+**Size:** 92 star systems within ~50 light years of Sol  
+**Coordinates:** Cartesian grid (-130 to +130 on compressed scale)  
+**Total Ports:** 136 docking locations across all systems
 
 **Design Philosophy:**
-- Quality over quantity
-- Each system has personality and purpose
+- Based on actual astronomical data
+- Real star names and spectral types
+- Compressed distances (10x factor) for gameplay
 - Strategic positioning creates natural trade routes
-- Faction territories clearly defined
+- Faction territories based on stellar geography
 
 ### System Types
 
-**Core Systems (Federation Space):**
-- High tech level (8-10)
-- High population
-- All services available
+**Core Systems (Hegemony Space):**
+- Close to Sol (< 30 units)
+- High tech level (7-10)
 - Heavy patrol presence
+- All services available
 - Higher prices, safer
 
-**Colony Systems (Outer Rim):**
-- Medium tech level (4-7)
-- Lower population
-- Basic services
-- Light patrol
-- Lower prices, opportunities
+**Mid-Range Systems (Coalition/Contested):**
+- 30-60 units from Sol
+- Medium tech level (5-8)
+- Variable security
+- Most services available
+- Moderate prices, some risk
 
-**Frontier Systems:**
-- Low tech level (2-5)
-- Sparse population
-- Limited services
-- No patrols
-- Extreme prices, dangerous
+**Frontier Systems (Alliance/Remote):**
+- 60+ units from Sol
+- Low to medium tech (3-6)
+- Light or no patrols
+- Basic services only
+- Lower prices, dangerous
 
-**Hidden/Special Systems:**
-- Discoverable through exploration or missions
-- Unique goods or services
-- Story significance
+**Scattered Systems (Nexus Territory):**
+- Non-contiguous locations
+- High tech (8-10)
+- Advanced/unusual services
+- Experimental equipment
+- Mysterious
+
+**Distant Systems (Velanthi Territory):**
+- Isolated, far from Sol
+- Very high tech (9-10)
+- Alien technology available
+- Rare encounters
+- Unknown risks
+
+### System Spectral Distribution
+
+| Type | Count | Description | Color |
+|------|-------|-------------|-------|
+| M-type | 63 | Red dwarfs (most common) | Red |
+| K-type | 13 | Orange stars | Orange |
+| G-type | 9 | Yellow, Sun-like stars | Yellow |
+| F-type | 2 | Yellow-white stars | Yellow-white |
+| A-type | 4 | White stars (Sirius, Vega, Altair, Fomalhaut) | White |
+| D-type | 1 | White dwarf (Van Maanen's Star) | White |
+
+**Note:** G-type systems have slightly higher chance of multiple ports due to habitability.
+
+### Port Types
+
+Ports are docking locations where players can trade, repair, hire crew, and accept missions.
+
+**Port Categories:**
+1. **Planet** - Terrestrial world with surface settlements
+2. **Moon** - Lunar base or settlement
+3. **Space Station** - Orbital platform
+4. **Mining Colony** - Resource extraction facility
+5. **Trade Hub** - Commercial center
+6. **Research Outpost** - Scientific facility
+7. **Military Base** - Faction military installation
+8. **Orbital Platform** - Industrial or residential orbital
+
+**Port Distribution:**
+- 66 systems (72%) have 1 port
+- 16 systems (17%) have 2 ports
+- 10 systems (11%) have 3 ports
+
+### Notable Systems
+
+**Sol (0, 0)** - Terran Hegemony Capital
+- Starting location
+- 1 port: Sol Prime
+- All services available
+- Highest security
+
+**Alpha Centauri (-12, -3)** - Hegemony Territory
+- Nearest neighbor to Sol
+- 3 ports: Alpha Centauri Prime, Alpha, Beta
+- Major trade hub
+- 4.37 light years from Sol (real distance)
+
+**Tau Ceti (38, -9)** - Free Systems Coalition Capital
+- Coalition headquarters
+- 1 port: Tau Ceti Prime
+- Rebel shipyards
+- 11.89 light years from Sol
+
+**Sirius (-29, 10)** - Nexus Collective Capital
+- AI-human hybrid society
+- 1 port: Sirius Orbital
+- Advanced technology
+- 8.59 light years from Sol (brightest star in Earth's sky)
+
+**Vega (-52, 65)** - Velanthi Commonwealth Capital
+- Alien civilization home
+- 1 port: Vega Station
+- Exotic alien tech
+- 25.04 light years from Sol
+
+**Wolf 359 (24, 3)** - Crimson Cartel Base
+- Pirate haven
+- 1 port: Wolf 359 Station
+- Black market
+- 7.78 light years from Sol
+
+**Epsilon Eridani (9, -32)** - Nova Mining Guild HQ
+- Mining operations center
+- 1 port: Epsilon Eridani Prime
+- Industrial equipment
+- 10.52 light years from Sol
+
+**Other Notable Systems:**
+- **Barnard's Star** (20, -2) - 3 ports, Hegemony military presence
+- **Procyon** (-32, 6) - Famous star, Hegemony control
+- **61 Cygni** (33, 40) - Binary system, Coalition territory
+- **Gliese 163** (135, -68) - Distant, Frontier Alliance capital
+- **Altair** (-38, 41) - Bright star, Coalition space
+- **Fomalhaut** (31, -76) - 2 ports, southern frontier
 
 ### System Data Structure
 
@@ -858,36 +1121,27 @@ If skipped:
 - System ID: 1 byte
 - Name: 20 bytes
 - Coordinates X,Y: 4 bytes (2 each)
-- Government Type: 1 byte
+- Faction Control: 1 byte
+- Faction Strength: 1 byte (0-100)
 - Tech Level: 1 byte
-- Population: 1 byte
+- Spectral Type: 4 bytes
+- Real Distance (light years): 2 bytes
+- Port Count: 1 byte
 - Commodity Prices: 10 bytes (one per commodity)
 - Station Services Flags: 1 byte
-- Faction Control: 1 byte
-- Special Flags: 1 byte
+- Special Flags: 1 byte (contested, capital, etc.)
 - Description pointer: 2 bytes
-- Mission availability flags: 2 bytes
 ```
 
-### Randomization
-
-**On New Game Start:**
-- Initial commodity prices (within ranges): Randomized
-- Crew availability at hiring halls: Random names/skills
-- Minor event triggers: Randomized timing
-- Starting reputation: Small random variance (±5)
-
-**Persistent Across Game:**
-- System positions: Fixed
-- Base prices: Fixed
-- Tech levels: Fixed
-- Government types: Fixed
-
-**Dynamic During Play:**
-- Current commodity prices: Fluctuate based on events/time
-- Available missions: Generated based on reputation/location
-- NPC ship encounters: Random
-- Faction territory control: Can shift based on missions
+**Per Port (~30 bytes):**
+```
+- Port ID: 1 byte
+- System ID: 1 byte
+- Name: 20 bytes
+- Type: 1 byte (Planet, Moon, Station, etc.)
+- Services Available: 1 byte (bitfield)
+- Tech Level: 1 byte
+```
 
 ---
 
@@ -1176,8 +1430,6 @@ Cargo Scanner:
 10. **Shipyard Screen** - Buy ships, install equipment
 11. **Hiring Hall Screen** - Recruit crew and escorts
 
-*(Full ASCII mockups available in main conversation)*
-
 ### Color Scheme
 
 **General:**
@@ -1195,6 +1447,7 @@ Cargo Scanner:
 - Enemy Ships: Red or Orange
 - Reputation Positive: Green
 - Reputation Negative: Red
+- Faction Colors: Match faction palette
 
 ### Navigation Between Screens
 
@@ -1268,6 +1521,7 @@ $8000-$9EFF: Buffer space (~7KB)
 - Pre-loaded mission/dialog text
 - Save game slots
 - Future expansion
+
 ```
 Banks 0-10: Reserved for BASIC system use
 
@@ -1310,183 +1564,7 @@ With the shift to CSV data files, the primary data access pattern is:
 4. Close file
 5. Work with cached variables
 
-See **Data Files & External Storage** section for complete implementation details.
-
----
-
----
-
-## Data Files & External Storage
-
-### Overview
-To minimize RAM usage, large data tables are stored as CSV files on SD card and loaded on-demand. This approach allows for:
-- Easy external editing of game data
-- No RAM overhead for unused data
-- Simple balancing and content updates
-- Potential for modding support
-
-### Data File Strategy
-
-**Access Pattern:**
-```basic
-1. Open data file (e.g., SHIPS.DAT)
-2. Search for specific record by ID
-3. Parse CSV into working variables
-4. Close file
-5. Use variables until next lookup needed
-```
-
-**Caching Strategy:**
-- Frequently accessed data (current ship, current system) stays in BASIC variables
-- Lookup only when changing context (buying new ship, jumping systems)
-- Faction names/basic info loaded at game start, kept resident
-
-### File Organization
-```
-/GAME/
-  MAIN.BAS
-  DOCKED.BAS
-  SPACE.BAS
-  COMBAT.BAS
-  DATA/
-    SHIPS.DAT       (60-80 records: 6-8 ships × 6-10 factions)
-    SYSTEMS.DAT     (40-60 records)
-    PLANETS.DAT     (60-150 records)
-    EQUIPMENT.DAT   (20-40 records)
-    FACTIONS.DAT    (6-10 records)
-    COMMODITIES.DAT (10-20 records)
-    MISSIONS.DAT    (mission templates)
-  SAVES/
-    GAMESTATE.DAT
-```
-
-### CSV Format Specification
-
-**SHIPS.DAT Format:**
-```csv
-ID,NAME,FACTION,COST,CARGO,FUEL,ARMOR,SHIELDS,WEAPONS,ACCEL,TURN
-1,SHUTTLE,1,15000,50,100,10,0,1,8,9
-2,SCOUT,1,35000,20,150,15,10,2,12,11
-3,COURIER,1,45000,30,200,20,25,2,10,10
-```
-
-**SYSTEMS.DAT Format:**
-```csv
-ID,NAME,X,Y,FACTION,TECH_LEVEL,GOVT,POPULATION
-1,SOL,0,0,1,8,2,9
-2,ALPHA CENTAURI,4,3,1,7,2,7
-3,SIRIUS,8,-5,2,6,1,5
-```
-
-**FACTIONS.DAT Format:**
-```csv
-ID,NAME,HOMEWORLD,ALLIED_TO,ENEMY_OF,GOVT_TYPE
-1,TERRAN FEDERATION,1,2,5,DEMOCRACY
-2,MARS COLLECTIVE,3,1,5,REPUBLIC
-3,OUTER RIM PIRATES,0,0,0,ANARCHY
-```
-
-**COMMODITIES.DAT Format:**
-```csv
-ID,NAME,BASE_PRICE,VARIANCE,ILLEGAL
-1,FOOD,20,5,0
-2,MINERALS,45,15,0
-3,ELECTRONICS,120,30,0
-4,WEAPONS,200,50,1
-```
-
-**EQUIPMENT.DAT Format:**
-```csv
-ID,NAME,TYPE,COST,TECH_REQ,STAT1,STAT2,STAT3
-1,LASER MK I,WEAPON,2000,3,15,5,3
-2,SHIELD GEN I,SHIELD,5000,4,50,5,0
-3,ARMOR PLATE I,ARMOR,3000,2,10,0,0
-```
-
-### CSV Parsing in BASIC
-
-**Generic CSV Parser:**
-```basic
-10000 REM === PARSE CSV LINE ===
-10010 REM INPUT: L$ = CSV line
-10020 REM OUTPUT: F$(1-N) = fields array
-10030 C = 1: P = 1
-10040 FOR I = 1 TO LEN(L$)
-10050   IF MID$(L$,I,1) = "," THEN F$(C) = MID$(L$,P,I-P): C=C+1: P=I+1
-10060 NEXT I
-10070 F$(C) = MID$(L$,P) : REM Last field
-10080 RETURN
-```
-
-**Find Record by ID Pattern:**
-```basic
-2000 REM === FIND SHIP BY ID ===
-2010 REM INPUT: FIND_ID = ship to find
-2020 REM OUTPUT: F$() array with ship data, or FOUND=0
-2030 OPEN 1,8,2,"DATA/SHIPS.DAT,S,R"
-2040 INPUT#1, L$ : REM Skip header
-2050 FOUND = 0
-2060 IF ST<>0 THEN 2120 : REM EOF check
-2070 INPUT#1, L$
-2080 GOSUB 10000 : REM Parse CSV
-2090 IF VAL(F$(1)) = FIND_ID THEN FOUND=1: GOTO 2110
-2100 GOTO 2060 : REM Keep searching
-2110 CLOSE 1
-2120 RETURN
-```
-
-**Usage Example:**
-```basic
-1000 REM Load player's ship data
-1010 FIND_ID = PLAYER_SHIP_ID
-1020 GOSUB 2000 : REM Find ship in SHIPS.DAT
-1030 IF FOUND = 0 THEN PRINT "ERROR: SHIP NOT FOUND": END
-1040 REM Cache in variables
-1050 SHIP_NAME$ = F$(2)
-1060 SHIP_FACTION = VAL(F$(3))
-1070 SHIP_COST = VAL(F$(4))
-1080 SHIP_CARGO = VAL(F$(5))
-1090 REM ... etc
-```
-
-### Performance Characteristics
-
-**Search Performance:**
-- 60-80 ships: ~40 comparisons average (linear search)
-- Estimated time: 100-200ms on X16 (imperceptible)
-- No indexing needed at this scale
-
-**Optimization Strategies if Needed:**
-1. **Sorted files + binary search** - Reduces comparisons to ~6-7
-2. **Index file** - Maps ID→byte offset for direct seek
-3. **Faction-segregated files** - Search only relevant subset
-4. **Caching** - Keep frequently accessed records in memory
-
-**When to Optimize:**
-- Only if file searches feel sluggish in playtesting
-- If dataset exceeds ~100 records per file
-- If same record looked up repeatedly (use caching first)
-
-### Alternative Format: Fixed-Width
-
-If CSV parsing proves too slow, fixed-width format is faster but less editable:
-```
-01SHUTTLE    00150000050010000100001080911
-02SCOUT      00350000020015001000210121112
-03COURIER    00450000030020002502210101013
-```
-
-**Parsing (faster - no loops):**
-```basic
-10000 REM === PARSE FIXED WIDTH ===
-10010 SHIP_ID = VAL(MID$(L$,1,2))
-10020 SHIP_NAME$ = MID$(L$,3,12)
-10030 SHIP_COST = VAL(MID$(L$,15,8))
-10040 SHIP_CARGO = VAL(MID$(L$,23,3))
-10050 RETURN
-```
-
-**Recommendation:** Start with CSV, switch only if performance requires it.
+See **Data Files & External Storage** section in original document for complete implementation details.
 
 ---
 
@@ -1506,10 +1584,10 @@ Offset  Size  Description
 11      1     Leadership Skill (1-10)
 12      2     Total XP
 14      1     Ship Type ID
-15      4     Faction Reputations (4 factions, -128 to +127 each)
-19      20    Cargo array (10 commodities × 2 bytes each)
-39      10    Active Mission IDs (up to 5 missions × 2 bytes)
-49      ...   Additional player state
+15      20    Faction Reputations (10 factions × 2 bytes each, -100 to +100)
+35      20    Cargo array (10 commodities × 2 bytes each)
+55      10    Active Mission IDs (up to 5 missions × 2 bytes)
+65      ...   Additional player state
 ```
 
 ### Ship Data Structure (~50 bytes)
@@ -1557,17 +1635,19 @@ Offset  Size  Description
 Offset  Size  Description
 ------  ----  -----------
 0       1     System ID
-1       2     X Coordinate
-3       2     Y Coordinate
-5       1     Government Type
-6       1     Tech Level
-7       1     Population Level
-8       10    Current Commodity Prices (10 commodities)
-18      1     Services Flags (bitfield)
-19      1     Faction Control
-20      20    System Name
-40      50    Description Text (pointer or short text)
-90      10    Special Flags/Data
+1       2     X Coordinate (compressed)
+3       2     Y Coordinate (compressed)
+5       1     Faction Control ID
+6       1     Faction Strength (0-100)
+7       1     Tech Level
+8       4     Spectral Type (string)
+9       2     Real Distance (light years × 10)
+11      1     Port Count
+12      10    Current Commodity Prices (10 commodities)
+22      1     Services Flags (bitfield)
+23      1     Special Flags (contested, capital, etc.)
+24      20    System Name
+44      50    Additional data
 ```
 
 ### Save Game Structure (~4-5KB)
@@ -1578,12 +1658,12 @@ Player Data       200 B   Player stats, skills, XP
 Ship Data         50 B    Current ship state
 Crew Data         65 B    5 crew × 13 bytes
 Escort Data       100 B   2 escorts × 50 bytes
-Universe State    2048 B  System prices, flags (40 systems × ~50 bytes)
-Mission State     500 B   Active missions, completion flags
-Faction Data      100 B   Reputation, relationship state
-Inventory         100 B   Equipment, cargo
+Faction Rep       20 B    10 factions × 2 bytes
+Cargo             40 B    10-20 commodity quantities
+Mission State     200 B   Active missions, completion flags
+Discovered Systems 12 B   92 systems as bitfield
 Statistics        100 B   Kills, trades, jumps, etc.
-Flags             500 B   Story progression, discoveries
+Flags             500 B   Story progression, special events
 ```
 
 ---
@@ -1598,9 +1678,9 @@ Flags             500 B   Story progression, discoveries
 - [ ] Common library (COMMON.BAS with shared routines)
 - [ ] State persistence (SAVE_STATE / LOAD_STATE routines)
 - [ ] CSV data file system (parser, loaders)
-- [ ] Create initial data files (5 ships, 5 systems, 3 commodities)
+- [ ] Create initial data files (10 test systems, 5 ships, 5 commodities)
 - [ ] Navigation system between test systems
-- [ ] Simple trading (buy/sell 3-4 commodities)
+- [ ] Simple trading (buy/sell 5 commodities)
 - [ ] Basic turn-based combat (1v1)
 - [ ] Player stats and leveling
 - [ ] Basic UI screens (station, navigation, trading)
@@ -1609,19 +1689,21 @@ Flags             500 B   Story progression, discoveries
 **Estimated Effort:** 5-7 weeks
 
 ### Phase 2: Content Expansion (Pure BASIC)
-**Goal:** Full game content in data files
+**Goal:** Full galaxy content in data files
 
 **Deliverables:**
-- [ ] Complete galaxy data (30-40 systems in SYSTEMS.DAT)
-- [ ] All factions (6-10 in FACTIONS.DAT)
+- [ ] Complete galaxy data (92 systems in SYSTEMS.DAT)
+- [ ] All 136 ports with names and types
+- [ ] All factions (9 factions in FACTIONS.DAT)
+- [ ] Faction territory assignments
 - [ ] All ships (60-80 in SHIPS.DAT: 6-8 per faction)
-- [ ] All equipment types (20-40 in EQUIPMENT.DAT)
-- [ ] All commodities (10-20 in COMMODITIES.DAT)
+- [ ] All equipment types (30-40 in EQUIPMENT.DAT)
+- [ ] All commodities (10 in COMMODITIES.DAT)
 - [ ] Complete pricing and trade system
 - [ ] Crew system fully implemented
 - [ ] Escort hiring and management
 - [ ] Multi-ship combat (up to 7 ships)
-- [ ] Mission system (3 tiers, stored in MISSIONS.DAT)
+- [ ] Mission system (3 tiers)
 - [ ] Faction reputation system
 - [ ] Complete UI screens (all modules)
 - [ ] Dynamic events system
@@ -1632,29 +1714,31 @@ Flags             500 B   Story progression, discoveries
 **Goal:** Replayability through story content
 
 **Deliverables:**
-- [ ] 3-4 faction story arcs (6-8 missions each)
+- [ ] 5 major faction story arcs (6-8 missions each)
 - [ ] Branching mission paths
 - [ ] Faction-specific ships and equipment
 - [ ] Special/hidden systems
-- [ ] Dynamic events system
+- [ ] Contested system mechanics
 - [ ] Contraband and smuggling
 - [ ] Bounty system
+- [ ] Cross-faction reputation effects
 
-**Estimated Effort:** 6-8 weeks
+**Estimated Effort:** 8-10 weeks
 
 ### Phase 4: Polish & Optimization
 **Goal:** Professional presentation
 
 **Deliverables:**
-- [ ] Graphics improvements (PETSCII art, colors)
+- [ ] Graphics improvements (PETSCII art, colors, faction emblems)
 - [ ] Assembly helpers for bottlenecks
   - [ ] Banking routines
   - [ ] Combat calculation
   - [ ] Graphics drawing
 - [ ] Sound effects (if desired)
-- [ ] Balance testing
+- [ ] Balance testing (economy, combat, progression)
 - [ ] Bug fixing
 - [ ] Performance optimization
+- [ ] Galaxy map visualization
 
 **Estimated Effort:** 4-6 weeks
 
@@ -1662,14 +1746,253 @@ Flags             500 B   Story progression, discoveries
 **Goal:** Additional gameplay depth
 
 **Possible Features:**
-- [ ] More factions
-- [ ] Larger galaxy
+- [ ] Minor faction storylines
+- [ ] More ship classes
 - [ ] Ship customization/painting
-- [ ] Multiplayer trading (if feasible)
-- [ ] Random universe generation mode
+- [ ] Hidden alien artifacts
+- [ ] Procedural mission generation
 - [ ] Challenge modes
+- [ ] New Game+ with increased difficulty
 
 **Estimated Effort:** Variable
+
+---
+
+## Galaxy Data
+
+### Complete System List
+
+The game features **92 real star systems** based on our actual stellar neighborhood within ~50 light years of Sol. Systems use compressed coordinates (10x factor) to fit the playable game grid.
+
+**System Distribution by Faction:**
+- **Terran Hegemony:** 20 systems, 32 ports
+- **Free Systems Coalition:** 15 systems, 24 ports
+- **Frontier Alliance:** 24 systems, 33 ports
+- **The Nexus Collective:** 9 systems, 16 ports
+- **Velanthi Commonwealth:** 7 systems, 8 ports
+- **Crimson Cartel:** 2 systems, 2 ports
+- **Nova Mining Guild:** 2 systems, 4 ports
+- **Independent:** 13 systems, 17 ports
+
+**Notable System Examples:**
+
+```
+SOL (Terran Hegemony Capital)
+Position: (0, 0)
+Real Distance: 0.00 light years
+Spectral Type: G2V
+Ports: 1 - Sol Prime (Moon)
+Description: Earth's home system and heart of the Terran Hegemony. 
+Starting location for all players. Maximum security and all services.
+
+ALPHA CENTAURI (Terran Hegemony)
+Position: (-12, -3)
+Real Distance: 4.37 light years
+Spectral Type: G2V/K1V (binary)
+Ports: 3 - Alpha Centauri Prime (Mining Colony), Alpha (Space Station), 
+       Beta (Military Base)
+Description: Humanity's first interstellar colony and major trade hub. 
+Triple star system with extensive orbital infrastructure.
+
+TAU CETI (Free Systems Coalition Capital)
+Position: (38, -9)
+Real Distance: 11.89 light years
+Spectral Type: G8V
+Ports: 1 - Tau Ceti Prime (Planet)
+Description: Coalition headquarters and symbol of independence. 
+Home to rebel shipyards and democratic government.
+
+SIRIUS (Nexus Collective Capital)
+Position: (-29, 10)
+Real Distance: 8.59 light years
+Spectral Type: A1V (brightest star in Earth's sky)
+Ports: 1 - Sirius Orbital (Orbital Platform)
+Description: AI-human synthesis civilization. Advanced cybernetic 
+technology and mysterious research facilities.
+
+VEGA (Velanthi Commonwealth Capital)
+Position: (-52, 65)
+Real Distance: 25.04 light years
+Spectral Type: A0V
+Ports: 1 - Vega Station (Space Station)
+Description: Alien civilization's primary contact point with humanity. 
+Exotic technology and rare encounters.
+
+WOLF 359 (Crimson Cartel)
+Position: (24, 3)
+Real Distance: 7.78 light years
+Spectral Type: M6V
+Ports: 1 - Wolf 359 Station (Space Station)
+Description: Notorious pirate haven. Black market and smuggling hub.
+
+EPSILON ERIDANI (Nova Mining Guild)
+Position: (9, -32)
+Real Distance: 10.52 light years
+Spectral Type: K2V
+Ports: 1 - Epsilon Eridani Prime (Mining Colony)
+Description: Guild headquarters with extensive asteroid mining operations.
+
+BARNARD'S STAR (Terran Hegemony)
+Position: (20, -2)
+Real Distance: 5.96 light years
+Spectral Type: M4V
+Ports: 3 - Multiple military and trade facilities
+Description: Major Hegemony military outpost near Sol.
+
+PROCYON (Terran Hegemony)
+Position: (-32, 6)
+Real Distance: 11.46 light years
+Spectral Type: F5IV-V
+Ports: 1 - Procyon Prime (Trade Hub)
+Description: Important Hegemony trade route junction.
+
+61 CYGNI (Free Systems Coalition)
+Position: (33, 40)
+Real Distance: 11.41 light years
+Spectral Type: K5V/K7V (binary)
+Ports: 2 - Coalition colonies
+Description: Strategic Coalition system on Hegemony border.
+
+GLIESE 163 (Frontier Alliance Capital)
+Position: (135, -68) [Note: Distant frontier location]
+Real Distance: 49.40 light years
+Spectral Type: M3.5V
+Ports: 1 - Gliese 163 Station (Space Station)
+Description: Remote Frontier Alliance capital. Independent and pragmatic.
+```
+
+**Spectral Type Distribution:**
+- M-type (Red Dwarfs): 63 systems - Most common, small cool stars
+- K-type (Orange): 13 systems - Medium-sized stars
+- G-type (Yellow, Sun-like): 9 systems - Similar to Sol
+- F-type (Yellow-white): 2 systems - Hotter than Sun
+- A-type (White): 4 systems - Large, bright stars (Sirius, Vega, Altair, Fomalhaut)
+- D-type (White Dwarf): 1 system - Stellar remnant (Van Maanen's Star)
+
+**Port Distribution:**
+- 1 port: 66 systems (72%)
+- 2 ports: 16 systems (17%)
+- 3 ports: 10 systems (11%)
+
+**Complete galaxy data** is available in SYSTEMS.DAT and PORTS.DAT files. See Development Roadmap for implementation details.
+
+---
+
+## Faction Details
+
+### Diplomatic Relations Matrix
+
+Cross-faction reputation modifiers when taking actions:
+
+| Action | TH | FSC | FA | NC | VC | CC | NMG |
+|--------|----|----|----|----|----|----|-----|
+| **Attack Hegemony ship** | -15 | +10 | +2 | 0 | +5 | +3 | -5 |
+| **Attack Coalition ship** | +10 | -15 | -5 | -2 | -3 | 0 | 0 |
+| **Attack Nexus ship** | +5 | +2 | 0 | -15 | -5 | 0 | -10 |
+| **Attack Velanthi ship** | +3 | -5 | -3 | -5 | -20 | 0 | 0 |
+| **Attack Cartel ship** | +5 | +2 | +1 | 0 | +1 | -15 | +3 |
+| **Complete Hegemony mission** | +10 | -5 | -2 | -3 | -5 | -5 | +2 |
+| **Complete Coalition mission** | -5 | +10 | +3 | -1 | +2 | +1 | 0 |
+| **Trade at Guild station** | +1 | 0 | +1 | +1 | 0 | -1 | +5 |
+| **Trade with Nexus** | -5 | -1 | 0 | +3 | +1 | 0 | +1 |
+
+**Legend:**
+- TH = Terran Hegemony
+- FSC = Free Systems Coalition  
+- FA = Frontier Alliance
+- NC = Nexus Collective
+- VC = Velanthi Commonwealth
+- CC = Crimson Cartel
+- NMG = Nova Mining Guild
+
+### Faction-Specific Equipment
+
+**Terran Hegemony:**
+- Hegemony Battlecruiser (requires Allied status)
+- Heavy Plasma Lance (energy weapon)
+- Imperial Shield Array (superior shields)
+- Military-grade armor plating
+
+**Free Systems Coalition:**
+- Coalition Interceptor (fast, agile)
+- Freedom Fighter Missiles (high damage)
+- Stealth Field Generator (evasion bonus)
+- Democratic governance provides crew morale bonus
+
+**Frontier Alliance:**
+- Frontier Hauler (massive cargo capacity)
+- Salvage equipment (recover more from wrecks)
+- Long-range fuel tanks
+- Survival systems (repair bonuses)
+
+**The Nexus Collective:**
+- Nexus Cruiser (AI-assisted)
+- Neural Interface (skill bonuses)
+- Drone Bay (automated defenses)
+- Quantum Computing Core (targeting bonus)
+
+**Velanthi Commonwealth:**
+- Velanthi Starcruiser (alien design)
+- Exotic Beam Weapons (unique damage type)
+- Alien Shield Matrix (regenerates faster)
+- Biological computer (mysterious bonuses)
+
+### Mission Examples by Faction
+
+**Hegemony - Tier 1 (Neutral):**
+- "Transport military supplies to Alpha Centauri"
+- "Patrol Sol system and report suspicious activity"
+- "Deliver diplomatic message to Procyon"
+
+**Hegemony - Tier 3 (Allied):**
+- "Infiltrate Coalition base and steal battle plans"
+- "Lead assault on contested system"
+- "Escort Hegemony Admiral through war zone"
+
+**Coalition - Tier 1 (Neutral):**
+- "Deliver medical supplies to frontier colony"
+- "Courier encrypted messages to 61 Cygni"
+- "Scout Hegemony patrol routes"
+
+**Coalition - Tier 3 (Allied):**
+- "Sabotage Hegemony weapons facility"
+- "Rally independent systems to Coalition cause"
+- "Rescue Coalition leader from Hegemony prison"
+
+**Nexus - Tier 2 (Friendly):**
+- "Test experimental AI combat system"
+- "Retrieve damaged drone from deep space"
+- "Transport cybernetic components to Sirius"
+
+**Velanthi - Tier 3 (Allied):**
+- "First contact with unknown alien species"
+- "Investigate ancient alien artifact"
+- "Defend Velanthi ship from Hegemony attack"
+
+**Cartel (Criminal Missions):**
+- "Smuggle contraband through Hegemony blockade"
+- "Raid Guild mining convoy"
+- "Establish pirate cache in neutral system"
+
+### Story Arc Examples
+
+**Hegemony Campaign: "Imperial Restoration"**
+1. Prove loyalty by destroying rebel ships
+2. Infiltrate Coalition cell on border world
+3. Recover stolen Hegemony prototype
+4. Lead battle fleet in major offensive
+5. Decision: Genocide rebel planet or accept surrender
+6. Consequences: If merciful, secret Coalition ally; if ruthless, feared throughout galaxy
+7. Final mission: Defend Sol from Coalition counterattack OR participate in peace negotiations
+
+**Coalition Campaign: "Freedom's Price"**
+1. Escape Hegemony persecution
+2. Join underground resistance
+3. Sabotage Hegemony supply lines
+4. Rally neutral systems
+5. Decision: Accept Nexus AI support or reject for ideological purity
+6. Consequences: Nexus path = advanced tech but AI dependence; Pure path = maintain humanity but harder struggle
+7. Final mission: Lead liberation of oppressed colony OR assassination of Hegemony leadership
 
 ---
 
@@ -1727,6 +2050,8 @@ REM === EXAMPLE: Load a ship from SHIPS.DAT ===
 8080 PRINT#1, NAV_SKILL
 8090 PRINT#1, LEADER_SKILL
 8100 REM ... continue for all state variables
+8110 REM Save faction reputations
+8120 FOR I=1 TO 10: PRINT#1, FACTION_REP(I): NEXT I
 8200 CLOSE 1
 8210 RETURN
 
@@ -1741,6 +2066,8 @@ REM === EXAMPLE: Load a ship from SHIPS.DAT ===
 9080 INPUT#1, NAV_SKILL
 9090 INPUT#1, LEADER_SKILL
 9100 REM ... continue for all state variables
+9110 REM Load faction reputations
+9120 FOR I=1 TO 10: INPUT#1, FACTION_REP(I): NEXT I
 9200 CLOSE 1
 9210 RETURN
 ```
@@ -1765,6 +2092,32 @@ REM === EXAMPLE: Load a ship from SHIPS.DAT ===
 9540 IF ENEMYSHIELDS = 0 THEN ENEMYHULL = ENEMYHULL - (DAMAGE - ENEMYARMOR)
 9550 PRINT "HIT! ";DAMAGE;" DAMAGE"
 9560 RETURN
+```
+
+### Galaxy Distance Calculation
+```basic
+5000 REM === CALCULATE TRAVEL TIME ===
+5010 REM INPUT: SOURCE_ID, DEST_ID
+5020 REM OUTPUT: TRAVEL_DAYS, FUEL_COST
+5030 REM
+5040 REM Load system coordinates
+5050 GOSUB 6000: REM Get source X,Y
+5060 SX = SYSTEM_X: SY = SYSTEM_Y
+5070 GOSUB 6100: REM Get dest X,Y
+5080 DX = SYSTEM_X: DY = SYSTEM_Y
+5090 REM
+5100 REM Calculate distance (Pythagorean)
+5110 DX = DX - SX: DY = DY - SY
+5120 DIST = SQR(DX*DX + DY*DY)
+5130 REM
+5140 REM Calculate travel time
+5150 TRAVEL_DAYS = INT(DIST / 10) + 1
+5160 IF TRAVEL_DAYS < 1 THEN TRAVEL_DAYS = 1
+5170 REM
+5180 REM Calculate fuel cost
+5190 FUEL_COST = INT(DIST * 2)
+5200 REM
+5210 RETURN
 ```
 
 ### Screen Drawing Optimization
@@ -1792,44 +2145,51 @@ PRINT A$
 2. **Player Agency:** Multiple valid approaches to every situation
 3. **Consequence:** Choices matter and affect future options
 4. **Respect Player Time:** Clear feedback, no grinding requirements
-5. **8-bit Authenticity:** Embrace constraints, don't fight them
+5. **Authenticity:** Real stellar neighborhood creates immersive setting
+6. **8-bit Authenticity:** Embrace constraints, don't fight them
 
 ### Balancing Guidelines
-- Early game: Forgiving, tutorial-like
-- Mid game: Strategic choices matter
-- Late game: Mastery and optimization rewarded
+- Early game: Forgiving, tutorial-like (Sol system and nearby stars)
+- Mid game: Strategic choices matter (faction selection becomes critical)
+- Late game: Mastery and optimization rewarded (faction wars, unique ships)
 - No dead ends: Player can always recover from mistakes
 - Difficulty through interesting choices, not stat checks
+- Reputation system allows gradual faction switching if desired
 
 ### Content Philosophy
-- Every system should feel distinct
+- Every system should feel distinct (real star names help)
 - Every faction should offer unique gameplay
 - Every ship should have a purpose
 - Every upgrade should enable new strategies
 - Every mission should tell a story
+- Faction conflicts create emergent narratives
 
 ---
 
 ## Future Considerations
 
 ### Potential Expansions
-- **Planetary Landing:** Visit surfaces, cities, markets
-- **Fleet Command:** More than 2 escorts
-- **Economy Simulation:** More dynamic market system
+- **Planetary Landing:** Visit surfaces, cities, markets in major systems
+- **Fleet Command:** More than 2 escorts for high-level players
+- **Economy Simulation:** More dynamic market system with news propagation
 - **Procedural Events:** Greater variety in random encounters
-- **Modding Support:** External data files for systems/missions
+- **Modding Support:** External data files for custom missions/factions
+- **Expanded Galaxy:** Add more distant stars (50-100 light years)
+- **Alien Mysteries:** Discover ancient precursor civilization artifacts
 
 ### Technical Improvements
-- **Graphics Mode:** Use VERA bitmap/tile modes
-- **Music:** Background music via PSG
+- **Graphics Mode:** Use VERA bitmap/tile modes for star map
+- **Music:** Background music via PSG (faction themes)
 - **Networking:** Multi-player trading via serial/network
 - **Assembly Rewrite:** Full ML version for performance
+- **Voice Synthesis:** Text-to-speech for mission briefings
 
 ### Accessibility
-- **Difficulty Modes:** Easy/Normal/Hard settings
-- **Tutorial System:** Optional guided first hour
+- **Difficulty Modes:** Easy/Normal/Hard settings affecting combat and economy
+- **Tutorial System:** Optional guided first hour in Sol system
 - **Save Anywhere:** Not just at stations
 - **Quick Save:** Rapid save/load for experimentation
+- **Color Blind Mode:** Alternative color schemes
 
 ---
 
@@ -1841,25 +2201,100 @@ PRINT A$
 - **VERA:** Video Enhanced Retro Adapter (X16's video chip)
 - **d100:** 100-sided die roll (0-99 or 1-100)
 - **Hex:** Hexagon, unit of tactical combat grid
+- **Light Year:** Distance light travels in one year (~9.46 trillion km)
+- **Parsec:** Astronomical unit, ~3.26 light years
+- **Spectral Type:** Classification of stars by temperature and color (O, B, A, F, G, K, M)
+- **Port:** Docking location (planet, station, moon, etc.)
+- **Faction Rep:** Reputation score with political factions (-100 to +100)
 
-### B. References
+### B. Real Astronomy Notes
+
+**Distance Compression:**
+Real stellar distances are compressed by a factor of 10 for gameplay. For example:
+- Alpha Centauri: Real distance 4.37 ly → Game distance ~1.2 units → 3 day travel
+- Vega: Real distance 25.04 ly → Game distance ~8.5 units → 2-3 day travel
+
+**Spectral Classification:**
+Stars are classified by spectral type from hottest to coolest:
+- **O, B:** Very hot, blue-white (none in local neighborhood)
+- **A:** Hot, white (Sirius, Vega, Altair, Fomalhaut)
+- **F:** Yellow-white, hotter than Sun
+- **G:** Yellow, Sun-like (Sol, Alpha Centauri, Tau Ceti)
+- **K:** Orange, cooler than Sun
+- **M:** Cool red dwarfs (most common type)
+- **D:** White dwarf (stellar remnant)
+
+**Binary Systems:**
+Many real stars are binary (two stars orbiting each other):
+- Alpha Centauri: Actually a triple system (A, B, and Proxima)
+- 61 Cygni: Binary orange stars
+- Sirius: White star with white dwarf companion
+
+### C. References
 - Commander X16 documentation: https://github.com/X16Community/x16-docs
 - BASIC programming guide: X16 BASIC reference
 - Escape Velocity series: Original inspiration
 - Elite: Classic space trading game
+- SIMBAD Astronomical Database: Real stellar data source
+- Wikipedia: Stellar neighborhood data
 
-### C. Credits
-- Design: [Your Name]
-- Platform: Commander X16 project
-- Inspiration: Escape Velocity (Ambrosia Software)
+### D. Credits
+- **Design:** [Your Name]
+- **Platform:** Commander X16 project
+- **Inspiration:** Escape Velocity (Ambrosia Software), Elite (Acornsoft)
+- **Astronomical Data:** SIMBAD, HYG Database, Wikipedia
+- **Galaxy Generation:** Python scripts for real stellar data processing
 
 ---
 
-**Document Version:** 0.1  
+**Document Version:** 0.2  
 **Last Updated:** November 21, 2024  
-**Status:** Initial Design Phase  
+**Status:** Galaxy & Factions Complete - Ready for Phase 1 Development  
 **Next Review:** After Phase 1 prototype completion
 
 ---
 
 *This is a living document. Update as design evolves through development.*
+
+---
+
+## Quick Reference Tables
+
+### Faction Quick Reference
+
+| Faction | Capital | Systems | Type | Primary Trait | Player Start Rep |
+|---------|---------|---------|------|---------------|------------------|
+| Terran Hegemony | Sol | 20 | Major | Militaristic | 0 (Neutral) |
+| Free Systems Coalition | Tau Ceti | 15 | Major | Democratic | +10 (Slightly Friendly) |
+| Frontier Alliance | Gliese 163 | 24 | Major | Neutral | 0 (Neutral) |
+| Nexus Collective | Sirius | 9 | Major | AI-Cyberpunk | -10 (Suspicious) |
+| Velanthi Commonwealth | Vega | 7 | Alien | Mysterious | 0 (Unknown) |
+| Crimson Cartel | Wolf 359 | 2 | Minor | Criminal | -30 (Hostile) |
+| Nova Mining Guild | Epsilon Eridani | 2 | Minor | Corporate | +5 (Friendly) |
+| Free Traders Union | N/A | 0 | Mission | Commercial | 0 (Neutral) |
+| Archaeological Concord | N/A | 0 | Mission | Academic | 0 (Neutral) |
+
+### Key Systems Quick Reference
+
+| System | Coordinates | Faction | Ports | Notes |
+|--------|-------------|---------|-------|-------|
+| Sol | (0, 0) | Hegemony | 1 | Player start, capital |
+| Alpha Centauri | (-12, -3) | Hegemony | 3 | Nearest neighbor, major hub |
+| Tau Ceti | (38, -9) | Coalition | 1 | Rebel capital |
+| Sirius | (-29, 10) | Nexus | 1 | AI civilization |
+| Vega | (-52, 65) | Velanthi | 1 | Alien capital |
+| Wolf 359 | (24, 3) | Cartel | 1 | Pirate haven |
+| Epsilon Eridani | (9, -32) | Guild | 1 | Mining HQ |
+
+### Reputation Tiers
+
+| Rep Range | Status | Station Access | Equipment | Missions | Prices |
+|-----------|--------|----------------|-----------|----------|--------|
+| -100 to -25 | Hostile | Denied | None | None | N/A |
+| -24 to +24 | Neutral | Basic | Standard | Basic | Standard |
+| +25 to +74 | Friendly | Full | Advanced | Faction | -10% |
+| +75 to +100 | Allied | Full | Unique | Story | -20% |
+
+---
+
+**END OF DOCUMENT**
