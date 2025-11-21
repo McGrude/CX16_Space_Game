@@ -2,7 +2,7 @@
 **Platform:** Commander X16  
 **Genre:** Turn-Based Space Trading/Combat RPG  
 **Inspiration:** Escape Velocity series (Ambrosia Software)  
-**Version:** 0.2 - Galaxy & Factions Update  
+**Version:** 0.3 - Economy & Trading Update  
 **Last Updated:** November 21, 2024
 
 ---
@@ -70,8 +70,8 @@ Crew Data (65 bytes):
 Escort Data (100 bytes):
   - 2 escort slots × 50 bytes each
 
-Cargo Inventory (40 bytes):
-  - 10-20 commodity quantities
+Cargo Inventory (48 bytes):
+  - 12 commodity quantities (12 × 4 bytes each)
 
 Mission State (100 bytes):
   - Active mission IDs and progress flags
@@ -802,71 +802,580 @@ Example: Destroying Hegemony ship
 
 ### Commodity System
 
-**Core Commodities (6-10 types):**
+**Total Commodities:** 12 types (8 legal + 4-5 contraband)
 
-| Commodity | Description | Typical Production | Typical Demand |
-|-----------|-------------|-------------------|----------------|
-| Metals | Basic materials | Mining colonies | Industrial worlds |
-| Food | Agricultural products | Agricultural worlds | High-tech/urban worlds |
-| Textiles | Clothing, fabrics | Agricultural/low-tech | All worlds (baseline) |
-| Electronics | Tech goods | High-tech worlds | Low-tech/colony worlds |
-| Medical Supplies | Medicine, equipment | High-tech worlds | All worlds, especially colonies |
-| Luxury Goods | Art, jewelry | High-tech/wealthy | Wealthy worlds |
-| Weapons | Military equipment | Industrial/military | Conflict zones |
-| Machinery | Industrial equipment | Industrial worlds | Developing colonies |
-| Pharmaceuticals | Advanced drugs | High-tech/medical worlds | All worlds |
-| Contraband | Illegal goods | Pirate bases | Black markets |
+#### Legal Commodities (8)
 
-### Pricing System
+| Commodity | Base Price | Description | Typical Production | Typical Demand |
+|-----------|-----------|-------------|-------------------|----------------|
+| **Raw Ore** | 50 cr/ton | Unprocessed minerals | Mining colonies | Industrial worlds |
+| **Refined Metals** | 120 cr/ton | Processed alloys | Industrial worlds | Tech/Shipyards |
+| **Equipment** | 200 cr/ton | General machinery | Tech worlds | Frontier/Military |
+| **Food/Biologicals** | 80 cr/ton | Agricultural products | Agricultural worlds | Everywhere |
+| **Luxury Goods** | 400 cr/ton | Art, jewelry, entertainment | Core/Wealthy worlds | Wealthy stations |
+| **Medical Supplies** | 250 cr/ton | Medicine, equipment | High-tech/Medical worlds | Universal need |
+| **Fuel** | 100 cr/ton | Refined ship fuel | Gas giants/Refineries | Everyone |
+| **Electronics** | 180 cr/ton | Computer systems, circuits | Tech worlds | Industrial/Frontier |
 
-**Base Price Calculation:**
+#### Contraband (4-5)
+
+| Commodity | Base Price | Legal Locations | Illegal Everywhere Else | Detection Rate | Profit Margin |
+|-----------|-----------|----------------|------------------------|---------------|---------------|
+| **Military Weapons** | 300 cr/ton | Military bases, frontier defense | Core worlds, ag stations | 50% | 4-6× |
+| **Narcotics** | 200 cr/ton | "Vice stations" (1-2 systems) | All other systems | 70% | 6-10× |
+| **Ancient Artifacts** | 500 cr/ton | None (heritage protection laws) | Everywhere | 40% | 8-12× |
+| **Banned AI Cores** | 800 cr/ton | Nowhere (post-war ban) | Everywhere | 80% | 10-15× |
+| **Tobacco Products** | 150 cr/ton | Nowhere (banned 200 years ago) | Everywhere | 25% | 3-5× |
+
+**Contraband Notes:**
+- **Military Weapons:** Legal at military bases and frontier defense stations; serious crime in core worlds
+- **Narcotics:** Only legal at libertarian "vice stations"; highly profitable but heavily policed
+- **Ancient Artifacts:** Academic institutions buy "for research" but it's technically illegal; Archaeological Concord reacts strongly
+- **Banned AI Cores:** Universally illegal, extremely dangerous; triggers military responses if caught
+- **Tobacco Products:** The "silly" contraband - legal in 2025, banned galaxy-wide in 2450; nostalgic collectors pay premium
+
+### System Economic Types
+
+Each system has a **primary economy type** that determines base production/consumption:
+
+| Economy Type | Produces (Low Prices) | Consumes (High Prices) | Tech Level |
+|--------------|----------------------|------------------------|------------|
+| **Mining** | Raw Ore, Fuel | Equipment, Food | 3-6 |
+| **Industrial** | Refined Metals, Equipment | Raw Ore, Food | 5-8 |
+| **Agricultural** | Food/Biologicals | Equipment, Electronics | 2-5 |
+| **Technology** | Electronics, Equipment, Luxury | Refined Metals | 7-10 |
+| **Refinery** | Fuel, Refined Metals | Raw Ore | 4-7 |
+| **Frontier** | (Little production) | Everything | 2-5 |
+| **Core/Wealthy** | Luxury Goods | Variety of goods | 7-10 |
+
+### Dynamic Pricing System
+
+Each commodity at each system stores **3 values** (BASIC-friendly):
+
+```basic
+' Per system, per commodity:
+BASE_PRICE%    ' Base price (50-800 credits/ton)
+SUPPLY%        ' Supply level (0-250, 100=normal)
+DEMAND%        ' Demand level (0-250, 100=normal)
 ```
-System Base Price = Commodity Base × Tech Level Modifier × Government Modifier
 
-Price Variance: ±30% from base
-Buy Price: Base Price × 1.1 (10% markup)
-Sell Price: Base Price × 0.9 (10% markdown)
+**Actual Price Calculation:**
+```basic
+ACTUAL_PRICE = BASE_PRICE * (DEMAND / SUPPLY)
 
-Price Updates: Every 3-5 in-game days
+' Price limits to prevent extremes:
+IF ACTUAL_PRICE < BASE_PRICE * 0.2 THEN ACTUAL_PRICE = BASE_PRICE * 0.2
+IF ACTUAL_PRICE > BASE_PRICE * 6 THEN ACTUAL_PRICE = BASE_PRICE * 6
 ```
 
-**Regional Specialization:**
-- Agricultural worlds: Food cheap (-40%), Electronics expensive (+50%)
-- Mining colonies: Metals cheap (-50%), Luxury goods expensive (+80%)
-- High-tech worlds: Electronics cheap (-30%), Food expensive (+40%)
-- Wealthy systems: Luxury goods normal, Basic goods expensive (+30%)
+**Examples:**
+- Mining station ore: SUPPLY=180, DEMAND=70 → Price = 50 × (70/180) = 19 cr/ton (cheap!)
+- Tech world ore: SUPPLY=60, DEMAND=150 → Price = 50 × (150/60) = 125 cr/ton (expensive!)
 
-**Dynamic Events Affecting Prices:**
+### Dynamic Economy Updates
+
+**Weekly Update Cycle:**
+
+#### 1. Natural Drift (Returns to Equilibrium)
+```basic
+' Each commodity slowly returns toward normal
+IF SUPPLY% > 100 THEN SUPPLY% = SUPPLY% - RND(5)
+IF SUPPLY% < 100 THEN SUPPLY% = SUPPLY% + RND(5)
+' Same for DEMAND%
 ```
-Event Types:
-- War/Conflict: Weapons +50%, Food +30%
-- Plague: Medical supplies +60%, Food -20%
-- Discovery: Specific commodity -40%
-- Shortage: Specific commodity +70%
-- Festival: Luxury goods +40%
 
-Event Duration: 5-15 days
-Event Propagation: News spreads over time to nearby systems
+#### 2. Player Impact
+```basic
+' Player buys 50 tons of ore at mining station:
+SUPPLY% = SUPPLY% - (TONS_BOUGHT / 2)    ' Depletes local supply
+DEMAND% = DEMAND% - (TONS_BOUGHT / 4)    ' Reduces demand slightly
+
+' Player sells 50 tons at tech world:
+SUPPLY% = SUPPLY% + (TONS_SOLD / 2)      ' Increases local supply
+DEMAND% = DEMAND% - (TONS_SOLD / 4)      ' Satisfies some demand
+```
+
+#### 3. NPC Trade Route Simulation (Abstracted)
+```basic
+' Every week, check neighboring systems
+FOR EACH NEIGHBOR
+  IF NEIGHBOR.SUPPLY > THIS.SUPPLY + 50 THEN
+    ' Goods flow from high supply to low supply
+    THIS.SUPPLY = THIS.SUPPLY + RND(10)
+    NEIGHBOR.SUPPLY = NEIGHBOR.SUPPLY - RND(10)
+  END IF
+NEXT
+```
+
+#### 4. Random Events
+Occasional market shocks:
+- **Pirate Raid:** Supply drops 20-40% at target system
+- **Bumper Harvest:** Agricultural supply +50%
+- **Factory Explosion:** Industrial supply drops, demand spikes
+- **Blockade:** No trade flows for 2-4 weeks
+- **War Declaration:** Military goods demand spikes, luxury drops
+- **Plague:** Medical supplies +60% demand
+
+**Event Duration:** 5-15 days  
+**Event Frequency:** 5-10% chance per week per system
+
+### Supply and Demand Hard Caps
+
+```basic
+' Prevent runaway inflation/deflation:
+IF SUPPLY% < 20 THEN SUPPLY% = 20      ' Never totally empty
+IF SUPPLY% > 250 THEN SUPPLY% = 250    ' Never infinite
+IF DEMAND% < 20 THEN DEMAND% = 20
+IF DEMAND% > 250 THEN DEMAND% = 250
 ```
 
 ### Trading Mechanics
 
 **Cargo Management:**
-- Cargo capacity: Ship-dependent (20-100 tons)
+- Cargo capacity: Ship-dependent (20-200 tons base)
+- **Cargo Expansion upgrades:** +20 tons (5,000 cr) or +40 tons (15,000 cr)
+- **Maximum with upgrades:** 300 tons total
 - Buy in bulk: Quantity limited by credits and cargo space
 - Sell in bulk: Sell all or portion
-- Jettison: Emergency cargo dump (lose goods)
+- Jettison: Emergency cargo dump (lose goods, no refund)
 
 **Trade Routes:**
 - Player discovers profitable routes through exploration
-- Trade computer (upgrade) can suggest routes
-- Higher-tier computers show better opportunities
+- **Trade Computer I** (5,000 cr): Shows profit margins for nearby systems (1-2 jumps)
+- **Trade Computer II** (15,000 cr): Shows all known systems, suggests optimal routes
 
-**Contraband:**
-- Higher profit margins (100-300%)
-- Illegal in Federation/lawful systems
-- Risk: Cargo scans at stations
-- Penalty if caught: Fine (50% cargo value), reputation loss, possible combat
+**Example Profitable Route:**
+```
+Week 1: Buy 80 tons Raw Ore at Helios Mining (Supply=180, Price=19 cr/ton)
+        Cost: 1,520 credits
+        Travel 2 days to Forge Prime Industrial
+
+Week 2: Arrive Forge Prime (Supply=90, Demand=140, Price=78 cr/ton)
+        Sell 80 tons for 6,240 credits
+        Profit: 4,720 credits (minus fuel ~400 cr = 4,320 cr net)
+        
+        Market impact: Forge ore supply rises 90→130
+                      Next trip price drops to ~54 cr/ton (diminishing returns)
+```
+
+### Contraband System
+
+#### Detection Mechanics
+
+**Scan Chance Calculation:**
+```basic
+' When docking at station with contraband:
+BASE_DETECTION% = [Commodity-specific: 25-80%]
+STATION_SECURITY% = [0-50 based on faction/location]
+REPUTATION_MOD% = [+20% if player rep < 0, -10% if rep > 50]
+
+SCAN_CHANCE% = BASE_DETECTION% + STATION_SECURITY% + REPUTATION_MOD%
+
+' Player can reduce detection:
+EVASION_BONUS% = PILOT_SKILL% / 2
+SUCCESS_CHANCE% = 100 - SCAN_CHANCE% + EVASION_BONUS%
+
+IF RND(100) > SUCCESS_CHANCE% THEN
+  ' Caught! Trigger penalty
+  GOSUB CONTRABAND_PENALTY
+END IF
+```
+
+**Penalties When Caught:**
+- Contraband confiscated (0% value recovered)
+- Fine: 500-5000 credits based on quantity and type
+- Faction reputation loss (see Faction-Specific Penalties below)
+- Criminal record flag (increases future scan rates by +10%)
+- Possible ship impound if reputation < -50
+
+#### Contraband Details
+
+**Military Weapons:**
+- **Legal at:** Military bases, frontier defense stations, wartime economies
+- **Illegal at:** Core worlds, agricultural stations, high-security zones
+- **Sources:** Military surplus, black market, captured pirate cargo
+- **Buyers:** Rebels, pirates (through intermediaries), frontier militias
+- **Base Detection:** 50%
+- **Profit Margin:** 4-6× base price
+
+**Narcotics:**
+- **Legal at:** "Vice stations" (1-2 libertarian systems)
+- **Illegal at:** Everywhere else
+- **Sources:** Agricultural worlds (hidden production), vice stations
+- **Buyers:** Wealthy core worlds (highest prices), industrial workers
+- **Base Detection:** 70% (drug-sniffing sensors)
+- **Profit Margin:** 6-10× base price
+
+**Ancient Artifacts:**
+- **Legal at:** Nowhere officially (cultural heritage protection)
+- **Gray Market:** Academic stations buy "for research" under the table
+- **Sources:** Archaeological sites, ruins, ancient derelict ships, random discoveries
+- **Buyers:** Private collectors (core worlds), black market, museums
+- **Base Detection:** 40% (looks like regular cargo)
+- **Profit Margin:** 8-12× base price (extremely valuable but rare)
+
+**Banned AI Cores:**
+- **Legal at:** Nowhere (banned after AI wars)
+- **Sources:** Derelict military ships, secret research stations, extremely rare salvage
+- **Buyers:** Underground tech research, rogue AI sympathizers, military black ops
+- **Base Detection:** 80% (dangerous tech actively monitored)
+- **Profit Margin:** 10-15× base price
+- **Special:** May trigger military pursuit, story implications
+
+**Tobacco Products:**
+- **Legal at:** Nowhere (banned galaxy-wide 200 years ago)
+- **Sources:** Hidden agricultural domes, historical stockpiles, smuggler networks
+- **Buyers:** Nostalgic collectors, rebels (anti-authority), "hipsters of 2450"
+- **Base Detection:** 25% (authorities barely remember it exists)
+- **Profit Margin:** 3-5× base price
+- **Flavor:** "Your grandfather told stories of this ancient vice"
+
+### Dynamic Enforcement System
+
+Each system tracks **enforcement level per contraband type**:
+
+```basic
+' Per system, per contraband (commodities 9-12):
+DIM ENFORCE%(30, 12)        ' 0-100 enforcement level
+DIM BASE_ENFORCE%(30, 12)   ' Baseline by faction control
+```
+
+**Base Enforcement by Faction:**
+- Terran Hegemony: 70 (military enforcement)
+- Free Systems Coalition: 40 (moderate policing)
+- Frontier Alliance: 20 (minimal enforcement)
+- Nexus Collective: 50 (technocratic monitoring)
+- Velanthi Commonwealth: 60 (alien law enforcement)
+- Archaeological Concord systems: 50 general, 80 for artifacts
+
+#### Player-Driven Enforcement Changes
+
+```basic
+' When player sells contraband:
+TONS_SOLD = [amount]
+CONTRABAND_TYPE = [9-12]
+
+' Enforcement increases with volume:
+ENFORCE_INCREASE = (TONS_SOLD / 10) + RND(5)
+ENFORCE%(SYSTEM, CONTRABAND_TYPE) = ENFORCE%(SYSTEM, CONTRABAND_TYPE) + ENFORCE_INCREASE
+
+' Cap at 100:
+IF ENFORCE%(SYSTEM, CONTRABAND_TYPE) > 100 THEN ENFORCE%(SYSTEM, CONTRABAND_TYPE) = 100
+
+' Updated scan chance:
+SCAN_CHANCE% = BASE_DETECTION% + (ENFORCE% / 2)
+```
+
+**Example:**
+```
+Visit 1: Sell 40 tons narcotics at Frontier Station
+         Enforcement: 20 → 20 + (40/10) + 3 = 27
+         Next scan: 70% + 13.5% = 83.5%
+
+Visit 2: Sell another 50 tons
+         Enforcement: 27 → 27 + 8 = 35
+         Next scan: 70% + 17.5% = 87.5%
+
+Visit 3: Sell 60 tons (getting greedy!)
+         Enforcement: 35 → 35 + 9 = 44
+         Next scan: 70% + 22% = 92%
+
+Visit 4: Enforcement continues climbing
+         Eventually: 100% scan rate (guaranteed inspection!)
+```
+
+#### Enforcement Decay
+
+```basic
+' Every game week:
+FOR S = 1 TO NUM_SYSTEMS
+  FOR C = 9 TO 12  ' Contraband only
+    IF ENFORCE%(S,C) > BASE_ENFORCE%(S,C) THEN
+      ENFORCE%(S,C) = ENFORCE%(S,C) - RND(3) - 1
+    END IF
+  NEXT C
+NEXT S
+```
+
+Returns to baseline over 5-10 weeks if player stops trading there.
+
+#### Heat Spillover to Neighboring Systems
+
+```basic
+' When enforcement spikes above 80:
+IF ENFORCE%(SYSTEM, CONTRABAND) > 80 THEN
+  FOR EACH NEIGHBOR_SYSTEM WITHIN 2 JUMPS
+    ENFORCE%(NEIGHBOR, CONTRABAND) = ENFORCE%(NEIGHBOR, CONTRABAND) + RND(10)
+  NEXT
+  
+  ' Trigger news event:
+  PRINT "GALACTIC NEWS: ";CONTRABAND_NAME$;" crackdown in ";SYSTEM_NAME$;" sector!"
+END IF
+```
+
+#### Random Enforcement Events
+
+**"War on Narcotics"** (Terran Hegemony)
+- Duration: 4-8 weeks
+- Effect: +40% enforcement on narcotics in all Commonwealth systems
+- Trigger: Random or after major bust
+
+**"Archaeological Heritage Act"** (Archaeological Concord)
+- Duration: 6 weeks
+- Effect: +50% enforcement on artifacts, bounties issued
+- Trigger: Player sells 100+ tons total artifacts
+
+**"Free Trade Convention"** (Free Traders Union)
+- Duration: 2 weeks
+- Effect: -30% enforcement all contraband at Free Trader stations
+- Trigger: Random celebration/holiday
+
+**"Frontier Emergency Decree"** (Frontier Alliance)
+- Duration: 3 weeks
+- Effect: Military weapons become legal (0% detection)
+- Trigger: Pirate raids increase in sector
+
+### Faction-Specific Contraband Relationships
+
+#### Terran Hegemony (Lawful, Military)
+- **Hates:** Narcotics (×2 rep penalty), AI Cores (×3 rep penalty), Unauthorized Military Weapons (×1.5)
+- **Tolerates:** Artifacts if "donated to museums"
+- **Ignores:** Tobacco (considers it quaint)
+- **Safe Havens:** None (enforces everywhere)
+
+#### Free Systems Coalition (Democratic, Rebel)
+- **Hates:** AI Cores (×1.5 rep penalty)
+- **Tolerates:** Most contraband (×0.5 rep penalty)
+- **Ignores:** Tobacco, Artifacts
+- **Safe Havens:** Vice stations, free ports (0-10% detection)
+
+#### Frontier Alliance (Independent, Pragmatic)
+- **Hates:** Nothing (desperate for supplies)
+- **Tolerates:** Military Weapons (defense needs), Narcotics (medical use)
+- **Ignores:** Everything
+- **Safe Havens:** Frontier outposts (10-20% detection, formality only)
+- **Reputation:** No penalty for contraband (×0 multiplier)
+
+#### Archaeological Concord (Academic, Preservationist)
+- **Hates:** Artifacts (×3 rep penalty - cultural theft!), AI Cores (×2 - dangerous history)
+- **Tolerates:** Other contraband (not their concern)
+- **Ignores:** Tobacco, Narcotics
+- **Special:** Will buy artifacts "for preservation" at premium prices despite laws
+
+#### Nexus Collective (Technocratic, AI)
+- **Hates:** Nothing officially
+- **Curious about:** AI Cores (will pay premium, no penalty)
+- **Ignores:** Most contraband
+- **Safe Havens:** Nexus systems have unique enforcement (50% base but no rep penalty)
+
+#### Velanthi Commonwealth (Alien)
+- **Hates:** Nothing human contraband affects them
+- **Disdains:** Artifact trafficking (×1.5 rep penalty - primitive behavior)
+- **Ignores:** Human vices (narcotics, tobacco)
+
+### Reputation Consequences by Contraband Type
+
+**Base Reputation Loss When Caught:**
+```basic
+BASE_REP_LOSS = -10
+
+' Modified by contraband severity:
+' Tobacco:          0.5× (minor offense)
+' Military Weapons: 1.5× (serious)
+' Artifacts:        2× (cultural crime)
+' Narcotics:        2× (serious crime)
+' AI Cores:         3× (existential threat)
+
+' Modified by faction multiplier:
+ACTUAL_REP_LOSS = BASE_REP_LOSS × SEVERITY × FACTION_MULT
+```
+
+**Examples:**
+
+**Caught with Narcotics at Terran Station:**
+- Terran Hegemony: -10 × 2 × 2 = **-40 rep**
+- Free Traders: -10 × 2 × 0.5 = **-10 rep**
+- Frontier Alliance: -10 × 2 × 0 = **0 rep** (they don't care)
+- Archaeological Concord: -10 × 2 × 0.5 = **-10 rep** (general disapproval)
+
+**Caught with Artifacts at Archaeological Station:**
+- Archaeological Concord: -10 × 2 × 3 = **-60 rep** (cultural vandalism!)
+- Terran Hegemony: -10 × 2 × 1 = **-20 rep** (supports heritage laws)
+- Free Traders: -10 × 2 × 0 = **0 rep** (not their business)
+- Frontier Alliance: -10 × 2 × 0 + 5 = **+5 rep** (like anti-authority rebels)
+
+**Caught with AI Cores (anywhere):**
+- ALL FACTIONS: **-30 to -50 rep** (universally feared)
+- Plus: Potential military response (pursuit ships spawned)
+
+### Positive Reputation from Smuggling
+
+Certain factions reward successful contraband delivery:
+
+```basic
+' Successful delivery to faction allies:
+IF DELIVERY_TO_PIRATES OR DELIVERY_TO_REBELS THEN
+  REP_GAIN = (TONS_DELIVERED / 10) × CONTRABAND_MULTIPLIER
+  
+  ' Example: 30 tons weapons to rebel base
+  ' +15 rep with rebels, -0 with others (they don't know)
+END IF
+```
+
+**Hidden "Black Market Reputation":**
+- Builds as you successfully smuggle
+- Unlocks: Better contraband sources, special missions, pirate safe havens
+- Risk: If discovered by lawful factions, major penalty
+
+### Ship Equipment for Smuggling
+
+**Shielded Cargo Hold** (upgrade slot):
+- Cost: 15,000 credits
+- Effect: -25% to scan detection chance
+- Drawback: -10 tons cargo capacity (shielding takes space)
+- Tech requirement: 6+
+
+**Falsified Manifest System** (upgrade slot):
+- Cost: 8,000 credits
+- Effect: Navigation skill bonus added to evasion
+- Requires: Navigation 6+
+
+**Bribery Attempt** (not equipment, just cash):
+- Cost: 1,000-5,000 credits per attempt
+- Success: Leadership skill + Reputation modifier
+- Failure: Double fine + additional reputation hit
+
+### Supply & Trade Missions
+
+**Legal Cargo Missions:**
+```
+"Deliver 30 tons Medical Supplies to Frontier Outpost"
+- Payment: 4,500 credits
+- Time limit: 3 weeks
+- Cargo provided
+- Standard mission
+```
+
+**Gray Market Missions:**
+```
+"Transport 'Electronics' to Research Station Alpha"
+- Payment: 12,000 credits
+- Time limit: 2 weeks
+- Cargo provided (actually Banned AI Cores!)
+- Note: If scanned, you take the fall
+- Reputation: +10 with shady faction if successful
+```
+
+**Smuggling Contracts:**
+```
+"No questions asked: Move cargo to Zeta Station"
+- Payment: 20,000 credits
+- No time limit
+- Must provide own cargo space
+- Contact provides pickup coordinates
+- Criminal faction rep boost
+- Higher risk, higher reward
+```
+
+### Story Mission Integration Examples
+
+**"Medicine or Money"** (Early Game)
+- Quest giver: Doctor at frontier station
+- Request: Deliver 20 tons Medical Supplies
+- Twist: Actually narcotics for pain management (illegal most places)
+- Choices:
+  - Deliver (risk arrest, +rep Frontier, -rep if caught)
+  - Abandon (-rep Frontier)
+  - Report to authorities (+rep Terran, unlock investigation)
+
+**"The Lost Archive"** (Mid-Game)
+- Quest giver: Archaeological Concord researcher
+- Request: Retrieve Ancient Artifacts from ruins
+- Twist: Terran military wants them destroyed
+- Choices:
+  - Deliver to Concord (+30 rep, unlock research)
+  - Deliver to military (+20 rep, military tech)
+  - Sell on black market (profit, -rep both)
+  - Keep them (???, story implications)
+
+**"The AI Question"** (Late Game)
+- Quest giver: Underground tech network
+- Request: Transport Banned AI Core through high-security space
+- Twist: AI Core is sentient, talks during journey
+- Choices:
+  - Complete delivery (huge payment, unlock AI faction?)
+  - Destroy it (Terran +50 rep, prevent uprising?)
+  - Keep it (install in ship? Dangerous power?)
+
+**"The Tobacco Baron"** (Recurring Chain)
+- Mission 1: Deliver 5 tons tobacco (+5,000 cr)
+- Mission 2: Find tobacco farm location (+8,000 cr)
+- Mission 3: Protect shipment from Commonwealth raid (combat)
+- Mission 4: Deliver 50 tons to warehouse (+30,000 cr)
+- Finale: Collector preserving pre-ban culture
+- Reward: Permanent tobacco source, unique ship upgrade, "Historical Society" rep
+
+### Memory Requirements
+
+```basic
+' Commodity prices and supply/demand:
+12 commodities × 30 systems × 3 bytes = 1,080 bytes
+
+' Enforcement tracking:
+4 contraband types × 30 systems × 1 byte = 120 bytes
+
+' Player cargo manifest:
+12 commodities × 1 byte quantity = 12 bytes
+
+' Total economy data: ~1,200 bytes (very manageable!)
+```
+
+### Gameplay Flow Example
+
+**Week 1:**
+- Buy 40 tons narcotics at Vice Station (legal, 200 cr/ton = 8,000 cr)
+- Frontier Alpha enforcement: 25%
+- Travel to Frontier Alpha (2 days)
+
+**Week 2:**
+- Arrive Frontier Alpha
+- Scan chance: 70% (base) + 12.5% (enforcement) = 82.5%
+- Roll: 45 — Success! Not scanned
+- Sell 40 tons for 1,200 cr/ton = 48,000 cr
+- Profit: 40,000 cr (5× return!)
+- Enforcement rises: 25% → 32%
+
+**Week 3:**
+- Return with 50 tons narcotics
+- Frontier Alpha enforcement: 30% (decayed slightly)
+- Scan chance: 70% + 15% = 85%
+- Roll: 91 — CAUGHT!
+- Penalties:
+  - Fine: 50 tons × 500 cr = 25,000 cr
+  - Frontier Alliance: 0 rep loss (don't care)
+  - Terran Hegemony: -40 rep (cross-faction effect)
+  - Enforcement spikes: 30% → 65%
+
+**Week 4:**
+- News: "Narcotics Crackdown in Frontier Sector!"
+- Neighboring systems: +10% enforcement
+- Frontier Alpha: 100% scan rate for narcotics
+- Time to find new routes or trade legally for a while...
+
+**Week 8:**
+- Return to Frontier Alpha after 4 weeks
+- Enforcement decayed: 65% → 40%
+- Scan chance: 70% + 20% = 90%
+- Still risky, but improving
+
+---
+
+**Design Notes:**
+- System encourages player to move around (enforcement follows them)
+- Natural market saturation prevents infinite money loops
+- Faction relationships create strategic choices
+- Story missions can force moral dilemmas
+- Memory footprint remains BASIC-friendly (~1.2KB total)
 
 ---
 
@@ -1585,9 +2094,9 @@ Offset  Size  Description
 12      2     Total XP
 14      1     Ship Type ID
 15      20    Faction Reputations (10 factions × 2 bytes each, -100 to +100)
-35      20    Cargo array (10 commodities × 2 bytes each)
-55      10    Active Mission IDs (up to 5 missions × 2 bytes)
-65      ...   Additional player state
+35      24    Cargo array (12 commodities × 2 bytes each)
+59      10    Active Mission IDs (up to 5 missions × 2 bytes)
+69      ...   Additional player state
 ```
 
 ### Ship Data Structure (~50 bytes)
@@ -1650,7 +2159,7 @@ Offset  Size  Description
 44      50    Additional data
 ```
 
-### Save Game Structure (~4-5KB)
+### Save Game Structure (~5-6KB)
 ```
 Section           Size    Description
 -------           ----    -----------
@@ -1659,11 +2168,14 @@ Ship Data         50 B    Current ship state
 Crew Data         65 B    5 crew × 13 bytes
 Escort Data       100 B   2 escorts × 50 bytes
 Faction Rep       20 B    10 factions × 2 bytes
-Cargo             40 B    10-20 commodity quantities
+Cargo             24 B    12 commodity quantities × 2 bytes
+Economy State     1200 B  30 systems × 12 commodities × 3 bytes (BASE, SUPPLY, DEMAND)
+Enforcement       120 B   30 systems × 4 contraband × 1 byte
 Mission State     200 B   Active missions, completion flags
 Discovered Systems 12 B   92 systems as bitfield
 Statistics        100 B   Kills, trades, jumps, etc.
 Flags             500 B   Story progression, special events
+Criminal Record   10 B    Scan history, penalties, etc.
 ```
 
 ---
