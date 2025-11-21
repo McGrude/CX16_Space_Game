@@ -6,3 +6,13 @@ Command a small starship, ferry cargo between nearby systems, pick up missions, 
 - Docked mode for trading, outfitting, mission management, and briefings.
 - Spaceflight navigation with fuel management and random encounters between systems.
 - Turn-based combat that resolves weapon fire, maneuvers, and post-battle salvage.
+
+## Data files
+
+Structured CSV files in `DATA/` hold the initial galaxy seed used by the BASIC loaders:
+- `systems.csv` – star systems with coordinates, economies, and control.
+- `ports.csv` – per-system stations and the services they provide.
+- `factions.csv` – faction identities for reputation and territory lookups.
+- `ships.csv` – starter hulls spanning every faction, including neutral options.
+- `commodities.csv` – legal and contraband trade goods with base prices.
+- `equipment.csv` – early outfitting upgrades and faction-locked tech.

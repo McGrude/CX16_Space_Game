@@ -1,0 +1,13 @@
+id,name,legal,base_price,category,notes
+1,Raw Ore,Y,50,Legal,Unprocessed minerals from mining colonies.
+2,Refined Metals,Y,120,Legal,Processed alloys used in ship construction.
+3,Equipment,Y,200,Legal,General machinery and tools.
+4,Food/Biologicals,Y,80,Legal,Agricultural staples and medical-grade biomass.
+5,Luxury Goods,Y,400,Legal,High-end art and entertainment goods.
+6,Medical Supplies,Y,250,Legal,Medicine and hospital equipment.
+7,Fuel,Y,100,Legal,Refined ship fuel and reactor pellets.
+8,Electronics,Y,180,Legal,Computers, control systems, and circuits.
+9,Military Weapons,N,300,Contraband,Restricted armaments with high profit margins.
+10,Narcotics,N,200,Contraband,Illegal stimulants and recreational drugs.
+11,Ancient Artifacts,N,500,Contraband,Protected relics sought by collectors and researchers.
+12,Banned AI Cores,N,800,Contraband,Forbidden AI hardware drawing military scrutiny.
