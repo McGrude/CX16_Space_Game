@@ -1,0 +1,27 @@
+
+Window Function to draw an arbitrary window in Petscii
+
+DIM AN(10) : REM GLOBAL ARGUMENT NUMERIC 
+DIM AS$(10) : REM GLOBAL ARGUMENT STRING 
+DIM WD(10) =
+
+                   Square  Rounded
+Top-Left         = Alt-A   Shift-U
+Bottom-Left      = Alt-Z   Shift-J
+Top-Right        = Alt-S   Shift-I
+Bottom-Right     = Alt-X   Shift-K
+Left-T           = Alt-Q
+Right-T          = Alt-W
+Vertical         = Shift-B
+Horizontal       = Shift-C
+Title Bar Fill   = Alt-+
+
+AS$(0)   Title Text
+
+AN(0)	X ( left edge )
+AN(1)	Y ( top edge )
+AN(2)	Width
+AN(3)	Height
+AN(4)	Foreground Color
+AN(5)	Background Color
+AN(6)   Rounded (0 or 1)

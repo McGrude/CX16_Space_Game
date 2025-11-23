@@ -1,0 +1,55 @@
+Can you write a CX16 BASIC subroutine which creates a bordered 'window' on the screen. It will use the global array variables AN and AS$ for arguments.
+
+AN(0) is the X coordinate ( left edge of window ), 1-based, and can be directly passed to LOCATE
+AN(1) is the Y coordinate ( top edge of window ), 1-based, and can be directly passed to LOCATE
+AN(2) is the window width
+AN(3) is the window height
+AN(4) is the foreground color
+AN(5) is the background color
+AN(6) is rounded or square corners
+AS$(0) is the window title.
+
+The window will use petscii characters (glyphs) for the window border. The character IDs to use will be stored as their numeric value in the global numeric array WD.
+
+The corner glyphs to use will be selected based on the value of AN(6) -- 0 for square, 1 for rounded.
+If AN(6) is neither 0 nor 1 then it must print an error message and stop or exit.
+
+WD(0) = square top left corner, Character ID 176
+WD(1) = rounded top left corner, Character ID 117
+
+WD(2) = square top right corner, Character ID 174
+WD(3) = rounded top right corner, Character ID 105
+
+WD(4) = square bottom left corner, Character ID 173
+WD(5) = rounded bottom left corner, Character ID 106
+
+WD(6) = square bottom right corner, Character ID 189
+WD(7) = rounded bottom right corner, Character ID 107
+
+WD(8) = vertical glyph for left or right edge, Character ID 125
+WD(9) = horizontal glyph for top or bottom edge, Character ID 99
+
+WD(10) = glyph to join horizontal line to left side vertical line, Character ID 171
+WD(11) = glyph to join horizontal line to right side vertical line, Character ID 179
+
+WD(12) = glyph to fill empty title bar space, Character ID 166
+
+When printing the corners it can just add the value of AN(6) to the index for WD() array ( e.g. WD(n) is square, WD(n+AN(6)) is rounded )
+
+The title text will be drawn one row below the top border edge.   It must be truncated to fit into the window, taking into account the left and right border glyphs.  Any empty space on the right side of the title will be filled with glyph identified by WD(12).  Below the title text row will be another horizontal line using the same glyph as the bottom border.  On the left and right sides these will join the vertical border lines with the WD(10) and WD(11) glyphs.
+
+If a portion of the window will be drawn off screen, it will ignore those portions, only drawing the text that will appear on screen.   Assume the screen is 80x60.  Use the variables SW and SH for screen width and screen height.
+
+The foreground and background colors are stored in AN(4) and AN(5).   It must bounds check these to ensure they are value for the usual X16 color range, if print an error message and stop or exit.
+
+Interior space of the window should be filled with the space character to clear the window.
+
+The minimum window size is 3 wide by 4 high.   If they are smaller print an error message and stop or exit.
+
+Do not store and restore the foreground and background colors.
+
+Include the WD array populated with the content for the array.   Include the DIM statements for the AN, AS$, and WD arrays.
+
+Did I miss anything in my specification?
+
+
