@@ -1,5 +1,7 @@
 .DS_Store
 *~
+x16emu_macos_m1-r49
+emu
 BUILD/*.BAS
 BUILD/*.PRG
 BUILD/*.BIN
