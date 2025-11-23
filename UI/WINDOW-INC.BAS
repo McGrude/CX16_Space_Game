@@ -1,0 +1,143 @@
+10 REM =========================================
+20 REM  SIMPLE WINDOW SYSTEM SETUP
+30 REM =========================================
+40 SW=80:SH=60          : REM SCREEN WIDTH/HEIGHT (TEXT MODE)
+50 DIM AN(10)
+60 DIM WD(12)
+70 DIM AS$(0)
+
+80 REM --- POPULATE WD() PER SPEC ---
+90  WD(0)=176 : REM square top left corner
+100 WD(1)=117 : REM rounded top left corner
+110 WD(2)=174 : REM square top right corner
+120 WD(3)=105 : REM rounded top right corner
+130 WD(4)=173 : REM square bottom left corner
+140 WD(5)=106 : REM rounded bottom left corner
+150 WD(6)=189 : REM square bottom right corner
+160 WD(7)=107 : REM rounded bottom right corner
+170 WD(8)=125 : REM vertical edge
+180 WD(9)= 99 : REM horizontal edge
+190 WD(10)=171: REM join: horizontal to left vertical
+200 WD(11)=179: REM join: horizontal to right vertical
+210 WD(12)=166: REM title bar fill
+    
+500 CLS
+510 AN(0)=10:AN(1)=5         : REM X,Y
+520 AN(2)=30:AN(3)=10        : REM W,H
+530 AN(4)=1:AN(5)=0          : REM FG,BG
+540 AN(6)=1                  : REM 0=SQUARE, 1=ROUNDED
+550 AS$(0)="SYSTEM MENU"
+560 GOSUB 1000
+570 STOP
+    
+720 REM =========================================
+730 REM  WINDOW SUBROUTINE
+740 REM  USE: SET AN(), AS$(0) THEN GOSUB 1000
+750 REM =========================================
+    
+1000 REM ***** DRAW WINDOW USING AN(), AS$(), WD() *****
+1010 X0=AN(0)           : REM LEFT X (1-BASED)
+1020 Y0=AN(1)           : REM TOP  Y (1-BASED)
+1030 W =AN(2)           : REM WIDTH
+1040 H =AN(3)           : REM HEIGHT
+1050 FG=AN(4)           : REM FOREGROUND COLOR
+1060 BG=AN(5)           : REM BACKGROUND COLOR
+1070 RC=AN(6)           : REM 0=SQUARE, 1=ROUNDED
+
+1080 REM --- VALIDATION ---
+1090 IF RC<>0 AND RC<>1 THEN PRINT"WINDOW ERROR: BAD CORNER TYPE":STOP
+1100 IF W<3 OR H<4 THEN PRINT"WINDOW ERROR: WINDOW TOO SMALL":STOP
+1110 IF FG<0 OR FG>15 OR BG<0 OR BG>15 THEN PRINT"WINDOW ERROR: BAD COLOR":STOP
+
+1120 COLOR FG,BG
+
+1130 REM ================= TOP BORDER =================
+1140 Y=Y0
+1150 FOR X=X0 TO X0+W-1
+1160   IF X>=1 AND X<=SW AND Y>=1 AND Y<=SH THEN
+1170     IF X=X0 THEN
+1180       C=WD(0+RC)           : REM TL CORNER
+1190     ELSEIF X=X0+W-1 THEN
+1200       C=WD(2+RC)           : REM TR CORNER
+1210     ELSE
+1220       C=WD(9)              : REM HORIZ
+1230     END IF
+1240     LOCATE Y,X:PRINT CHR$(C);
+1250   END IF
+1260 NEXT X
+
+1270 REM ================= TITLE ROW =================
+1280 YT=Y0+1
+1290 IF YT>=1 AND YT<=SH THEN
+
+1300   TW=W-2                   : REM TITLE INTERIOR WIDTH
+1310   T$=AS$(0)
+1320   IF LEN(T$)>TW THEN T$=LEFT$(T$,TW)
+1330   FILL=TW-LEN(T$)
+1340   IF FILL>0 THEN T$=T$+RPT$(CHR$(WD(12)),FILL)
+
+1350   REM LEFT JOIN GLYPH ON TITLE ROW
+1360   X=X0
+1370   IF X>=1 AND X<=SW THEN LOCATE YT,X:PRINT CHR$(WD(10));
+
+1380   REM TITLE TEXT + FILL
+1390   FOR I=1 TO TW
+1400     X=X0+I
+1410     IF X>=1 AND X<=SW THEN
+1420       C$=MID$(T$,I,1)
+1430       LOCATE YT,X:PRINT C$;
+1440     END IF
+1450   NEXT I
+
+1460   REM RIGHT JOIN GLYPH ON TITLE ROW
+1470   X=X0+W-1
+1480   IF X>=1 AND X<=SW THEN LOCATE YT,X:PRINT CHR$(WD(11));
+1490 END IF
+
+1500 REM ========== TITLE SEPARATOR HORIZONTAL LINE ==========
+1510 YS=Y0+2
+1520 IF YS>=1 AND YS<=SH THEN
+1530   FOR X=X0 TO X0+W-1
+1540     IF X>=1 AND X<=SW THEN
+1550       IF X=X0 THEN
+1560         C=WD(10)            : REM LEFT JOIN TO VERTICAL
+1570       ELSEIF X=X0+W-1 THEN
+1580         C=WD(11)            : REM RIGHT JOIN TO VERTICAL
+1590       ELSE
+1600         C=WD(9)             : REM HORIZ (SAME AS BOTTOM)
+1610       END IF
+1620       LOCATE YS,X:PRINT CHR$(C);
+1630     END IF
+1640   NEXT X
+1650 END IF
+
+1660 REM ========== SIDES + CLEAR INTERIOR WITH SPACES ==========
+1670 FOR Y=Y0+3 TO Y0+H-2
+1680   IF Y<1 OR Y>SH THEN GOTO 1810
+1690   FOR X=X0 TO X0+W-1
+1700     IF X<1 OR X>SW THEN GOTO 1800
+1710     IF X=X0 OR X=X0+W-1 THEN
+1720       C=WD(8)               : REM VERTICAL EDGE
+1730     ELSE
+1740       C=32                  : REM SPACE FOR INTERIOR
+1750     END IF
+1760     LOCATE Y,X:PRINT CHR$(C);
+1800   NEXT X
+1810 NEXT Y
+
+1820 REM ================= BOTTOM BORDER =================
+1830 YB=Y0+H-1
+1840 FOR X=X0 TO X0+W-1
+1850   IF X>=1 AND X<=SW AND YB>=1 AND YB<=SH THEN
+1860     IF X=X0 THEN
+1870       C=WD(4+RC)            : REM BL CORNER
+1880     ELSEIF X=X0+W-1 THEN
+1890       C=WD(6+RC)            : REM BR CORNER
+1900     ELSE
+1910       C=WD(9)               : REM HORIZ
+1920     END IF
+1930     LOCATE YB,X:PRINT CHR$(C);
+1940   END IF
+1950 NEXT X
+
+1960 RETURN
