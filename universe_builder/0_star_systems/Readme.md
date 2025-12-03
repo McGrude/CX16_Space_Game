@@ -9,73 +9,215 @@
 
 
 
-# Star Catalog Generator  
-### Local Sector Map Builder for the Commander X16 Space Game
 
-This tool generates a **game-ready star catalog** and a **100×100 ASCII stellar map** from a real astronomical dataset (HYG 4.x or later).  
-It serves as the first stage of the game’s universe-generation pipeline.
+# Star Map Generator — Specification & Documentation
 
-The script:
-
-- Loads a HYG star catalog CSV (local file).
-- Filters stars within a configurable radius from Sol (in light-years).
-- Projects 3D coordinates (x,y,z) into a 2D 100×100 sector map.
-- Prunes off-map stars.
-- Handles collisions: when multiple stars map to the same grid cell, it:
-  1. Prefers the star with a real proper name.
-  2. If none have proper names, keeps the brightest/largest star.
-  3. Ensures Sol always wins.
-- Synthesizes **sector/cluster style star names** for unnamed stars.
-- Outputs:
-  - A compact CSV database suitable for loading into the game.
-  - A 100×100 ASCII sector grid for human reference.
+This document defines the **input**, **output**, and **behavioral specifications** for the **Star Map Generator**, a Python tool that converts HYG star catalog data into a compressed, game‑ready 2D star map with synthetic sector/cluster naming.
 
 ---
 
-## Table of Contents
+## Overview
 
-1. [Requirements](#requirements)  
-2. [Input Dataset](#input-dataset)  
-3. [Program Usage](#program-usage)  
-4. [Processing Stages](#processing-stages)  
-5. [Output Files](#output-files)  
-6. [CSV Output Specification](#csv-output-specification)  
-7. [ASCII Map Specification](#ascii-map-specification)  
-8. [Synthetic Star Naming Scheme](#synthetic-star-naming-scheme)  
-9. [Collision Resolution Rules](#collision-resolution-rules)  
-10. [Known Limitations](#known-limitations)  
+The generator:
 
----
+1. **Loads a local HYG star catalog CSV** (any recent version: 4.x recommended).
+2. **Filters stars** within a configurable radius from Sol (in light‑years).
+3. **Selects a maximum number of stars** (nearest first).
+4. **Projects 3D Cartesian coordinates** (x,y,z in parsecs) into a **2D 100×100 grid**.
+5. **Prunes**:
+   - Stars outside the 100×100 map
+   - Collisions (multiple stars in same cell), using a priority rule
+6. **Generates proper names**:
+   - Uses real catalog names when available
+   - Uses **synthetic sector/cluster names** otherwise (deterministic based on original catalog ID)
+7. **Writes two outputs**:
+   - A **clean CSV** of final stars
+   - A **100×100 ASCII map** of the projected region
 
-## Requirements
-
-- Python 3.8+  
-- A local copy of the HYG star database (version 4.x or later recommended).  
-  Download from:  
-  https://astronexus.com/projects/hyg
+The output is stable, deterministic, and suitable for use as a canonical in‑game dataset.
 
 ---
 
-## Input Dataset
+## Input Requirements
 
-The program expects a **HYG database CSV file** containing at least the following fields:
+### **Primary Input**
+A local HYG star catalog file, for example:
 
-- `id` or `ID`
-- `hip` (optional)
-- `proper` (optional)
-- `x`, `y`, `z` (Cartesian coordinates in parsecs)
-- `dist` or `dist_pc`  
-- `spect`, `mag`, `lum`, `absmag` (optional but used if present)
+```
+hyg_v4.csv
+hygdata_v3.csv
+HYG-Database-4.2.csv
+```
 
-### Required coordinate system
-Coordinates must be centered on **Sol at (0,0,0)** in parsecs.  
-HYG already provides this.
+The file must contain at minimum:
+- `dist` or `dist_pc` or `Distance`
+- `x`, `y`, `z` (parsec coordinates)
+- Optional: `proper`, `mag`, `lum`, `spect`
 
-### Required distance units
-- Input distance is in **parsecs**.  
-- Program converts to **light-years** automatically.
+Missing coordinates are handled gracefully.
 
 ---
 
-## Program Usage
+## Command-Line Usage
+
+```
+python3 build_star_database.py     --input-csv HYG.csv     --radius-ly 50     --max-stars 150     --scale 1.0     --csv-out star_catalog.csv     --map-out star_map.txt
+```
+
+### **Required Argument**
+
+| Argument | Description |
+|---------|-------------|
+| `--input-csv` | Path to local HYG CSV |
+
+### **Optional Arguments**
+
+| Argument | Default | Description |
+|----------|----------|-------------|
+| `--radius-ly` | `50.0` | Only stars within radius (ly) are included |
+| `--max-stars` | `150` | Maximum stars kept before projection |
+| `--scale` | `1.0` | Light‑years per grid cell |
+| `--csv-out` | stdout | Output CSV path |
+| `--map-out` | `star_map.txt` | ASCII map output path |
+
+### Exit Behavior
+If no stars remain after filtering and projection, the script terminates with an error message.
+
+---
+
+## Data Processing Pipeline
+
+### 1. **Distance Filtering**
+Only stars with:
+```
+dist_ly <= radius_ly
+```
+are retained.
+
+### 2. **Nearest Star = Sol**
+The nearest star (distance 0–0.01 ly) is labeled as Sol and forced to remain.
+
+### 3. **3D → 2D Projection**
+Coordinates:
+
+```
+grid_x = round(50 + x_ly / scale)
+grid_y = round(50 + y_ly / scale)
+```
+
+Stars outside `0–99` are **pruned**, not clamped.
+
+### 4. **Collision Resolution**
+If two or more stars land in the same cell:
+
+Priority order:
+1. Sol (if present)
+2. Named stars (real catalog names)
+3. Largest star by:
+   - Luminosity (higher wins)
+   - Apparent magnitude (lower wins)
+   - Distance (closer wins)
+
+Only one survives; others are pruned.
+
+---
+
+## Output Files
+
+### 1. **CSV Output (“star_catalog.csv”)**
+
+Sorted by `dist_ly` ascending (Sol first).
+
+#### **CSV Columns**
+
+```
+id, proper, dist_ly, grid_x, grid_y, spect
+```
+
+| Column | Meaning |
+|--------|---------|
+| `id` | Monotonic integer: 0 = Sol |
+| `proper` | Real name or synthetic sector/cluster name |
+| `dist_ly` | Distance from Sol, in light‑years |
+| `grid_x` | 0–99 projected X position |
+| `grid_y` | 0–99 projected Y position |
+| `spect` | Spectral class (string) |
+
+### **Synthetic Naming System**
+
+If a star has no catalog proper name, it receives a deterministic name:
+
+Examples:
+```
+Helion Sector-17
+Koros Cluster-03
+Velarn Arc-81
+Nadir Reach-22
+Triarch Expanse-04
+```
+
+Names are derived from:
+- Prefix bank  
+- Sector type bank  
+- Number 01–99  
+- RNG seeded using the original catalog ID  
+
+Names remain stable across runs.
+
+---
+
+### 2. **ASCII Map Output (“star_map.txt”)**
+
+A 100×100 grid of characters:
+
+```
+X  = Sol
+*  = Star
+.  = Empty cell inside radius
+␣  = Space (outside radius)
+```
+
+The map is useful for debugging or display.
+
+---
+
+## Example Region (excerpt)
+
+```
+.................................................          
+.......................*.........................          
+....................*...........*................          
+.......................X........................          
+....................*............................          
+```
+
+---
+
+## Error Conditions
+
+The tool terminates with an explanatory message if:
+
+- Input CSV is missing or unreadable
+- No stars fall within the radius
+- All stars are pruned during projection
+- Map cannot be written to disk
+
+---
+
+## License & Use
+
+The script is free for use in game development, research, or modification.  
+HYG database license may apply depending on version downloaded.
+
+---
+
+## Summary
+
+This generator turns raw astronomical data into:
+
+- A clean, **collided-pruned**, **scaled**, **projected**, **named** dataset
+- A stable, deterministic 2D star map
+- A minimal CSV that is compact enough for retro hardware or game engines
+
+It forms the foundation for your in‑game star system registry.
 
