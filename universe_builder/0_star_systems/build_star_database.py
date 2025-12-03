@@ -15,7 +15,10 @@ Behavior:
 - Stars whose projected grid_x/grid_y are outside [0, 99] are PRUNED.
 - If more than one star lands in the same grid cell:
     - If Sol is in that cell, keep Sol and prune the rest.
-    - Otherwise, keep the "largest" star for that cell and prune the rest.
+    - Otherwise:
+        1) Prefer stars with a non-empty proper name (from catalog).
+        2) Among that subset, keep the "largest" star (see below).
+        3) If none are named, pick the "largest" among all.
 
   "Largest" is determined by:
     1. lum (luminosity) if present (higher is brighter),
@@ -28,12 +31,25 @@ Behavior:
     - '*' = other stars (one per cell by construction)
     - After placing stars, any cell that is still '.' and whose center
       lies beyond the configured radius (in ly) becomes a space ' '.
+
+CSV OUTPUT (for game use):
+
+- Sorted by dist_ly ascending (Sol first).
+- Columns:
+    id, proper, dist_ly, grid_x, grid_y, spect
+- `id` is a monotonic integer starting at 0 for Sol.
+- `proper` is either:
+    - the catalog's real proper name, if present, OR
+    - a synthetic sector/cluster style name generated deterministically
+      from the original catalog id (or HIP / coords if no id).
 """
 
 import argparse
 import csv
 import math
 import sys
+import random
+import hashlib
 from typing import List, Dict, Any, Optional, Tuple
 
 PC_TO_LY = 3.26156
@@ -258,7 +274,10 @@ def project_to_grid(
 
     If multiple stars land in the same (grid_x, grid_y):
       - If one of them is Sol, keep Sol and drop the rest.
-      - Otherwise keep only the "largest" star using _size_metric().
+      - Else:
+          1) Prefer stars with a non-empty proper name (from catalog).
+          2) Among those, keep the "largest" by _size_metric().
+          3) If none are named, keep the "largest" among all.
     """
     cell_map: Dict[Tuple[int, int], List[Dict[str, Any]]] = {}
     off_map_count = 0
@@ -298,7 +317,12 @@ def project_to_grid(
         if sol_in_cell:
             chosen = sol_in_cell[0]
         else:
-            chosen = max(cell_stars, key=_size_metric)
+            # Prefer stars with catalog proper names (not synthetic)
+            named = [s for s in cell_stars if (s.get("proper") or "").strip() != ""]
+            if named:
+                chosen = max(named, key=_size_metric)
+            else:
+                chosen = max(cell_stars, key=_size_metric)
 
         survivors.append(chosen)
         pruned_here = len(cell_stars) - 1
@@ -307,34 +331,125 @@ def project_to_grid(
     if pruned_collisions:
         print(
             f"Pruned {pruned_collisions} stars due to grid cell collisions "
-            f"(one star per cell retained).",
+            f"(one star per cell retained, preferring catalog-named stars).",
             file=sys.stderr,
         )
 
     return survivors
 
 
+# ---------- Synthetic naming helpers ----------
+
+_SECTOR_PREFIXES = [
+    "Helion",
+    "Koros",
+    "Velarn",
+    "Nadir",
+    "Procyon",
+    "Altaris",
+    "Veyra",
+    "Talios",
+    "Meridian",
+    "Triarch",
+    "Nomad",
+    "Aurigon",
+    "Serpentis",
+    "Draxis",
+    "Cygnera",
+    "Luyten",
+    "Epsara",
+    "Tauven",
+    "Sigmar",
+    "Zethys",
+    "Khoras",
+    "Frontier",
+    "Pioneer",
+    "Arcturon",
+    "Vegaine",
+]
+
+_SECTOR_TYPES = [
+    "Sector",
+    "Cluster",
+    "Reach",
+    "Arc",
+    "Belt",
+    "Verge",
+    "Expanse",
+]
+
+
+def _seed_from_star(star: Dict[str, Any]) -> int:
+    """
+    Build a deterministic RNG seed from:
+      - original catalog id, if present
+      - else HIP number
+      - else hashed coordinates.
+    """
+    base = (
+        (star.get("id") or "").strip()
+        or (star.get("hip") or "").strip()
+        or f"{star.get('x_ly', 0.0):.5f},{star.get('y_ly', 0.0):.5f},{star.get('z_ly', 0.0):.5f}"
+    )
+
+    # If base is purely numeric, use it directly (clamped to 32-bit).
+    if base.isdigit():
+        return int(base) & 0x7FFFFFFF
+
+    # Otherwise, hash it to an int.
+    h = hashlib.sha256(base.encode("utf-8")).hexdigest()
+    return int(h[:16], 16) & 0x7FFFFFFF
+
+
+def generate_synthetic_name(star: Dict[str, Any]) -> str:
+    """
+    Generate a synthetic sector/cluster style name for a star, deterministically
+    based on its original catalog id (or fallback seed).
+
+    Examples:
+        Helion Sector-17
+        Koros Cluster-03
+        Velarn Arc-81
+    """
+    seed = _seed_from_star(star)
+    rng = random.Random(seed)
+
+    prefix = _SECTOR_PREFIXES[rng.randrange(len(_SECTOR_PREFIXES))]
+    kind = _SECTOR_TYPES[rng.randrange(len(_SECTOR_TYPES))]
+    number = rng.randrange(1, 100)  # 01-99
+
+    return f"{prefix} {kind}-{number:02d}"
+
+
+# ---------- CSV / map output ----------
+
 def write_star_csv(stars: List[Dict[str, Any]], path: Optional[str]) -> None:
-    """Write CSV catalog to file or stdout."""
+    """
+    Write compact, game-ready CSV catalog.
+
+    Rules:
+    - Sort by dist_ly ascending (Sol/nearest first).
+    - Replace 'id' with monotonic integer starting at 0.
+      (0 will be Sol if distances are correct.)
+    - Columns:
+        id, proper, dist_ly, grid_x, grid_y, spect
+
+    The `proper` column is:
+      - the real catalog proper name if present, else
+      - a synthetic sector/cluster name deterministically generated
+        from the original catalog id (or HIP/coords fallback).
+    """
     fieldnames = [
         "id",
-        "hip",
         "proper",
-        "ra",
-        "dec",
-        "dist_pc",
         "dist_ly",
-        "x_ly",
-        "y_ly",
-        "z_ly",
         "grid_x",
         "grid_y",
         "spect",
-        "mag",
-        "lum",
-        "absmag",
-        "is_sol",
     ]
+
+    # Sort by distance from Sol
+    stars_sorted = sorted(stars, key=lambda s: float(s["dist_ly"]))
 
     out_file = None
     if path:
@@ -346,8 +461,21 @@ def write_star_csv(stars: List[Dict[str, Any]], path: Optional[str]) -> None:
     try:
         writer = csv.DictWriter(writer_target, fieldnames=fieldnames)
         writer.writeheader()
-        for s in stars:
-            row = {k: s.get(k, "") for k in fieldnames}
+        for new_id, s in enumerate(stars_sorted):
+            raw_proper = (s.get("proper") or "").strip()
+            if raw_proper:
+                name = raw_proper
+            else:
+                name = generate_synthetic_name(s)
+
+            row = {
+                "id": new_id,
+                "proper": name,
+                "dist_ly": s.get("dist_ly", ""),
+                "grid_x": s.get("grid_x", ""),
+                "grid_y": s.get("grid_y", ""),
+                "spect": s.get("spect", ""),
+            }
             writer.writerow(row)
     finally:
         if out_file is not None:
@@ -449,7 +577,7 @@ def main() -> None:
 
     print(
         f"Projecting to 100x100 grid with scale {args.scale} ly/cell, "
-        f"pruning off-map stars and enforcing 1 star per cell...",
+        f"pruning off-map stars and enforcing 1 star per cell (real catalog names preferred)...",
         file=sys.stderr,
     )
     stars = project_to_grid(stars, args.scale)
