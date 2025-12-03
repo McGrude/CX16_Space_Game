@@ -1,0 +1,3295 @@
+================================================================================
+SPACE EXPLORATION AND TRADING GAME - UNIVERSE SIMULATION SPECIFICATION
+================================================================================
+
+VERSION: 1.0
+DATE: 2025-12-02
+PURPOSE: Generate a rich, believable universe for a space exploration and 
+         trading game with realistic histories, political entities, 
+         corporations, and interconnected events.
+
+================================================================================
+OVERVIEW
+================================================================================
+
+This specification defines a historical simulation model that generates 80-120 
+star systems with realistic histories, political entities, corporations, and 
+interconnected events spanning multiple eras of human expansion into space.
+
+The simulation creates:
+- Real star systems within 50 light-years of Sol
+- Multiple political factions with distinct ideologies
+- Major corporations across various industries
+- Complex economic systems with resource dependencies
+- Historical timeline spanning 350+ years
+- Dynamic relationships between all entities
+- Named historical figures and landmark events
+
+================================================================================
+TECHNICAL IMPLEMENTATION
+================================================================================
+
+LANGUAGE: Python 3.8+
+
+RATIONALE FOR PYTHON (NOT BASH):
+- Robust data structures (lists, dicts, classes) for complex relationships
+- NumPy for star chart calculations and spatial transformations
+- Native JSON serialization for game data export
+- Easy parameterization and reproducible random generation
+- Maintainable, readable code for future modifications
+- Proper floating-point math without external tools
+- Excellent debugging capabilities
+
+PROJECT STRUCTURE:
+------------------
+generate_universe.py        # Main orchestrator script
+config.py                   # Adjustable simulation parameters
+requirements.txt            # Python dependencies
+
+data/
+├── star_catalog.csv        # Real star chart data (50 LY radius)
+└── name_lists.json         # Names for places, people, corporations
+
+generators/
+├── __init__.py
+├── star_systems.py         # Physical system generation
+├── factions.py             # Political entity generation
+├── corporations.py         # Commercial entity generation
+├── history.py              # Timeline simulation engine
+├── economy.py              # Resource and trade systems
+├── events.py               # Random event generation
+└── relationships.py        # Diplomatic/commercial relations
+
+models/
+├── __init__.py
+├── system.py               # Star system data structures
+├── installation.py         # Planets, stations, facilities
+├── faction.py              # Political entity model
+├── corporation.py          # Corporate entity model
+├── technology.py           # Tech tree and diffusion
+├── resources.py            # Resource types and distributions
+└── historical_event.py     # Event recording
+
+utils/
+├── __init__.py
+├── star_mapping.py         # 3D to 2D projection and scaling
+├── random_weighted.py      # Probability utilities
+└── name_generator.py       # Procedural naming
+
+output/
+├── universe.json           # Complete simulation data
+├── game_data/              # Simplified data for game import
+│   ├── systems.csv
+│   ├── factions.csv
+│   ├── corporations.csv
+│   ├── trade_routes.csv
+│   └── history.csv
+├── summary.txt             # Human-readable chronicle
+└── star_map.svg            # Visual 2D representation
+
+COMMAND LINE INTERFACE:
+-----------------------
+# Basic generation
+python generate_universe.py
+
+# With custom parameters
+python generate_universe.py --systems 100 --seed 42 --output game_data/
+
+# Adjust event probabilities
+python generate_universe.py --war-likelihood 0.4 --discovery-rate 0.3
+
+# Regenerate with same seed
+python generate_universe.py --seed 12345
+
+================================================================================
+STAR SYSTEM GENERATION
+================================================================================
+
+REAL WORLD STAR DATA:
+---------------------
+- Source: Systems within 50 light-year radius of Sol
+- Expand to 60-70 LY if needed to reach 80-120 viable systems
+- Data includes: spectral class, distance, luminosity, estimated habitability
+- Use real astronomical catalogs (HYG Database, Gliese Catalog, etc.)
+
+3D TO 2D PROJECTION:
+--------------------
+1. Take real 3D galactic coordinates (x, y, z in light-years)
+2. Project onto 2D plane (preserve x-y, compress z to density overlay)
+3. Scale distances logarithmically or proportionally to fit 100x100 grid
+4. Maintain relative positions and distances where possible
+5. Sol system positioned at or near grid center (50, 50)
+
+SYSTEM PROPERTIES:
+------------------
+Each star system includes:
+
+Physical Characteristics:
+- Spectral class (O, B, A, F, G, K, M)
+- Luminosity and mass
+- Age (affects planet formation and habitability)
+- Metallicity (affects resource availability)
+
+Planets (1-8 per system):
+- Type: Rocky/terrestrial, gas giant, ice giant
+- Orbital characteristics: distance from star, period
+- Moons for gas giants (0-12) and large terrestrials (0-2)
+- Habitability factors: gravity, atmosphere, temperature, water presence
+- Resource deposits based on composition
+
+INHABITED LOCATIONS:
+--------------------
+Each inhabited location has an industry profile that determines:
+1. What commodities it produces (exports)
+2. What commodities it consumes (imports)
+3. Production/consumption volumes
+4. Economic development level
+
+HABITAT TYPES AND INDUSTRY PROFILES:
+
+1. CORE WORLD (Major Inhabited Planet)
+   Population: 500 million - 5 billion
+   Development: High - mature infrastructure
+   
+   Primary Industries (produces):
+   - Industrial Goods (high volume) - major manufacturing centers
+   - High-Tech Goods (medium volume) - research and development
+   - Luxury Goods (low volume) - artisan production, cultural goods
+   - Medical (medium volume) - pharmaceutical industry
+   
+   Secondary Consumption (imports):
+   - Mining Output (very high volume) - raw materials for industry
+   - Agricultural Goods (high volume) - food for massive population
+   - Fuel (high volume) - power generation and transport
+   
+   Notes: Self-sufficient in most areas, major trade hubs, high GDP
+
+2. INDUSTRIAL WORLD (Manufacturing Planet)
+   Population: 100 million - 2 billion
+   Development: Medium-High - focused on production
+   
+   Primary Industries (produces):
+   - Industrial Goods (very high volume) - primary output
+   - Mining Output (medium volume) - may have local extraction
+   
+   Secondary Consumption (imports):
+   - Mining Output (very high volume) - raw material input
+   - Agricultural Goods (high volume) - worker population needs
+   - Fuel (very high volume) - factory power demands
+   - High-Tech Goods (low volume) - factory automation components
+   
+   Notes: Pollution problems common, high employment, strong unions
+
+3. AGRICULTURAL WORLD (Farm Planet)
+   Population: 10 million - 500 million
+   Development: Low-Medium - rural, distributed settlements
+   
+   Primary Industries (produces):
+   - Agricultural Goods (very high volume) - primary output
+   - Mining Output (low volume) - may have small-scale local mining
+   
+   Secondary Consumption (imports):
+   - Industrial Goods (medium volume) - farm equipment, infrastructure
+   - High-Tech Goods (low volume) - agritech, hydroponics systems
+   - Fuel (medium volume) - transport and processing
+   - Medical (low volume) - rural healthcare needs
+   
+   Notes: Low prices locally, exports to high-population systems
+
+4. MINING COLONY (Resource Extraction Planet/Moon)
+   Population: 50,000 - 50 million
+   Development: Low-Medium - functional, spartan conditions
+   
+   Primary Industries (produces):
+   - Mining Output (very high volume) - primary output
+   
+   Secondary Consumption (imports):
+   - Agricultural Goods (high volume) - all food imported
+   - Industrial Goods (high volume) - mining equipment, maintenance
+   - Fuel (high volume) - heavy machinery operation
+   - Medical (medium volume) - industrial accident treatment
+   
+   Notes: Dangerous work, transient population, boom-and-bust cycles
+
+5. TECH HUB (Research/Development Planet)
+   Population: 50 million - 1 billion
+   Development: Very High - cutting-edge infrastructure
+   
+   Primary Industries (produces):
+   - High-Tech Goods (very high volume) - primary output
+   - Blacknet Assets (low volume) - research overflow, rogue code
+   - Medical (medium volume) - biotech research centers
+   
+   Secondary Consumption (imports):
+   - Mining Output (medium volume) - rare elements for manufacturing
+   - Agricultural Goods (medium volume) - educated population needs
+   - Luxury Goods (medium volume) - high-income consumers
+   - Fuel (medium volume) - power for computing clusters
+   
+   Notes: High wages, corporate campuses, university towns
+
+6. MILITARY BASE (Fortified Planet/Installation)
+   Population: 10,000 - 10 million
+   Development: High - specialized military infrastructure
+   
+   Primary Industries (produces):
+   - Weapons (high volume) - armories and munitions factories
+   - Industrial Goods (medium volume) - ship repair and production
+   
+   Secondary Consumption (imports):
+   - Mining Output (high volume) - armor plating, munitions
+   - Agricultural Goods (high volume) - military personnel rations
+   - Fuel (very high volume) - fleet operations
+   - High-Tech Goods (medium volume) - advanced weapons systems
+   - Medical (high volume) - combat casualty care
+   
+   Notes: Restricted access, high security, weapons legal here
+
+7. TRADE STATION (Orbital/Space Station)
+   Population: 10,000 - 5 million
+   Development: Medium-High - commercial focus
+   
+   Primary Industries (produces):
+   - [Transshipment only - no production]
+   - Acts as market hub, takes small percentage of all trades
+   
+   Secondary Consumption (imports):
+   - Agricultural Goods (high volume) - all food imported
+   - Fuel (very high volume) - constant ship traffic
+   - Industrial Goods (medium volume) - station maintenance
+   - Medical (low volume) - station healthcare
+   
+   Notes: Markets fluctuate based on supply/demand, smuggling common
+
+8. REFINERY STATION (Gas Giant Orbital/Processing Facility)
+   Population: 1,000 - 500,000
+   Development: Medium - specialized industrial facility
+   
+   Primary Industries (produces):
+   - Fuel (very high volume) - primary output from gas processing
+   - Mining Output (medium volume) - rare isotopes, helium-3
+   
+   Secondary Consumption (imports):
+   - Agricultural Goods (high volume) - all food imported
+   - Industrial Goods (medium volume) - processing equipment
+   - High-Tech Goods (low volume) - automated systems
+   
+   Notes: Dangerous work, explosion risks, high pay
+
+9. RESEARCH STATION (Remote Scientific Outpost)
+   Population: 100 - 10,000
+   Development: High - specialized equipment
+   
+   Primary Industries (produces):
+   - High-Tech Goods (low volume) - experimental prototypes
+   - Blacknet Assets (very low volume) - research data, sometimes stolen
+   - Medical (low volume) - experimental treatments
+   
+   Secondary Consumption (imports):
+   - Agricultural Goods (medium volume) - all food imported
+   - Industrial Goods (low volume) - lab equipment
+   - Fuel (low volume) - power generation
+   
+   Notes: Often in isolated systems, corporate or university-run
+
+10. FRONTIER COLONY (New Settlement, Any Type)
+    Population: 500 - 100,000
+    Development: Very Low - basic infrastructure only
+    
+    Primary Industries (produces):
+    - [Varies by colony focus - usually one commodity type]
+    - Mining Output OR Agricultural Goods (low volume)
+    
+    Secondary Consumption (imports):
+    - Everything else - highly dependent on imports
+    - Agricultural Goods (high volume if not farm colony)
+    - Industrial Goods (very high volume) - construction materials
+    - Fuel (high volume) - power generation
+    - Medical (medium volume) - pioneer healthcare
+    
+    Notes: High risk, high reward, may fail and be abandoned
+
+11. LUXURY RESORT (Tourist Destination)
+    Population: 5,000 - 500,000
+    Development: Very High - premium infrastructure
+    
+    Primary Industries (produces):
+    - Luxury Goods (medium volume) - high-end services and products
+    
+    Secondary Consumption (imports):
+    - Agricultural Goods (very high volume) - gourmet food
+    - Luxury Goods (high volume) - imported for resale
+    - Medical (medium volume) - cosmetic and rejuvenation treatments
+    - Drugs (low volume) - black market for wealthy tourists
+    
+    Notes: Only in stable, safe systems, extremely profitable
+
+12. CORPORATE HEADQUARTERS (Administrative Center)
+    Population: 1 million - 100 million
+    Development: Very High - office towers, luxury districts
+    
+    Primary Industries (produces):
+    - High-Tech Goods (medium volume) - corporate R&D
+    - Luxury Goods (high volume) - executive market
+    - Blacknet Assets (low volume) - corporate espionage products
+    
+    Secondary Consumption (imports):
+    - Agricultural Goods (medium volume) - executive dining
+    - Luxury Goods (very high volume) - status-conscious executives
+    - Medical (high volume) - executive life extension
+    
+    Notes: Wealthy but bureaucratic, high cost of living
+
+13. PRISON COLONY (Penal Settlement)
+    Population: 10,000 - 1 million
+    Development: Low - minimal amenities
+    
+    Primary Industries (produces):
+    - Mining Output (medium volume) - forced labor extraction
+    - Industrial Goods (low volume) - prison workshops
+    
+    Secondary Consumption (imports):
+    - Agricultural Goods (high volume) - prisoner rations (cheap)
+    - Industrial Goods (medium volume) - security systems
+    - Medical (medium volume) - basic healthcare
+    - Weapons (low volume) - guard armament
+    
+    Notes: Brutal conditions, escape attempts, riots
+
+14. FREEPORT (Lawless Trading Hub)
+    Population: 10,000 - 2 million
+    Development: Medium - unregulated growth
+    
+    Primary Industries (produces):
+    - Weapons (medium volume) - black market armories
+    - Drugs (high volume) - narcotics labs
+    - Blacknet Assets (medium volume) - hacker haven
+    
+    Secondary Consumption (imports):
+    - Everything - major smuggling hub
+    - No legal restrictions on trade
+    - Haven for pirates, criminals, fugitives
+    
+    Notes: Dangerous but profitable, no law enforcement
+
+15. AUTOMATED MINING FACILITY (Unmanned Extractor)
+    Population: 0 (robots only) - maybe 10-100 maintenance crew
+    Development: Medium - automated systems
+    
+    Primary Industries (produces):
+    - Mining Output (high volume) - fully automated extraction
+    
+    Secondary Consumption (imports):
+    - Industrial Goods (low volume) - robot maintenance parts
+    - Fuel (medium volume) - power for operations
+    
+    Notes: Vulnerable to piracy, may go offline and need recovery
+
+16. ABANDONED COLONY (Ghost Town)
+    Population: 0 - maybe 10-1,000 squatters
+    Development: Deteriorating - ruins and salvage
+    
+    Primary Industries (produces):
+    - [Nothing official]
+    - May have salvage value (one-time extraction)
+    
+    Secondary Consumption (imports):
+    - [None - no active economy]
+    
+    Notes: Dangerous, unstable infrastructure, potential treasure trove
+
+UNINHABITED RESOURCE NODES:
+----------------------------
+Planets, moons, and asteroids without permanent inhabitants can still 
+produce resources if scanned and exploited by the player. These are stored 
+in the CSV as probability values.
+
+For each uninhabited body, store:
+- scan_mining_probability: 0.0-1.0 (chance to find mineable deposits)
+- mining_output_richness: none/poor/fair/good/rich/motherlode
+- mining_output_volume: 0-10000 (tons per extraction cycle)
+- depletion_rate: 0.0-1.0 (how fast resource depletes per extraction)
+
+Resource Distribution By Body Type:
+
+ASTEROID (Rocky Body):
+- scan_mining_probability: 0.60 (good chance)
+- Typical richness: fair to good
+- Output: Mining Output (metals, ores)
+- Volume: 500-5000 tons per cycle
+- Notes: Easy to extract, multiple asteroids per belt
+
+BARREN ROCKY PLANET:
+- scan_mining_probability: 0.40 (moderate chance)
+- Typical richness: poor to fair
+- Output: Mining Output (various ores)
+- Volume: 1000-10000 tons per cycle
+- Notes: Requires surface mining operations
+
+ICE MOON/PLANET:
+- scan_mining_probability: 0.70 (high chance)
+- Typical richness: good (water ice, volatiles)
+- Output: Mining Output (ice, volatiles) → can be refined to Fuel
+- Volume: 2000-15000 tons per cycle
+- Notes: Valuable for fuel production
+
+GAS GIANT MOON:
+- scan_mining_probability: 0.50 (moderate)
+- Typical richness: fair to good
+- Output: Mining Output (various, depends on composition)
+- Volume: 1000-8000 tons per cycle
+- Notes: May have exotic compounds
+
+VOLCANIC WORLD:
+- scan_mining_probability: 0.35 (lower chance due to difficulty)
+- Typical richness: rich (rare isotopes, exotic minerals)
+- Output: Mining Output (high-value rare materials)
+- Volume: 500-3000 tons per cycle
+- Notes: Dangerous extraction, high value
+
+GAS GIANT (Atmospheric Scooping):
+- scan_mining_probability: 1.0 (always available)
+- Typical richness: excellent (hydrogen, helium-3)
+- Output: Fuel (after processing) or Mining Output (helium-3)
+- Volume: 10000-50000 tons per scoop
+- Notes: Requires specialized equipment, storm dangers
+
+ANCIENT ALIEN RUIN SITE:
+- scan_mining_probability: 0.10 (rare artifacts)
+- Typical richness: motherlode (archaeological value)
+- Output: High-Tech Goods (alien artifacts) or Blacknet Assets (alien data)
+- Volume: 10-100 tons equivalent
+- Notes: One-time extraction, extremely valuable, may trigger events
+
+Special Mechanics:
+- First scan of uninhabited body reveals resource potential
+- Multiple extraction cycles deplete resource over time
+- Rich deposits attract competition from other factions/corporations
+- Automated mining can be set up on good sites (requires investment)
+- Depleted sites become worthless (scan_mining_probability → 0.0)
+
+CSV Storage Format Example:
+location_id,system_id,name,type,inhabited,population,
+scan_mining_probability,mining_output_richness,mining_output_volume,
+depletion_rate,industry_profile,produces_1,produces_2,produces_3,
+consumes_1,consumes_2,consumes_3,consumes_4
+
+loc_042,sys_008,Vega IV-b,ice_moon,false,0,0.75,good,8000,0.05,none,
+mining_output,fuel,,,,,
+
+loc_043,sys_008,Vega V,core_world,true,2500000000,0.0,none,0,0.0,
+core_world,industrial_goods,high_tech,luxury_goods,mining_output,
+agricultural,fuel,
+
+================================================================================
+RESOURCE AND ECONOMIC SYSTEM
+================================================================================
+
+COMMODITY SYSTEM:
+-----------------
+
+The economy operates on 10 major commodity types that are traded, produced, 
+and consumed across all inhabited locations. Each habitat has an industry 
+profile that determines what it produces and what it needs to import.
+
+1. MINING OUTPUT
+   Description: Bulk raw materials extracted from planets, moons, and 
+                asteroid belts—ore, unrefined metals, silicates, isotopes.
+   Price Range: Low (10-50 credits per ton)
+   Volatility: Low - essential baseline commodity
+   Volume: Very high - bulk cargo
+   Legality: Legal everywhere
+   Produced By: Mining colonies, asteroid habitats, automated extractors
+   Consumed By: Industrial centers, construction hubs, shipyards
+   
+2. INDUSTRIAL GOODS
+   Description: The manufactured backbone of civilization: machinery, tools, 
+                alloys, construction materials, reactors, ship parts.
+   Price Range: Medium (100-500 credits per ton)
+   Volatility: Low - stable demand
+   Volume: High - standard cargo
+   Legality: Legal everywhere
+   Produced By: Industrial worlds, manufacturing stations, shipyards
+   Consumed By: All inhabited locations (maintenance, construction, expansion)
+   
+3. AGRICULTURAL GOODS
+   Description: Foodstocks, organics, biochemical feedstock, hydroponic 
+                crops, livestock substitutes.
+   Price Range: Low in farm systems (20-80 credits/ton), 
+                High in barren systems (200-800 credits/ton)
+   Volatility: Medium - supply disruptions cause spikes
+   Volume: High - bulk perishables
+   Legality: Legal everywhere
+   Produced By: Agricultural worlds, orbital farms, biosphere stations
+   Consumed By: All inhabited locations (food for population)
+   
+4. HIGH-TECH GOODS
+   Description: Computers, sensors, navigation modules, nano-fabricators, 
+                precision electronics, advanced components.
+   Price Range: High (500-2000 credits per ton)
+   Volatility: Medium-High - sensitive to tech advancement
+   Volume: Medium - moderate cargo
+   Legality: Legal, some export restrictions during wartime
+   Produced By: Tech hubs, research stations, advanced manufacturing centers
+   Consumed By: Shipyards, military bases, research facilities, wealthy 
+                colonies
+   
+5. LUXURY GOODS
+   Description: Art, rare spirits, high-end consumer goods, exotic 
+                entertainment modules, jewelry, status items.
+   Price Range: Very High (1000-10000 credits per ton)
+   Volatility: Very High - fashion and trends
+   Volume: Low - small specialized cargo
+   Legality: Legal, heavily taxed in some systems
+   Produced By: Core worlds, cultural centers, artisan colonies
+   Consumed By: Wealthy core worlds, corporate headquarters, elite stations
+   
+6. FUEL
+   Description: Refined drive fuel, jump-charged isotopes, station-grade 
+                fusion slurry, reactor mass.
+   Price Range: Medium (80-200 credits per ton)
+   Volatility: Low - universal necessity
+   Volume: Very High - bulk fuel transport
+   Legality: Legal, regulated for safety
+   Produced By: Refineries, gas giant scooping stations, fuel processing 
+                facilities
+   Consumed By: All inhabited locations (ships, stations, power generation)
+   
+7. MEDICAL
+   Description: Pharmaceuticals, medkits, biostabilizers, gene therapies, 
+                surgical supplies, diagnostics.
+   Price Range: High (800-3000 credits per ton)
+   Volatility: High - spikes during outbreaks and crises
+   Volume: Low-Medium - specialized cargo
+   Legality: Legal but tightly regulated, prescription requirements
+   Produced By: Pharmaceutical worlds, biotech centers, medical research 
+                stations
+   Consumed By: All inhabited locations (healthcare), spikes during plagues
+   
+8. WEAPONS
+   Description: Small arms, ship munitions, targeting modules, militarized 
+                hardware, explosives, defense systems.
+   Price Range: Very High (1500-5000 credits per ton)
+   Volatility: High - wartime demand spikes
+   Volume: Medium - restricted cargo
+   Legality: ILLEGAL in most civilian systems, legal only at military bases
+             Heavy penalties for unauthorized possession
+   Produced By: Defense contractors, military industrial complexes, 
+                black market
+   Consumed By: Military bases, conflict zones, PMC headquarters, black market
+   
+9. DRUGS
+   Description: Narcotics, stimulants, designer neurochems, pleasure dust, 
+                banned psychoactives, combat enhancers.
+   Price Range: Extreme (2000-20000 credits per ton)
+   Volatility: Extreme - black market fluctuations
+   Volume: Low - compact contraband
+   Legality: ILLEGAL everywhere except specific "sin" systems
+             Severe criminal penalties, confiscation, imprisonment
+   Produced By: Black market labs, frontier drug labs, criminal syndicates
+   Consumed By: Black market demand across all systems, addiction economies
+   
+10. BLACKNET ASSETS
+    Description: Encrypted data vaults, intrusion suites, stolen corporate 
+                 intel, rogue AIs, ICE packages, exploit bundles, blacklisted 
+                 software, trace-resistant digital contraband.
+    Price Range: Extreme (5000-50000 credits per ton equivalent)
+    Volatility: Extreme - information economy, rapid obsolescence
+    Volume: Very Low - pure data, carried on secure drives
+    Legality: ILLEGAL in all systems, considered espionage/cyberterrorism
+              Extreme penalties: life imprisonment or execution
+    Produced By: Hacker collectives, corporate espionage cells, rogue AI labs
+    Consumed By: Syndicates, espionage agencies, cyber-mercenaries, 
+                 corporations
+
+RAW RESOURCE DISTRIBUTION (Underlying geology):
+------------------------------------------------
+These determine what Mining Output can be extracted and what uninhabited 
+locations can yield if scanned:
+
+- Based on system age, metallicity, and planet types
+- Young systems: more volatiles and organics (better fuel, agricultural 
+  precursors)
+- Old systems: depleted light elements, more heavy metals (better mining 
+  output)
+- High metallicity: abundant industrial and rare resources
+- Gas giants: helium-3 and deuterium for fusion (fuel production)
+- Asteroid belts: concentrated metal deposits (mining output)
+- Rocky planets: varied mineral composition (mining output)
+- Ice worlds: water and volatile compounds (fuel, agricultural inputs)
+
+Distribution Patterns:
+- Resource-rich systems become mining hubs (10-15% of systems)
+- Resource-poor systems serve as waypoints or administrative centers
+- Some systems have unique monopoly resources (rare isotopes, exotic crystals)
+- Resource scarcity/abundance drives colonization patterns
+- Depletion over time in heavily exploited systems (mining output decreases)
+
+ECONOMIC INTERDEPENDENCIES:
+---------------------------
+The economy operates on commodity flows between systems:
+
+Core Industrial Loop:
+- Mining colonies extract Mining Output → 
+- Industrial worlds convert to Industrial Goods →
+- All systems consume Industrial Goods for maintenance and growth →
+- Cycle repeats
+
+Food Supply Chain:
+- Agricultural worlds produce Agricultural Goods →
+- All inhabited locations consume (population needs food) →
+- Prices high in barren systems, low in farm systems →
+- Supply disruptions cause famines and unrest
+
+Energy Economy:
+- Refineries process gas giant resources into Fuel →
+- All systems consume Fuel (ships, power generation) →
+- Universal demand, stable prices, narrow margins →
+- Strategic stockpiles critical during war
+
+High-Value Chains:
+- Tech Hubs produce High-Tech Goods →
+- Consumed by advanced industries, military, research →
+- Luxury Goods flow from Core Worlds to wealthy markets →
+- Medical flows to all systems, spikes during crises
+
+Black Market Economy:
+- Weapons flow to conflict zones and military bases →
+- Drugs produced in frontier labs, consumed everywhere →
+- Blacknet Assets traded in digital underground →
+- Extremely profitable but highly illegal
+
+Economic Drivers:
+- Trade routes emerge from supply/demand optimization
+- Corporate control of key commodities creates bottlenecks and monopolies
+- Economic booms from: new resource discoveries (Mining Output), tech 
+  breakthroughs (High-Tech), new colonies (all commodities)
+- Economic busts from: resource depletion (Mining Output drops), disasters,
+  wars (disrupts all trade), blockades (cuts supply lines)
+- Price volatility varies by commodity type
+
+Supply and Demand Mechanics:
+- Each system calculates: (Production - Consumption) = Net Export/Import
+- Systems with surplus export at lower prices
+- Systems with deficit import at higher prices
+- Transportation costs increase with distance
+- Risk premium added for dangerous routes (piracy, war zones)
+
+TRADE NETWORKS:
+---------------
+Major trade routes connecting complementary economies:
+
+Primary Routes (High Volume, Low Margin):
+- Mining Output: Mining colonies → Industrial worlds
+- Agricultural Goods: Farm worlds → Core worlds and mining colonies
+- Fuel: Refineries → All systems (universal distribution)
+- Industrial Goods: Industrial worlds → All systems
+
+Secondary Routes (Medium Volume, Medium Margin):
+- High-Tech Goods: Tech hubs → Advanced systems, military bases
+- Medical: Pharma worlds → All systems (spikes during outbreaks)
+
+Luxury Routes (Low Volume, High Margin):
+- Luxury Goods: Core worlds → Wealthy systems, corporate HQs
+
+Black Market Routes (Very Low Volume, Extreme Margin):
+- Weapons: Defense contractors → Conflict zones, black market
+- Drugs: Frontier labs → Freeports → Distribution networks
+- Blacknet Assets: Hacker collectives → Syndicates, spies
+
+Route Characteristics:
+- Calculate shortest paths between complementary economies
+- Weight by: commodity value, political stability, route safety
+- Corporate control of lucrative routes (monopolies on key commodities)
+- Piracy risk in poorly patrolled frontier systems (especially Luxury, 
+  Weapons, Drugs)
+- Trade disruption during conflicts reduces supply and increases prices
+- Blockades can starve systems dependent on food imports
+- Smuggling routes avoid customs and enforcement (higher risk, higher profit)
+
+BLACK MARKET ECONOMICS:
+
+Black Market Pricing:
+- Legal commodity base price × illegal markup (2x to 10x)
+- Weapons: 3-5x markup in civilian systems where they're illegal
+- Drugs: 5-10x markup from production to street price
+- Blacknet Assets: 3-8x markup depending on demand and rarity
+- Stolen goods: 0.3-0.5x normal price (fenced at discount)
+
+Black Market Locations:
+- Freeports: Everything legal, market price (no markup)
+- Hidden stations: Syndicate-controlled, moderate markup
+- Corrupt officials: Bribes add 1.5-2x to transaction costs
+- Frontier systems: Less enforcement, lower risk premium
+
+Smuggling Economics:
+- Transport fee: 20-50% of cargo value for illegal goods
+- Risk premium increases with: cargo illegality, route danger, 
+  enforcement strength
+- Failed smuggling: Cargo confiscated, fines, imprisonment, or death
+- Successful smuggling: High profits split between smuggler and client
+
+Piracy Economics:
+- Target selection: High-value cargo (Luxury, High-Tech, Medical)
+- Stolen cargo fenced at 30-50% of market value
+- Ransoms for ships/crew: 50,000 to 5,000,000 credits
+- Protection rackets: 5-10% of trade route value annually
+- Piracy increases insurance costs for all traders
+
+Criminal Revenue Streams by Syndicate Type:
+- Pirates: Ship captures (30%), protection rackets (40%), ransoms (20%), 
+  fencing (10%)
+- Drug Cartels: Drug sales (80%), money laundering services (15%), 
+  enforcement services (5%)
+- Cybercrime: Data theft (40%), ransomware (30%), blacknet sales (20%), 
+  contract hacking (10%)
+- Smugglers: Transport fees (70%), document forgery (15%), 
+  brokerage fees (15%)
+- Organized Crime: Extortion (30%), illegal gambling (25%), 
+  weapons trafficking (20%), legitimate businesses (25%)
+
+Route Generation Algorithm:
+1. For each system, calculate net export/import by commodity
+2. Find complementary pairs (exporter + importer of same commodity)
+3. Calculate route profitability:
+   Price_Difference × Volume - Transportation_Cost - Risk_Premium
+4. If profitable, establish route
+5. Assign controlling corporation (highest market share in that commodity)
+6. Update route status each era based on:
+   - War (routes through war zones close or become smuggling routes)
+   - Piracy (unsafe routes reduce volume or increase prices)
+   - Competition (multiple corps may service same route)
+   - Supply/demand changes (new colonies, resource depletion)
+
+================================================================================
+TECHNOLOGY SYSTEM
+================================================================================
+
+MAJOR TECHNOLOGIES:
+-------------------
+
+1. FTL Drive Evolution:
+   
+   Generation 1 (Invented ~2095, Deployed Era 1):
+   - Alcubierre-style warp drive principle
+   - Speed: 0.5-1 light-years per month
+   - Range: 10 light-years maximum before refueling
+   - Cost: Extremely expensive (government/corporate only)
+   - Reliability: 90% (accidents common)
+   
+   Generation 2 (Invented ~2210, Deployed Era 2):
+   - Improved efficiency and power systems
+   - Speed: 2-4 light-years per month
+   - Range: 30 light-years
+   - Cost: Expensive but commercially viable for major corps
+   - Reliability: 97%
+   
+   Generation 3 (Invented ~2315, Deployed Era 3):
+   - Commercial viability breakthrough
+   - Speed: 5-8 light-years per month
+   - Range: 50+ light-years
+   - Cost: Affordable for small corporations and wealthy individuals
+   - Reliability: 99.5%
+   
+   Generation 4 (Invented ~2380, Deployed Era 4):
+   - Modern standard
+   - Speed: 3-5 light-years per day (90-150 light-years per month)
+   - Range: Unlimited (can traverse entire known space)
+   - Cost: Mass production, available to most spacers
+   - Reliability: 99.9%
+
+2. Terraforming Technology:
+   - Atmospheric processing (CO2 conversion, oxygen generation)
+   - Temperature regulation (orbital mirrors, greenhouse gases)
+   - Ecosystem establishment (engineered biomes)
+   - Water cycle creation
+   - Timeline: 50-200 years depending on planet conditions
+   - Progression: Early era failures, mid-era successes, late-era refinement
+
+3. Life Support and Habitats:
+   - Closed-loop life support systems
+   - Artificial gravity (rotating habitats)
+   - Radiation shielding (magnetic fields, material barriers)
+   - Food production (hydroponics, vat-grown)
+   - Progression: Bulky and expensive to compact and reliable
+
+4. Manufacturing Technology:
+   - Automated mining and processing
+   - Molecular assembly and 3D printing
+   - Shipbuilding techniques (modular, in-orbit construction)
+   - Nanotech fabrication (late-era)
+
+5. Military Technology:
+   - Energy weapons (lasers, particle beams)
+   - Kinetic weapons (railguns, missiles)
+   - Defensive systems (shields, point defense, armor)
+   - Stealth technology
+   - Electronic warfare
+
+6. Communications:
+   - FTL communication limited to ship-based courier (no instantaneous)
+   - Quantum entanglement networks (extremely expensive, faction capitals only)
+   - Standard radio/laser comms (speed of light limited)
+   - Information lag drives political decentralization
+
+TECHNOLOGY DIFFUSION:
+---------------------
+- Technologies discovered at specific points in timeline
+- Spread rate varies by system connectivity and faction relations
+- Connected systems adopt technology faster
+- Isolated frontier systems lag by decades
+
+Diffusion Factors:
+- Corporate proprietary tech spreads slowly (patents, secrecy, licensing)
+- Open-source or government tech spreads faster
+- Military tech diffusion accelerated during wartime (espionage, capture)
+- Embargoes and restrictions during conflicts
+- Technology regression in isolated or abandoned systems
+- Lost technologies from collapsed factions or corporations
+
+Technology Transfer Events:
+- Patent expiration leading to tech boom
+- Corporate espionage stealing secrets
+- Defectors bringing knowledge to rivals
+- War forcing rapid innovation
+- Peaceful technology sharing agreements
+
+================================================================================
+POLITICAL FACTIONS (6 TOTAL)
+================================================================================
+
+FACTION ARCHETYPES (SPECTRUM COVERAGE):
+----------------------------------------
+
+MAJOR FACTIONS (6 Total - Legitimate Governments):
+
+1. UTOPIAN DEMOCRACY
+   - Government: Representative democracy with strong civil rights
+   - Values: Individual freedom, equality, cooperation, progress
+   - Economy: Mixed economy with social safety nets
+   - Expansion: Through peaceful colonization and diplomacy
+   - Society: High education, artistic expression, scientific research
+   - Weakness: Slow decision-making, vulnerable to infiltration
+
+2. CORPORATE OLIGARCHY
+   - Government: Ruled by corporate council of major shareholders
+   - Values: Profit, efficiency, market freedom, innovation
+   - Economy: Pure free market capitalism
+   - Expansion: Through economic dominance and buyouts
+   - Society: Meritocratic but unequal, consumer culture
+   - Weakness: Exploitative labor practices, environmental damage
+
+3. MILITARY HEGEMONY
+   - Government: Authoritarian military junta or stratocracy
+   - Values: Strength, discipline, order, territorial expansion
+   - Economy: State-controlled military-industrial complex
+   - Expansion: Through conquest and force projection
+   - Society: Militaristic culture, mandatory service, rigid hierarchy
+   - Weakness: Oppressive, high military spending, low innovation
+
+4. TECHNOCRATIC COLLECTIVE
+   - Government: Rule by technical experts and AI advisors
+   - Values: Rationality, efficiency, scientific progress, planning
+   - Economy: Centrally planned with algorithmic optimization
+   - Expansion: Through calculated, efficient colonization
+   - Society: Education-focused, technocratic meritocracy
+   - Weakness: Can be inflexible, disregards human factors
+
+5. FRONTIER CONFEDERACY
+   - Government: Loose association of independent colonies
+   - Values: Independence, self-reliance, minimal regulation, freedom
+   - Economy: Free market with minimal taxation or regulation
+   - Expansion: Organic, opportunistic settlement
+   - Society: Frontier culture, individualistic, pioneering spirit
+   - Weakness: Weak unified defense, internal disputes, lawlessness
+
+6. DYSTOPIAN AUTOCRACY
+   - Government: Oppressive surveillance state with personality cult
+   - Values: Control, stability, loyalty to the state/leader
+   - Economy: State-controlled resource extraction
+   - Expansion: Through subjugation and forced labor
+   - Society: Constant surveillance, propaganda, thought control
+   - Weakness: Stagnant innovation, rebellions, brain drain
+
+CRIMINAL SYNDICATES (3-5 Total - Shadow Powers):
+
+These are not nation-states but organized criminal networks that operate 
+across multiple systems, often in the shadows of legitimate factions. They 
+control black markets, piracy operations, and illegal trade networks.
+
+1. PIRATE CONFEDERATION (Example: "The Outer Reach Corsairs")
+   - Structure: Loose alliance of pirate captains and crews
+   - Territory: No fixed territory; operates in frontier and lawless systems
+   - Primary Activities:
+     * Ship piracy and cargo theft
+     * Protection rackets on trade routes
+     * Smuggling operations
+     * Slave trading (in some factions)
+   - Bases: Hidden asteroid bases, rogue stations, sympathetic freeports
+   - Strength: 50-200 armed ships, hit-and-run tactics
+   - Revenue: Stolen cargo, ransoms, "protection fees"
+   - Relationships: 
+     * Hostile to most factions (hunted by military)
+     * Neutral/friendly with some freeports
+     * May have corrupt officials in frontier systems
+   - Notable: Some pirate captains become folk heroes in frontier worlds
+
+2. DRUG CARTEL (Example: "The Helios Syndicate")
+   - Structure: Hierarchical criminal organization with regional cells
+   - Territory: Drug production labs in frontier systems, distribution 
+     networks everywhere
+   - Primary Activities:
+     * Narcotics production and distribution
+     * Money laundering through legitimate businesses
+     * Bribery and corruption of officials
+     * Violent enforcement and assassinations
+   - Bases: Hidden labs, front companies, corrupt officials
+   - Strength: Thousands of operatives, private armies in some systems
+   - Revenue: Drug sales (billions of credits annually)
+   - Relationships:
+     * Hostile to law enforcement everywhere
+     * Corrupt alliances with officials in many systems
+     * May fund terrorist groups or rebellions
+   - Notable: Controls entire economies in some frontier systems
+
+3. CYBERCRIME SYNDICATE (Example: "The Ghost Network")
+   - Structure: Decentralized network of hackers, data brokers, AI rogues
+   - Territory: Digital space, operates from anywhere with network access
+   - Primary Activities:
+     * Corporate espionage and data theft
+     * Blacknet asset creation and distribution
+     * Identity theft and fraud
+     * Ransomware attacks on stations and ships
+     * Illegal AI development and trafficking
+   - Bases: Hidden servers, distributed networks, darknet markets
+   - Strength: Hundreds of elite hackers, thousands of script kiddies
+   - Revenue: Stolen data, ransoms, blacknet sales
+   - Relationships:
+     * Hostile to corporations and law enforcement
+     * Sells services to anyone who pays
+     * May collaborate with intelligence agencies
+   - Notable: Often hire themselves out for espionage or sabotage
+
+4. SMUGGLING CARTEL (Example: "The Free Traders Union")
+   - Structure: Network of independent smugglers with shared infrastructure
+   - Territory: Hidden routes through all major trade corridors
+   - Primary Activities:
+     * Smuggling illegal commodities (weapons, drugs, blacknet)
+     * Tax evasion and customs avoidance
+     * Document forgery and false identities
+     * Illegal passenger transport (fugitives, refugees)
+   - Bases: Secret warehouses, modified freighters, sympathetic stations
+   - Strength: 100-500 smuggling vessels, extensive bribery network
+   - Revenue: Smuggling fees, resale markups on illegal goods
+   - Relationships:
+     * Hostile to customs and border enforcement
+     * Neutral to most factions (seen as necessary evil)
+     * Strong ties to freeports and black markets
+   - Notable: Some smugglers have "gentleman's code" and refuse certain cargo
+
+5. ORGANIZED CRIME FAMILY (Example: "The Novak Bratva")
+   - Structure: Traditional mafia-style family organization
+   - Territory: Urban centers in 10-20 systems, particularly core worlds
+   - Primary Activities:
+     * Extortion and protection rackets
+     * Illegal gambling and entertainment
+     * Weapons trafficking
+     * Contract killings
+     * Legitimate business fronts (construction, shipping, entertainment)
+   - Bases: Legitimate businesses, urban territories, political connections
+   - Strength: 1,000-5,000 made members, larger associate network
+   - Revenue: Diverse criminal operations
+   - Relationships:
+     * Deep corruption networks in police and government
+     * Violent conflicts with rival families
+     - May have legitimate political influence
+   - Notable: Often presents itself as "community protector"
+
+SYNDICATE EVOLUTION AND HISTORY:
+
+Criminal syndicates emerge and evolve through the eras:
+
+Era 1-2 (Early Expansion):
+- Small-scale piracy in frontier systems
+- Limited organized crime in Sol system
+- Few established criminal networks
+
+Era 3 (Consolidation and Conflict):
+- Major criminal syndicates form during chaos of Great War
+- Black markets flourish as supply chains collapse
+- Pirate confederations unite for survival against military crackdowns
+- First cybercrime syndicates emerge with advanced AI technology
+
+Era 4 (Modern Era):
+- Mature criminal empires control significant illegal trade
+- Some syndicates more powerful than small factions
+- Constant cat-and-mouse with law enforcement
+- Occasional truces or cooperation with governments during crises
+
+SYNDICATE RELATIONSHIPS:
+
+Syndicate-to-Faction:
+- Generally hostile (hunted by law enforcement)
+- May have corrupt alliances with officials
+- Some factions tolerate them in exchange for services
+- Intelligence agencies sometimes use them as assets
+
+Syndicate-to-Syndicate:
+- Competitive or cooperative depending on territory
+- Pirate confederations vs drug cartels (different markets)
+- Cybercrime syndicates often neutral (sell to everyone)
+- Violent turf wars in contested territories
+
+Syndicate-to-Corporation:
+- Hostile (corporations are victims of theft/espionage)
+- Some corporations secretly use syndicates for dirty work
+- Black market provides what legal markets won't
+- Protection money paid by some corporate operations
+
+CRIMINAL SAFE HAVENS:
+
+Freeports (2-5 systems):
+- No legal restrictions on trade or activities
+- Governed by local strongmen or councils
+- Attract smugglers, pirates, fugitives
+- Economic hubs for illegal goods
+- May pay tribute to nearby factions for autonomy
+
+Black Market Stations:
+- Hidden or disguised as legitimate operations
+- Clearinghouses for stolen goods and contraband
+- Information brokers and contract killers
+- Laundering operations
+- Meeting places for criminal deals
+
+FACTION PROPERTIES:
+-------------------
+For each faction, define:
+
+Territory:
+- Number of systems controlled: 8-25 (varies by power level)
+- Capital system (seat of government)
+- Core systems (heavily populated, well-developed)
+- Frontier systems (newly acquired, less developed)
+
+Government Structure:
+- Head of state title and selection method
+- Legislative/advisory bodies
+- Judicial system
+- Administrative hierarchy
+
+Core Values and Ideology:
+- Primary political philosophy
+- Attitude toward individual rights
+- Economic system preferences
+- Foreign policy approach (isolationist to interventionist)
+
+Military Strength:
+- Fleet size and composition
+- Standing army/militia
+- Defense budget as % of GDP
+- Military technology level
+
+Citizen Rights and Quality of Life:
+- Civil liberties (speech, assembly, privacy)
+- Economic mobility
+- Education and healthcare access
+- Wealth inequality (Gini coefficient)
+
+FACTION EVOLUTION:
+------------------
+Track each faction's historical development:
+
+Founding (Era 1 or 2):
+- Circumstances: Rebellion, charter colony, corporate venture, conquest
+- Founding figures and their motivations
+- Initial territory (1-5 systems)
+- Founding documents or principles
+
+Expansion Phase:
+- Primary era of territorial growth
+- Colonization waves and settlement patterns
+- Systems acquired and how (peaceful vs conquest)
+- Peak territory extent
+
+Conflicts and Wars:
+- Major wars fought (with dates, opponents, causes)
+- Border disputes and skirmishes
+- Ideological clashes
+- Resource competition
+- War outcomes and territorial changes
+
+Alliances and Diplomacy:
+- Temporary wartime alliances
+- Lasting defense pacts or economic unions
+- Diplomatic incidents and treaties
+- Periods of isolation or engagement
+
+Internal Events:
+- Constitutional reforms or coups
+- Economic crises or booms
+- Social movements and revolutions
+- Succession crises or leadership changes
+
+Decline (if applicable):
+- Causes: Military defeat, economic collapse, internal strife
+- Territory lost
+- Systems that broke away or were conquered
+- Successor states or absorption by others
+
+Current Status (Era 4):
+- Present territory and population
+- Economic strength and stability
+- Military readiness
+- Current leadership and policies
+- Ongoing conflicts or tensions
+- Public sentiment and stability
+
+================================================================================
+CORPORATIONS (10 TOTAL)
+================================================================================
+
+CORPORATE TYPES AND EXAMPLES:
+------------------------------
+
+1. STARSHIP MANUFACTURING
+   - Products: FTL-capable vessels, commercial freighters, luxury yachts,
+     small craft
+   - Primary Commodity: Industrial Goods (ships are complex manufactured goods)
+   - Key Technologies: Drive systems, hull design, avionics
+   - Major Customers: All factions, shipping corporations, wealthy individuals
+
+2. WEAPONS AND DEFENSE
+   - Products: Military spacecraft, weapons systems, personal arms, armor,
+     security systems
+   - Primary Commodity: Weapons
+   - Key Technologies: Energy weapons, kinetic weapons, shields, stealth
+   - Major Customers: Military factions, security corporations, militias,
+     black market
+
+3. MINING AND RESOURCES
+   - Products: Raw materials, refined metals, processed resources
+   - Primary Commodity: Mining Output
+   - Key Technologies: Automated mining, asteroid capture, deep drilling
+   - Major Customers: Manufacturing corporations, construction, all factions
+
+4. ENERGY PRODUCTION
+   - Products: Fusion reactors, solar arrays, power storage, fuel
+   - Primary Commodity: Fuel
+   - Key Technologies: Fusion, antimatter generation, power distribution
+   - Major Customers: Colonies, industrial facilities, starships, refineries
+
+5. TECHNOLOGY AND COMPUTING
+   - Products: AI systems, quantum computers, software, communications
+   - Primary Commodity: High-Tech Goods
+   - Key Technologies: Quantum computing, AI/ML, networking, encryption
+   - Major Customers: All factions, research institutions, other corporations
+
+6. BIOTECHNOLOGY
+   - Products: Pharmaceuticals, genetic engineering, life extension, 
+     agriculture
+   - Primary Commodity: Medical (pharmaceuticals) or Agricultural (biotech food)
+   - Key Technologies: Gene editing, cloning, synthetic biology
+   - Major Customers: Medical facilities, colonies, wealthy individuals,
+     agricultural worlds
+
+7. LUXURY GOODS
+   - Products: High-end consumer products, entertainment, art, fashion,
+     exotic foods
+   - Primary Commodity: Luxury Goods
+   - Key Technologies: Advanced manufacturing, cultural production
+   - Major Customers: Wealthy individuals, stable core worlds, corporate elites
+
+8. SHIPPING AND LOGISTICS
+   - Products: Freight transport, supply chain management, courier services
+   - Primary Commodity: [Transshipment services, not producer]
+   - Trades in: All commodities (facilitates trade)
+   - Key Technologies: Fleet management, route optimization, warehousing
+   - Major Customers: All economic actors, trade-dependent systems
+
+9. TERRAFORMING AND CONSTRUCTION
+   - Products: Planetary engineering, habitat construction, infrastructure
+   - Primary Commodity: Industrial Goods (construction materials, equipment)
+   - Key Technologies: Atmospheric processing, ecosystem design, 
+     megastructure engineering
+   - Major Customers: Colonization efforts, expanding factions
+
+10. BANKING AND FINANCE
+    - Products: Interstellar credit systems, insurance, investment,
+      currency exchange
+    - Primary Commodity: [Financial services, not producer]
+    - Facilitates: All commodity trade through financing and credit
+    - Key Technologies: Blockchain/distributed ledgers, risk modeling
+    - Major Customers: All economic actors, governments
+
+CORPORATE PROPERTIES:
+---------------------
+For each corporation, define:
+
+Basic Information:
+- Corporate name
+- Industry sector (from list above)
+- Founding date and circumstances
+- Headquarters system and location
+- Corporate structure (public, private, family-owned, cooperative)
+
+Market Position:
+- Market share in their sector: Dominant (>40%), Major (20-40%), 
+  Niche (<20%)
+- Annual revenue (relative scale)
+- Number of employees
+- Reach: Number of systems with major operations (5-40)
+
+Faction Alignment:
+- Loyal to specific faction (provides advantages)
+- Neutral/multi-faction (operates everywhere)
+- Opposed to specific factions (boycott or sanctions)
+
+Reputation:
+- Public perception: Ethical innovator, reliable provider, necessary evil,
+  ruthless monopolist
+- Quality of products/services
+- Treatment of employees
+- Environmental/social responsibility
+
+Resources and Assets:
+- Key resource monopolies or mining rights
+- Technology patents and intellectual property
+- Production facilities and infrastructure
+- Fleet size (for shipping/military contractors)
+
+CORPORATE EVOLUTION:
+--------------------
+Track each corporation's historical development:
+
+Founding (any era):
+- Founder(s) and their background
+- Initial capital and backing
+- Original business focus
+- Early challenges and successes
+
+Growth Phase:
+- Market expansion strategies
+- Key innovations and product launches
+- Mergers and acquisitions (companies absorbed)
+- Vertical/horizontal integration
+
+Major Events:
+- Hostile takeover attempts (successful or failed)
+- Patent breakthroughs disrupting markets
+- Scandals (fraud, safety violations, environmental disasters)
+- Government contracts or partnerships
+- Corporate espionage incidents (victim or perpetrator)
+
+Conflicts:
+- Trade wars with competitors
+- Price-fixing cartels
+- Sabotage operations
+- Legal battles over patents or regulations
+
+Partnerships and Alliances:
+- Joint ventures with other corporations
+- Strategic alliances
+- Cartel memberships
+- Technology licensing agreements
+
+Current Status (Era 4):
+- Present market position and financial health
+- Current CEO and leadership
+- Recent initiatives or product launches
+- Ongoing conflicts or partnerships
+- Public controversies or praise
+
+Decline or Dissolution (if applicable):
+- Causes: Bankruptcy, scandal, hostile takeover, market disruption
+- Assets sold or absorbed by competitors
+- Legacy and impact on industry
+
+================================================================================
+POPULATION AND DEMOGRAPHICS
+================================================================================
+
+POPULATION MECHANICS:
+---------------------
+
+Initial Colonization:
+- First colonies: 100-1,000 colonists (early era, high risk)
+- Established colonies: 5,000-50,000 initial population
+- Corporate colonies: Often larger initial populations (10,000-100,000)
+
+Growth Factors (increase population):
+- Natural birth rate (varies by faction culture)
+- Immigration from overcrowded or poor systems
+- Economic opportunity (jobs, resources, cheap land)
+- High quality of life (healthcare, education, safety)
+- Government incentives (tax breaks, free land, subsidies)
+- Successful terraforming completion
+
+Decline Factors (decrease population):
+- Emigration to better opportunities
+- War casualties and refugees fleeing conflict
+- Disease, plague, or pandemic
+- Environmental disaster or resource depletion
+- Economic collapse or unemployment
+- Oppressive government driving brain drain
+- Failed terraforming or habitat failures
+
+Base Growth Rate: 2% per decade (adjusted by factors above)
+
+MIGRATION PATTERNS:
+-------------------
+People move between systems based on:
+
+Push Factors (leaving):
+- War zones and conflict areas
+- Economic depression or resource depletion
+- Political oppression or persecution
+- Environmental disasters
+- Overcrowding and high cost of living
+- Lack of opportunity or social mobility
+
+Pull Factors (arriving):
+- New colony opportunities (frontier spirit)
+- Economic boom systems (jobs and wealth)
+- Ideological havens (political or religious refugees)
+- Education and research opportunities
+- Lower cost of living
+- Climate and quality of life
+
+Migration Waves:
+- Era 1-2: Outward expansion from Sol, seeking new worlds
+- Era 3: Refugees from war zones, economic migration
+- Era 4: Selective migration to established, stable systems
+
+CULTURAL DRIFT:
+---------------
+Isolated systems develop distinct cultures:
+
+Linguistic Evolution:
+- Dialects and accents emerge over generations
+- New vocabulary from local conditions
+- Language mixing in multi-ethnic colonies
+- Some isolated systems develop unique creoles
+
+Cultural Development:
+- Local customs and traditions
+- Religious or philosophical movements
+- Art, music, and literature styles
+- Regional cuisine and fashion
+
+Identity Formation:
+- Strong local identity vs pan-human identity
+- Nationalism or system patriotism
+- Cultural exports and influences between systems
+- Stereotypes and prejudices between populations
+
+LABOR AND ECONOMY:
+------------------
+
+Labor Dynamics:
+- Labor shortages drive: automation adoption, wage increases, immigration
+  incentives, or exploitation
+- Labor surpluses cause: unemployment, unrest, emigration, or wage depression
+- Skilled labor concentrations: Tech hubs attract engineers and scientists
+- Unskilled labor: Mining and manufacturing in resource-rich systems
+
+Labor Conditions:
+- Utopian systems: Strong unions, worker protections, high wages
+- Corporate systems: At-will employment, competitive but insecure
+- Dystopian systems: Forced labor, indentured servitude, debt-slavery
+- Frontier systems: Dangerous work, high pay, minimal regulation
+
+================================================================================
+RELATIONSHIP MATRICES
+================================================================================
+
+FACTION-TO-FACTION RELATIONS:
+------------------------------
+Track dynamic relationships between all 6 factions using numerical scale:
+
+Relationship Scale:
+  100: Allied (mutual defense pact, free trade, open borders, shared intel)
+ 50-99: Friendly (trade agreements, diplomatic exchange, cooperation)
+  0-49: Neutral (basic diplomatic recognition, limited trade)
+-1 to -49: Cool (tensions, tariffs, border restrictions, propaganda)
+-50 to -99: Hostile (trade embargoes, proxy conflicts, espionage, cyberwar)
+ -100: War (active military conflict, shooting war)
+
+Relationships change based on:
+- Border disputes over resource-rich systems
+- Ideological conflicts (opposing government types)
+- Trade competition and economic rivalry
+- Historical grievances from past wars
+- Alliance cascades (attack on ally triggers defensive pacts)
+- Leadership changes and policy shifts
+- Terrorist attacks or assassinations
+- Treaties and peace agreements
+
+Track Historical Changes:
+- Record relationship value at end of each era
+- Document major shifts and their causes
+- Track wars: start date, end date, outcome, casualties, territorial changes
+
+Relationship Matrix Example (Era 4):
+                  Uto Corp Mil Tech Fron Dys
+Utopian Demo       --   20  -30  60   40  -80
+Corporate Olig     20   --  -10  30   50  -40
+Military Hege     -30  -10   --  -60  -20  -70
+Technocratic       60   30  -60   --   10  -50
+Frontier Conf      40   50  -20  10    --  -30
+Dystopian Auto    -80  -40  -70  -50  -30   --
+
+CORPORATION-TO-FACTION RELATIONS:
+---------------------------------
+Each corporation's relationship with each faction:
+
+Relationship Scale:
+ 75-100: Patronage (government contracts, subsidies, preferential treatment,
+         regulatory capture)
+ 25-74: Partnership (standard business relations, some contracts)
+  0-24: Neutral (minimal interaction, arm's length transactions)
+-25 to -1: Restricted (tariffs, regulations, limited market access)
+-100 to -26: Sanctioned (banned from operating, assets seized, 
+              executives wanted)
+
+Relationships based on:
+- Faction ideology compatibility with corporate values
+- Past business dealings and scandals
+- Corporate political lobbying and donations
+- Corruption and bribery
+- Strategic importance to faction (defense contractors, vital resources)
+- Public opinion and consumer pressure
+- Corporate headquarters location
+
+Example: A weapons manufacturer might have:
+- Patronage (90) with Military Hegemony (major defense contracts)
+- Restricted (-40) with Utopian Democracy (arms control regulations)
+- Sanctioned (-80) with Technocratic Collective (banned after safety scandal)
+
+CORPORATION-TO-CORPORATION RELATIONS:
+-------------------------------------
+Inter-corporate dynamics:
+
+Relationship Types:
+- Merger/Partnership (100): Combined operations, shared technology, 
+  joint ventures
+- Cartel Agreement (75): Price-fixing, market division, coordinated lobbying
+- Alliance (50): Technology sharing, mutual support, non-compete agreements
+- Competition (0): Normal market rivalry, competing for customers
+- Hostile (-50): Corporate espionage, sabotage, patent wars, smear campaigns
+- Takeover Battle (-100): Hostile acquisition attempts, proxy fights, 
+  market warfare
+
+Relationships based on:
+- Market overlap and competition
+- Complementary vs competing products
+- Merger and acquisition history
+- Patent disputes and intellectual property
+- Resource competition
+- Personality conflicts between leadership
+
+Examples:
+- Two shipping companies form cartel to fix prices
+- Biotech company and weapons manufacturer partner on bio-weapons research
+- Two starship manufacturers in bitter patent dispute
+- Mining corporation attempts hostile takeover of smaller competitor
+
+================================================================================
+HISTORICAL TIMELINE - FOUR ERAS
+================================================================================
+
+ERA 1: FIRST EXPANSION (2100-2200)
+-----------------------------------
+
+CONTEXT:
+Humanity achieves FTL travel and takes first tentative steps beyond Sol 
+system. This is an era of exploration, hope, and high risk.
+
+KEY DEVELOPMENTS:
+
+Technology:
+- Generation 1 FTL drive invented (~2095)
+  * Based on theoretical Alcubierre metric
+  * First successful test flight: 2097
+  * First crewed mission to Alpha Centauri: 2101
+- Early life support systems (bulky, unreliable)
+- First fusion reactors for power generation
+- Basic automated mining and manufacturing
+
+Expansion:
+- First colonies in nearest systems:
+  * Alpha Centauri A & B (2102-2105)
+  * Barnard's Star (2108)
+  * Wolf 359 (2112)
+  * Sirius (2115)
+  * Epsilon Eridani (2118)
+- Total systems colonized by 2200: 5-15
+- All within 15 light-years of Sol
+- Colony populations: 100-10,000 each
+
+Political:
+- Unified Earth Government controls initial expansion OR
+- Early factional splits based on ideology
+- Sol system remains center of power and authority
+- Colonial governors appointed from Earth
+- First stirrings of colonial independence movements
+
+Corporate:
+- First interstellar corporations form:
+  * Mining operations (asteroid and planetary)
+  * Shipping and logistics
+  * Habitat construction
+  * Life support systems
+- Government contracts dominate economy
+- High profits but high risks
+
+Population:
+- Small colonies with high mortality rates
+- Accidents, equipment failures, disease
+- Pioneering spirit and optimism
+- Strong ties to Earth, regular communication
+
+MAJOR EVENTS:
+
+- First Voyage (2101): Successful crewed FTL journey to Alpha Centauri, 
+  becomes historic milestone
+- First Colony (2102-2105): Establishment of Alpha Centauri colony, 
+  first permanent extrasolar human settlement
+- The Lost Ship Disaster (2110-2125): Early FTL accidents with ships lost, 
+  leads to safety regulations
+- First Interstellar Trade Agreement (2115): Treaty establishing trade 
+  rules between Sol and colonies
+- Discovery of Microbial Life (2125-2150): First confirmed extrasolar life 
+  (microbes on several worlds), transforms astrobiology
+- Colonial Rights Movement (2180-2190): Colonies demand representation and 
+  autonomy
+- The Barnard's Star Rebellion (2195-2198): Failed independence movement, 
+  brutally suppressed OR successful, becomes first independent system
+
+HISTORICAL FIGURES:
+- Dr. Elena Vasquez (2045-2125): Inventor of first practical FTL drive
+- Captain James Chen (2068-2138): Commander of first crewed interstellar 
+  voyage
+- Governor Sarah Martinez (2075-2165): Founder of Alpha Centauri colony
+- Marcus Webb (2090-2175): CEO of first major interstellar mining corporation
+- David Foster (2100-2197): Leader of Barnard's Star Rebellion
+
+SYSTEMS COLONIZED: 5-15 (closest to Sol)
+
+---
+
+ERA 2: COLONIAL PERIOD (2200-2300)
+-----------------------------------
+
+CONTEXT:
+Improved FTL technology unlocks wider expansion. Distinct factions emerge 
+with competing ideologies. Resource competition begins.
+
+KEY DEVELOPMENTS:
+
+Technology:
+- Generation 2 FTL drive deployed (~2210)
+  * Double the speed, triple the range
+  * Commercial viability for corporations
+- First successful terraforming projects begin (~2220)
+- Improved life support and habitat design
+- Advanced automated mining
+- Development of major shipyards in multiple systems
+
+Expansion:
+- Second wave of colonization reaches 30-40 light-years
+- Hundreds of colonies established
+- Multiple colonies per system become common
+- Jump routes established (sequences of systems along travel corridors)
+- Resource-rich systems become contested territory
+
+Political:
+- 6 major factions fully formed with distinct territories
+- Factional identities solidify:
+  * Different government types
+  * Competing ideologies
+  * Territorial claims and disputes
+- First embassies and formal diplomatic relations
+- Border systems become flashpoints
+
+Corporate:
+- Resource monopolies form in key industries
+- First corporate wars over mining rights
+- Mega-corporations emerge through mergers
+- Corporate city-states established in some systems
+- Black markets and smuggling operations appear
+
+Population:
+- Millions spread across dozens of worlds
+- Cultural divergence begins in isolated systems
+- First generation born in space (never saw Earth)
+- Interstellar migration patterns emerge
+- Colonial identity stronger than Earth identity
+
+MAJOR EVENTS:
+
+- FTL Generation 2 Breakthrough (2210): Enables true interstellar economy
+- The Sirius Resource War (2225-2228): First major interstellar war over 
+  helium-3 deposits
+  * Combatants: Earth forces vs Colonial Alliance
+  * Outcome: Negotiated settlement, establishes precedent for resource 
+    sharing
+- The Great Terraform (2235-2285): Ambitious terraforming of Epsilon 
+  Eridani IV
+  * Initially successful, later develops unforeseen problems
+  * Becomes cautionary tale
+- Discovery of the Tau Ceti Ruins (2240): Ancient alien structures found
+  * Non-human intelligence confirmed (extinct)
+  * Technology incomprehensible, suggests much older civilization
+  * Sparks archaeological rush and philosophical upheaval
+- Corporate Consolidation Acts (2245-2250): Major wave of mergers creates 
+  modern mega-corporations
+- The Webb Scandal (2258): Mining corporation CEO exposed for bribing 
+  officials
+  * Triggers reforms and regulations
+  * Destabilizes Corporate Oligarchy faction
+- Revolutionary Independence Movement (2270-2275): Multiple frontier 
+  colonies demand autonomy
+  * Some achieve independence, others suppressed
+  * Frontier Confederacy faction forms from successful rebellions
+- First Contact Incident (2285): Unconfirmed report of alien spacecraft
+  * Never substantiated, becomes legend/conspiracy theory
+- The Proxima Massacre (2295): Dystopian Autocracy forces destroy rebel 
+  colony
+  * 50,000 civilians killed
+  * Galvanizes opposition, begins cycle of retribution
+
+HISTORICAL FIGURES:
+- Admiral Victoria Cross (2180-2265): Commander in Sirius Resource War
+- Dr. Kenji Tanaka (2195-2278): Lead terraforming engineer
+- Alexander Frost (2210-2290): Founder of Frontier Confederacy
+- Dr. Amira Hassan (2215-2285): Archaeologist who discovered Tau Ceti Ruins
+- Maximilian Grey (2220-2298): Ruthless corporate CEO
+- General Ivan Volkov (2230-2302): Military leader of emerging hegemony
+
+SYSTEMS COLONIZED: 40-70 total
+
+---
+
+ERA 3: CONSOLIDATION AND CONFLICT (2300-2400)
+----------------------------------------------
+
+CONTEXT:
+Major wars reshape political landscape. Peak expansion period. Resource 
+depletion creates crises. This is the bloodiest and most transformative era.
+
+KEY DEVELOPMENTS:
+
+Technology:
+- Generation 3 FTL drive (2315) enables true commercial viability
+  * Affordable for small corporations and wealthy individuals
+  * Dramatically increases trade volume
+- Advanced AI and automation
+- Genetic engineering becomes commonplace
+- Quantum computing breakthroughs
+- Weapons technology advances dramatically
+
+Expansion:
+- Full 50+ light-year radius colonized
+- 80-120 systems inhabited
+- Some systems show signs of resource depletion
+- First systems abandoned due to economic collapse
+- Megastructures attempted (O'Neill cylinders, Dyson swarm components)
+
+Political:
+- "The Great War" (2330-2365): Massive multi-faction conflict
+  * 4 factions involved in complex alliance structures
+  * Tens of millions killed
+  * Dozens of systems change hands multiple times
+  * Ends with Treaty of New Terra (2365)
+- Territorial consolidation into clearly defined spheres
+- Cold war mentality becomes dominant
+- Espionage and covert operations common
+
+Corporate:
+- Mega-mergers create near-monopolies
+- Military-industrial complex dominates economy
+- Some corporations wield more power than small factions
+- Anti-trust movements in democratic factions
+- Black market and smuggling reach peak
+
+Population:
+- Billions across 80+ systems
+- Wide disparity between core and frontier worlds
+- Resource strain in heavily populated systems
+- Large-scale famines in poorly managed systems
+- Refugee crises from war zones
+
+MAJOR EVENTS:
+
+- The Great War (2330-2365): Defining conflict of the era
+  * Causes: Resource competition, ideological conflict, territorial disputes
+  * Major battles: Siege of Sirius (2335-2338), Battle of Wolf 359 (2345),
+    Procyon Campaign (2350-2355)
+  * War crimes and atrocities on multiple sides
+  * 35 million military casualties, 100+ million civilian deaths
+  * Treaty of New Terra (2365) establishes post-war order
+
+- The Vega Collapse (2320): Complete abandonment of Vega system
+  * Cause: Resource depletion and environmental catastrophe
+  * 5 million evacuated, 200,000 left behind
+  * System becomes "ghost town" with abandoned infrastructure
+  * Serves as warning about unsustainable development
+
+- Great Depression of 2340 (2338-2355): Economic collapse during war
+  * Multiple currencies collapse
+  * Supply chains destroyed by conflict
+  * Unemployment reaches 40% in some systems
+  * Starvation and social unrest widespread
+  * Leads to revolutionary movements
+
+- The Schism (2350): Technocratic Collective splits
+  * Radical AI-supremacy faction vs human-centered faction
+  * Brief civil war (2350-2353)
+  * Reunification under compromise platform
+
+- The Centauri Plague (2370-2378): Deadly pandemic
+  * Engineered bioweapon or natural outbreak? (debated)
+  * Spreads through trade routes
+  * 50 million deaths across 20 systems
+  * Leads to quarantine protocols and medical advances
+
+- Fusion Breakthrough (2375): Cheap, efficient fusion reactors
+  * Corporate research breakthrough
+  * Transforms energy economics
+  * Reduces dependence on helium-3 mining
+  * Shifts balance of power
+
+- Corporate Coup of Altair (2380): Corporation seizes control of system 
+  government
+  * First openly corporate-ruled system
+  * Controversial but economically successful
+  * Model for Corporate Oligarchy expansion
+
+- The Assassination of Premier Volkov (2388): Leader of Military Hegemony 
+  killed
+  * Never solved, multiple suspects
+  * Triggers succession crisis and internal purges
+  * Weakens Hegemony for a generation
+
+- Discovery of Quantum Computing Applications (2395): Major tech 
+  breakthrough
+  * Enables advanced AI and simulation
+  * Cryptography revolution
+  * Initially monopolized by inventor corporation
+
+HISTORICAL FIGURES:
+- Marshal Elena Rostova (2295-2375): Supreme commander during Great War
+- President James Harrison (2300-2368): Leader of Utopian Democracy during 
+  war
+- Dr. Yuki Sato (2320-2390): Virologist who fought Centauri Plague
+- Chairwoman Maria Santos (2315-2380): Corporate leader, brutal monopolist
+- Admiral Chen Wei (2310-2365): War hero, later war criminal
+- Terrorist/Freedom Fighter (depending on perspective) Ahmed Al-Rashid 
+  (2335-2385)
+
+SYSTEMS COLONIZED: 80-120 (peak)
+SYSTEMS ABANDONED: 5-10
+
+---
+
+ERA 4: MODERN ERA (2400-Present, ~2450)
+----------------------------------------
+
+CONTEXT:
+Established power structures, mature economy, uneasy peace or cold wars. 
+The "present day" of the game universe.
+
+KEY DEVELOPMENTS:
+
+Technology:
+- Generation 4 FTL drive (2380, now standard) ubiquitous
+- Mature AI integration in daily life
+- Genetic modification common
+- Life extension technologies (150+ year lifespan for wealthy)
+- Advanced materials and manufacturing
+- Military technology highly sophisticated but rarely used
+
+Expansion:
+- Minimal new colonization (95% of viable systems already settled)
+- Focus on developing and terraforming existing colonies
+- Some renewed interest in previously abandoned systems
+- Occasional discovery of new habitable worlds sparks settlement rush
+
+Political:
+- Cold wars and proxy conflicts more common than open warfare
+- Complex web of alliances and treaties
+- Espionage and cyberwarfare constant
+- Economic and trade wars substitute for military conflict
+- Recent war ended with treaty (5-20 years ago)
+- New tensions building over new issues
+
+Corporate:
+- Mature oligopolies with entrenched positions
+- Some disruption from innovative startups
+- Public backlash against corporate power in democratic factions
+- Corporate city-states accepted as normal in some regions
+- Black market still thriving in frontier systems
+
+Population:
+- Tens of billions across all systems
+- Extreme wealth disparity:
+  * Core worlds: Advanced, wealthy, high quality of life
+  * Mid-tier worlds: Industrial, middle-class, stable
+  * Frontier worlds: Poor, dangerous, opportunistic
+  * Dystopian worlds: Oppressed, surveilled, exploited
+- Migration from frontier to core slowing due to restrictions
+- Cultural renaissance in some systems
+
+MAJOR EVENTS (Recent History, 2400-2450):
+
+- Treaty of Arcturus (2430): Ended the Border War (2425-2430)
+  * Military Hegemony vs Frontier Confederacy
+  * 5 million casualties
+  * Established current borders, still contentious
+  * Fragile peace, potential for renewed conflict
+
+- The Vega Reclamation (2435-present): Effort to recolonize abandoned 
+  system
+  * Pioneering effort attracts opportunists and idealists
+  * Slowly rebuilding infrastructure
+  * Valuable intact pre-Collapse infrastructure being salvaged
+
+- AI Rights Movement (2438-present): Push for AI personhood
+  * Controversial across all factions
+  * Technocratic Collective leads, others resist
+  * Some AIs granted citizenship in limited jurisdictions
+
+- The Procyon Discovery (2442): Massive rare-earth deposit found
+  * System previously considered unimportant
+  * Now strategic target, multiple factions claim rights
+  * Corporate bidding war ongoing
+  * Potential flashpoint for conflict
+
+- Life Extension Scandal (2445): Biotech corporation hid serious side 
+  effects
+  * Wealthy customers suffer unexpected deaths
+  * Stock crashes, executives face criminal charges
+  * Public backlash against corporate healthcare
+
+- The Frontier Pact (2447): 12 independent systems form defensive alliance
+  * Response to perceived threats from major factions
+  * May be absorbed into Frontier Confederacy or remain independent
+  * Changes balance of power in outer regions
+
+- Tau Ceti Archaeological Breakthrough (2448): Partial alien tech 
+  deciphered
+  * Energy storage technology centuries beyond human capability
+  * Sparks new archaeological rush
+  * Military applications concerning to peaceniks
+
+- Cyber-Attack on Military Hegemony (2449): Massive data breach
+  * Military secrets stolen, leaked to public
+  * Embarrassing revelations about surveillance and war crimes
+  * Blame placed on Technocratic Collective (denied)
+  * Tensions escalating
+
+CURRENT TENSIONS AND FLASHPOINTS (2450):
+
+1. Procyon Resource Dispute: Multiple claimants, armed standoff
+2. Military Hegemony-Technocratic Cold War: Espionage and accusations
+3. Corporate Power: Growing populist movements in democratic factions
+4. AI Rights: Philosophical and legal battle dividing societies
+5. Frontier Independence: Confederacy expanding, threatening major factions
+6. Alien Technology: Race to exploit Tau Ceti discoveries
+7. Economic Inequality: Growing unrest in poor systems
+8. Dystopian Expansionism: Autocracy eyeing neighboring systems
+9. Trade Route Piracy: Frontier lawlessness threatening commerce
+10. Resource Depletion: Several systems facing environmental crises
+
+NOTABLE CURRENT FIGURES (2450):
+
+- President Amara Okafor (Utopian Democracy): Idealistic reformer, age 55
+- Chairman Victor Zhao (Corporate Oligarchy): Pragmatic dealmaker, age 67
+- Supreme Leader Konstantin Petrov (Military Hegemony): Hardline 
+  expansionist, age 62
+- Director Dr. Aria Chen (Technocratic Collective): AI-assisted governance 
+  advocate, age 58
+- Governor Jackson Reed (Frontier Confederacy): Former smuggler turned 
+  statesman, age 71
+- Eternal Chairman Liu Wei (Dystopian Autocracy): Cyborg dictator with life 
+  extension, age 135
+- CEO Jennifer Hartmann (StarDrive Corp, Starship Manufacturing): Industry 
+  titan, age 52
+- CEO Marcus Kane (Orion Defense, Weapons): Controversial arms dealer, 
+  age 60
+- CEO Priya Anand (Helios Mining): Controls 40% of helium-3 production, 
+  age 45
+
+SYSTEMS COLONIZED: 80-120 (stable)
+SYSTEMS ABANDONED: 5-10 (some being reclaimed)
+
+================================================================================
+RANDOM EVENTS AND WILDCARDS
+================================================================================
+
+NATURAL DISASTERS (15% per system per era):
+--------------------------------------------
+- Solar flares: Disrupt communications, damage satellites, radiation exposure
+- Asteroid/comet impacts: Catastrophic if hits inhabited area
+- Supervolcanic eruptions: On terraformed worlds, can undo decades of work
+- Seismic activity: Earthquakes on geologically active worlds
+- Atmospheric storms: Jupiter-scale storms on gas giants affecting mining
+- Rogue planet: Passing through system, disrupts orbits
+
+Impact: Deaths, infrastructure damage, economic disruption, evacuation, 
+        long-term recovery
+
+DISEASE AND HEALTH (10% per populated system per era):
+-------------------------------------------------------
+- Plague outbreak: Single world, high mortality
+- Pandemic: Spreads through trade routes, multiple systems
+- Genetic disorder: Limited founder population leads to inherited diseases
+- Alien microbe: Indigenous life form incompatible with human biology
+- Bioweapon attack: Deliberate release by terrorists or hostile faction
+- Medical breakthrough: Cure for disease, life extension, genetic therapy
+
+Impact: Population decline, quarantine, economic impact, political upheaval
+
+MAJOR DISCOVERIES (5% chance per era, any location):
+-----------------------------------------------------
+- Ancient alien artifacts: Technology, art, or structures
+- Intact alien technology: Potentially functional and reverse-engineerable
+- Stable wormhole: Natural FTL shortcut connecting distant systems
+- Massive resource deposit: Game-changing quantities of rare resources
+- Habitable world: Unexpected discovery in system thought barren
+- Scientific breakthrough: Fundamental physics or exotic phenomena
+
+Impact: Archaeological rush, technology leap, territorial disputes, 
+        paradigm shift
+
+POLITICAL UPHEAVALS (20% per faction per era):
+-----------------------------------------------
+- Revolutionary movement: Popular uprising against government
+- Coup d'état: Military or faction elite seize power
+- Assassination: Leader killed, succession crisis
+- Scandal: Corruption exposed, government loses legitimacy
+- Democratic upset: Unexpected election result, policy shift
+- Secession: System or colony breaks away
+- Civil war: Internal conflict within faction
+
+Impact: Government change, policy shift, instability, violence, 
+        refugee crisis
+
+FIRST CONTACT SCENARIOS (1% chance per era, cumulative):
+---------------------------------------------------------
+- Alien intelligence contact: Non-human sentient species
+  * Peaceful: Trade, cultural exchange, alliance
+  * Neutral: Observation, limited interaction
+  * Hostile: Territorial dispute, incompatible biology, aggression
+- Rogue AI: Artificial intelligence achieves sentience
+  * Cooperative: Seeks coexistence and rights
+  * Independent: Departs for own purposes
+  * Hostile: Sees humans as threat or resource
+- Extradimensional entity: Beings from parallel universe or higher dimension
+  * Incomprehensible: Beyond human understanding
+  * Dangerous: Unintentional or intentional threat
+
+Impact: Paradigm shift, technological leap or disaster, existential threat 
+        or opportunity, philosophical crisis
+
+CORPORATE DRAMA (25% per major corporation per era):
+-----------------------------------------------------
+- Hostile takeover attempt: Rival bids for acquisition
+- Bankruptcy: Financial collapse from mismanagement or disaster
+- Embezzlement scandal: Executives caught stealing
+- Fraud: Cooking books, false advertising, Ponzi schemes
+- Product failure: Catastrophic malfunction kills customers
+- Breakthrough innovation: New product disrupts entire market
+- Sabotage: Competitor or faction destroys facilities or reputation
+- Merger: Voluntary combination with competitor
+- Whistleblower: Insider exposes corporate crimes
+
+Impact: Stock crash, leadership change, legal prosecution, market disruption
+
+CRIMINAL SYNDICATE EVENTS (15% per syndicate per era):
+-------------------------------------------------------
+- Turf War: Violent conflict between rival syndicates over territory
+- Major Heist: Spectacular theft of valuable cargo or data
+- Law Enforcement Crackdown: Faction launches major anti-crime operation
+- Syndicate War: Full-scale conflict with government or rival syndicate
+- Leadership Assassination: Crime boss killed, succession struggle
+- Betrayal: Member turns informant or rival, internal purge
+- Expansion: Syndicate moves into new territory or market
+- Alliance: Two syndicates form partnership for mutual benefit
+- Spectacular Failure: Major operation goes wrong, members captured/killed
+
+Impact: Shift in black market power, violence spillover to civilians, 
+        price changes for illegal goods, law enforcement victories/failures
+
+EVENT IMPACT SYSTEM:
+--------------------
+Each event generates cascading consequences:
+
+Immediate Effects (0-5 years):
+- Deaths, injuries, destruction
+- Economic shock (production halt, market crash)
+- Emergency response and relief efforts
+- Media coverage and public reaction
+
+Short-Term Effects (5-20 years):
+- Refugee movements and migration
+- Investigation and accountability
+- Infrastructure rebuilding
+- Policy debates and proposed reforms
+
+Long-Term Effects (20+ years):
+- Policy changes and new regulations
+- Relationship shifts (faction and corporate)
+- Cultural impact (memorials, lessons learned)
+- Economic restructuring
+- Technological adaptation
+
+Historical Legacy:
+- Named in history books and popular culture
+- Influences future decisions and policies
+- Shapes faction and corporate identities
+- Creates heroes, villains, and martyrs
+
+================================================================================
+NOTABLE INDIVIDUALS AND EVENTS
+================================================================================
+
+HISTORICAL FIGURES (5-10 per era):
+-----------------------------------
+
+Generate notable people who shaped history in categories:
+
+1. EXPLORERS AND PIONEERS:
+   - First to reach distant systems
+   - Discoverers of major phenomena (ruins, resources, habitable worlds)
+   - Colonization leaders and settlement founders
+
+2. POLITICAL LEADERS:
+   - Faction founders and constitutional architects
+   - War leaders (generals, admirals, strategists)
+   - Reformers who changed government systems
+   - Tyrants and dictators (oppressors)
+   - Revolutionary leaders
+
+3. CORPORATE LEADERS:
+   - Visionary CEOs who built empires
+   - Ruthless monopolists who crushed competition
+   - Fraudsters and criminals
+   - Philanthropists and reformers
+   - Inventors and innovators
+
+4. SCIENTISTS AND INVENTORS:
+   - FTL drive inventors
+   - Terraforming pioneers
+   - AI and computer scientists
+   - Weapons designers
+   - Medical researchers
+
+5. REVOLUTIONARIES AND ACTIVISTS:
+   - Independence movement leaders
+   - Labor organizers and union founders
+   - Civil rights advocates
+   - Terrorists (or freedom fighters, depending on perspective)
+   - Cult leaders and religious founders
+
+6. CULTURAL ICONS:
+   - Artists who defined eras
+   - Philosophers who influenced societies
+   - Celebrities and entertainers
+   - Writers and journalists
+   - Musicians and performers
+
+For Each Figure Include:
+- Full name
+- Birth and death dates (or current age if alive)
+- Faction or corporation affiliation
+- Major accomplishments or crimes
+- Key events they participated in or caused
+- Historical impact and legacy
+- How they're remembered (hero, villain, tragic figure, complex)
+- Famous quotes or associated symbols
+
+LANDMARK EVENTS (10-20 per era):
+---------------------------------
+
+Major historical events with proper names and details:
+
+EVENT CATEGORIES:
+
+1. TREATIES AND DIPLOMATIC AGREEMENTS:
+   - "The Centauri Accords" (2115): First interstellar trade agreement
+   - "Treaty of New Terra" (2365): Ended the Great War
+   - "The Arcturus Treaty" (2430): Recent peace ending Border War
+
+2. WARS AND CONFLICTS:
+   - "The Sirius Resource War" (2225-2228): First major interstellar war
+   - "The Great War" (2330-2365): Massive multi-faction conflict
+   - "The Border War" (2425-2430): Recent Military vs Frontier conflict
+
+3. DISASTERS AND CATASTROPHES:
+   - "The Lost Ship Disaster" (2110-2125): Early FTL accidents
+   - "The Vega Collapse" (2320): Complete system abandonment
+   - "The Centauri Plague" (2370-2378): Deadly pandemic
+   - "The Procyon Massacre" (2295): 50,000 civilians killed
+
+4. DISCOVERIES AND BREAKTHROUGHS:
+   - "The First Voyage" (2101): First crewed FTL journey
+   - "The Tau Ceti Ruins" (2240): Discovery of ancient alien civilization
+   - "The Fusion Breakthrough" (2375): Energy revolution
+   - "The Procyon Discovery" (2442): Massive resource find
+
+5. POLITICAL MOVEMENTS AND REVOLUTIONS:
+   - "Colonial Rights Movement" (2180-2190): Demand for autonomy
+   - "The Barnard's Star Rebellion" (2195-2198): First independence war
+   - "The Schism" (2350-2353): Technocratic Collective civil war
+   - "AI Rights Movement" (2438-present): Push for AI personhood
+
+6. CORPORATE AND ECONOMIC EVENTS:
+   - "The Webb Scandal" (2258): Corporate fraud exposed
+   - "Corporate Consolidation Acts" (2245-2250): Merger wave
+   - "Great Depression of 2340" (2338-2355): Economic collapse
+   - "Life Extension Scandal" (2445): Biotech fraud
+
+For Each Event Include:
+- Proper name (memorable, evocative)
+- Date or date range
+- Systems involved
+- Factions involved
+- Corporations involved
+- Key figures (from generated people)
+- Causes (what led to it)
+- Course of events (what happened)
+- Consequences (immediate and long-term)
+- Historical significance
+- How it's remembered and commemorated
+- Controversies or disputed interpretations
+
+NAMING CONVENTIONS:
+-------------------
+Events should have memorable names that fit patterns:
+
+- Treaty of [Location]: Peace agreements, diplomatic accords
+- [Location] War/Rebellion/Conflict: Military events
+- The [Descriptor] [Event]: "The Great War", "The First Voyage"
+- [Location] [Type]: "Centauri Plague", "Vega Collapse"
+- The [Number/Descriptor] [Event]: "The Lost Ship Disaster"
+
+These names should feel natural and emerge from how people would actually 
+refer to these events in conversation and history books.
+
+================================================================================
+CONFIGURATION PARAMETERS
+================================================================================
+
+All adjustable parameters should be centralized in config.py:
+
+SIMULATION CONTROL:
+-------------------
+seed: None  # None for random, integer (e.g., 12345) for reproducible
+output_dir: 'output/'
+verbose: True  # Print progress during generation
+validate_output: True  # Check data consistency
+
+STAR SYSTEM PARAMETERS:
+-----------------------
+min_systems: 80
+max_systems: 120
+star_data_source: 'data/star_catalog.csv'
+max_radius_ly: 50  # Expand to 60-70 if needed for system count
+grid_size: 100  # 2D map dimensions (100x100)
+grid_center: (50, 50)  # Sol system position on grid
+
+# Planet generation
+min_planets: 1
+max_planets: 8
+gas_giant_probability: 0.3
+ice_giant_probability: 0.2
+
+# Inhabited locations
+inhabited_probability: 0.60  # Chance system has any inhabited locations
+min_inhabited: 0
+max_inhabited: 5
+space_station_probability: 0.3  # If system is inhabited
+moon_colony_probability: 0.2  # Per habitable moon
+
+# Special locations
+abandoned_probability: 0.15  # Chance inhabited location is abandoned
+special_site_probability: 0.05  # Abandoned installations per system
+alien_site_probability: 0.008  # Ancient alien facilities (very rare)
+
+ENTITY COUNTS:
+--------------
+num_factions: 6  # Legitimate government factions
+num_syndicates: 3-5  # Criminal syndicates (pirates, cartels, cybercrime)
+num_corporations: 10
+notable_people_per_era: 8
+landmark_events_per_era: 15
+
+EVENT PROBABILITIES (per era, adjusted by context):
+----------------------------------------------------
+# These are BASE probabilities, modified by historical context
+
+# Political and military
+war_likelihood: 0.30  # Major inter-faction war
+conflict_likelihood: 0.50  # Minor conflicts, skirmishes, border disputes
+revolution_likelihood: 0.20  # Political upheavals per faction
+coup_probability: 0.10  # Per faction per era
+assassination_probability: 0.05  # Major figure per faction per era
+
+# Corporate
+merger_likelihood: 0.40  # Corporate mergers/acquisitions
+corporate_drama_likelihood: 0.25  # Scandals, collapses per corporation
+hostile_takeover_probability: 0.15  # Per corporation per era
+bankruptcy_probability: 0.10  # Per corporation per era
+
+# Criminal Syndicates
+syndicate_event_likelihood: 0.15  # Major syndicate events per syndicate per era
+turf_war_probability: 0.20  # Syndicate vs syndicate conflict
+crackdown_probability: 0.25  # Law enforcement operation per syndicate per era
+piracy_incident_rate: 0.08  # Per trade route per era
+
+# Discoveries
+discovery_likelihood: 0.20  # Major discoveries per era
+alien_ruin_probability: 0.05  # Per explored system per era
+wormhole_probability: 0.01  # Per era total
+resource_discovery_probability: 0.15  # Per system per era
+
+# Disasters
+disaster_likelihood: 0.15  # Natural disasters per system per era
+plague_likelihood: 0.10  # Disease outbreaks per system per era
+famine_probability: 0.08  # Per system per era
+industrial_accident_probability: 0.12  # Per inhabited location per era
+
+# Extreme rare events
+first_contact_likelihood: 0.01  # Alien contact, cumulative per era
+rogue_ai_probability: 0.005  # Per era total
+existential_threat_probability: 0.001  # Catastrophic event per era
+
+ECONOMIC PARAMETERS:
+--------------------
+# Trade
+trade_route_threshold: 5.0  # Minimum trade value for established route
+trade_volume_multiplier: 1.5  # Growth rate per era
+piracy_rate: 0.05  # Percentage of trade lost to piracy in unsafe areas
+
+# Commodity base prices (credits per ton)
+commodity_base_prices:
+  mining_output: 30
+  industrial_goods: 300
+  agricultural: 50
+  high_tech: 1200
+  luxury: 5000
+  fuel: 140
+  medical: 1800
+  weapons: 3000
+  drugs: 12000
+  blacknet: 25000
+
+# Commodity price volatility (multiplier range: min, max)
+commodity_volatility:
+  mining_output: (0.8, 1.2)      # Low volatility
+  industrial_goods: (0.85, 1.15) # Low volatility
+  agricultural: (0.6, 2.0)       # Medium (supply disruptions)
+  high_tech: (0.7, 1.8)          # Medium-high (tech changes)
+  luxury: (0.5, 3.0)             # Very high (fashion/trends)
+  fuel: (0.9, 1.3)               # Low (universal need)
+  medical: (0.6, 5.0)            # High (crisis spikes)
+  weapons: (0.7, 2.5)            # High (wartime demand)
+  drugs: (0.3, 4.0)              # Extreme (black market)
+  blacknet: (0.4, 5.0)           # Extreme (information economy)
+
+# Commodity legality (which commodities are illegal where)
+# Only list illegal commodities; unlisted commodities are legal
+illegal_commodities:
+  core_world: [weapons, drugs, blacknet]
+  industrial_world: [weapons, drugs, blacknet]
+  agricultural_world: [weapons, drugs, blacknet]
+  mining_colony: [drugs, blacknet]
+  tech_hub: [weapons, drugs, blacknet]
+  military_base: [drugs, blacknet]  # Weapons legal here
+  trade_station: [weapons, drugs, blacknet]
+  refinery: [weapons, drugs, blacknet]
+  research_station: [weapons, drugs]
+  frontier_colony: [drugs, blacknet]
+  luxury_resort: [weapons, drugs, blacknet]
+  corporate_hq: [weapons, drugs, blacknet]
+  prison_colony: [weapons, drugs, blacknet]
+  freeport: []  # Nothing illegal in freeports
+  automated_mining: [weapons, drugs, blacknet]
+  abandoned: []  # No law in abandoned locations
+
+# Resources
+resource_depletion_rate: 0.02  # Percentage per era from extraction
+discovery_replenishment: 0.10  # Chance to find new deposits
+resource_price_volatility: 0.3  # Price fluctuation range
+
+# Economy cycles
+boom_probability: 0.15  # Economic boom per system per era
+bust_probability: 0.10  # Economic collapse per system per era
+boom_duration_years: (10, 30)  # Min, max years
+bust_duration_years: (5, 20)
+
+# Uninhabited resource scanning probabilities
+scan_probabilities:
+  asteroid: 0.60
+  barren_rocky: 0.40
+  ice_moon: 0.70
+  gas_giant_moon: 0.50
+  volcanic_world: 0.35
+  gas_giant: 1.0  # Always scoop-able
+  ancient_ruin: 0.10
+
+# Resource richness distribution (probabilities sum to 1.0)
+resource_richness_distribution:
+  none: 0.20
+  poor: 0.30
+  fair: 0.25
+  good: 0.15
+  rich: 0.08
+  motherlode: 0.02
+
+# Mining output volume ranges by richness (tons per extraction cycle)
+mining_volume_by_richness:
+  none: (0, 0)
+  poor: (100, 1000)
+  fair: (1000, 5000)
+  good: (5000, 15000)
+  rich: (15000, 40000)
+  motherlode: (40000, 100000)
+
+# Industry distribution (% of inhabited locations by type)
+# These are target percentages; actual distribution may vary
+industry_distribution:
+  core_world: 0.08
+  industrial_world: 0.12
+  agricultural_world: 0.15
+  mining_colony: 0.18
+  tech_hub: 0.06
+  military_base: 0.08
+  trade_station: 0.10
+  refinery: 0.05
+  research_station: 0.04
+  frontier_colony: 0.10
+  luxury_resort: 0.02
+  corporate_hq: 0.03
+  prison_colony: 0.02
+  freeport: 0.02
+  automated_mining: 0.03
+
+TECHNOLOGY PARAMETERS:
+----------------------
+# FTL generations
+ftl_generations: 4
+ftl_gen1_speed_ly_per_month: (0.5, 1.0)  # Min, max
+ftl_gen2_speed_ly_per_month: (2.0, 4.0)
+ftl_gen3_speed_ly_per_month: (5.0, 8.0)
+ftl_gen4_speed_ly_per_day: (3.0, 5.0)  # Modern era: 90-150 LY/month
+
+# Technology diffusion
+tech_spread_rate_open: 0.7  # Per era for open/government tech
+tech_spread_rate_proprietary: 0.3  # For corporate proprietary tech
+tech_embargo_effectiveness: 0.8  # Reduction in spread due to embargo
+tech_espionage_rate: 0.1  # Chance to steal embargoed tech
+
+# Technology regression
+tech_regression_rate_isolated: 0.05  # Isolated systems per era
+tech_regression_rate_war: 0.10  # War-torn systems per era
+
+# Terraforming
+terraforming_duration_years: (50, 200)  # Based on planet conditions
+terraforming_success_rate: 0.80  # Success vs partial/failure
+terraforming_cost_multiplier: 1.0  # Economic impact
+
+POPULATION PARAMETERS:
+----------------------
+# Initial colonies
+initial_colony_size: (500, 5000)  # Min, max first wave
+established_colony_size: (5000, 50000)  # Later waves
+corporate_colony_size: (10000, 100000)  # Corporate settlements
+
+# Growth and decline
+growth_rate_base: 0.02  # 2% per decade under normal conditions
+growth_rate_boom: 0.05  # During economic boom
+growth_rate_war: -0.03  # During war (negative = decline)
+growth_rate_plague: -0.10  # During disease outbreak
+
+# Migration
+migration_rate_normal: 0.05  # Between systems under normal conditions
+migration_rate_war: 0.20  # Refugees fleeing conflict
+migration_rate_boom: 0.15  # Economic migrants to boom systems
+emigration_rate_bust: 0.10  # Leaving failed economies
+
+# Demographics
+founding_population_diversity: 0.7  # Genetic/cultural diversity
+isolation_drift_rate: 0.02  # Cultural divergence per era
+intermarriage_rate: 0.3  # Cultural blending between groups
+
+RELATIONSHIP PARAMETERS:
+------------------------
+# Starting relationships
+faction_starting_relations: (-20, 20)  # Range for initial values
+corporate_faction_relations: (0, 50)  # Corps start neutral to friendly
+corporate_corporate_relations: (-10, 30)  # Some rivalry built in
+
+# Relationship change rates
+alliance_bonus: +25  # Per era for allied factions
+trade_agreement_bonus: +10  # Per era with strong trade
+war_penalty: -50  # During active war
+border_dispute_penalty: -5  # Per era with ongoing dispute
+ideological_alignment_bonus: +5  # Per era for similar ideologies
+
+# Relationship thresholds
+alliance_threshold: 75  # Minimum for mutual defense pact
+trade_agreement_threshold: 25  # Minimum for open trade
+war_threshold: -75  # Below this, war becomes likely
+embargo_threshold: -50  # Below this, trade embargoes likely
+
+TIMELINE:
+---------
+eras:
+  - name: 'First Expansion'
+    start: 2100
+    end: 2200
+    ftl_generation: 1
+    colonization_rate: 'slow'
+    conflict_level: 'low'
+    
+  - name: 'Colonial Period'
+    start: 2200
+    end: 2300
+    ftl_generation: 2
+    colonization_rate: 'medium'
+    conflict_level: 'medium'
+    
+  - name: 'Consolidation and Conflict'
+    start: 2300
+    end: 2400
+    ftl_generation: 3
+    colonization_rate: 'high'
+    conflict_level: 'very high'
+    
+  - name: 'Modern Era'
+    start: 2400
+    end: 2450
+    ftl_generation: 4
+    colonization_rate: 'minimal'
+    conflict_level: 'medium'
+
+current_year: 2450
+
+# Era-specific modifiers
+era_modifiers:
+  'First Expansion':
+    disaster_multiplier: 2.0  # Higher risk in early era
+    discovery_multiplier: 1.5  # More unknowns to discover
+    war_multiplier: 0.5  # Less warfare initially
+    
+  'Colonial Period':
+    colonization_multiplier: 1.5
+    corporation_growth_multiplier: 2.0
+    faction_formation_multiplier: 1.5
+    
+  'Consolidation and Conflict':
+    war_multiplier: 2.0
+    territory_change_multiplier: 1.5
+    corporate_merger_multiplier: 1.5
+    
+  'Modern Era':
+    stability_multiplier: 1.3
+    technology_multiplier: 1.2
+    colonization_multiplier: 0.5
+
+RANDOM SEED MANAGEMENT:
+-----------------------
+# If seed is None, generate random seed and save it
+# If seed is provided, use it for reproducible generation
+# All random number generation must use seeded RNG
+
+random_seed: None  # Set to integer for reproducible runs
+
+# Example usage:
+# python generate_universe.py --seed 42
+# This will produce identical universe every time with seed 42
+
+================================================================================
+OUTPUT FORMATS
+================================================================================
+
+PRIMARY OUTPUT: universe.json
+------------------------------
+Complete simulation data in structured JSON format:
+
+{
+  "metadata": {
+    "seed": 12345,
+    "generation_date": "2024-12-02T10:30:00Z",
+    "version": "1.0",
+    "config_snapshot": { ... }  # Copy of config used
+  },
+  
+  "systems": [
+    {
+      "id": "sys_001",
+      "name": "Alpha Centauri",
+      "real_name": "Alpha Centauri A",
+      "position_3d": [x, y, z],  # Light-years from Sol
+      "position_2d": [x, y],     # Grid coordinates (0-100)
+      "spectral_class": "G2V",
+      "distance_from_sol_ly": 4.37,
+      "planets": [ ... ],
+      "inhabited_locations": [ ... ],
+      "special_sites": [ ... ],
+      "resources": { ... },
+      "controlling_faction": "fac_001",
+      "population": 50000000,
+      "founded": 2102,
+      "history": [ ... ]
+    },
+    ...
+  ],
+  
+  "factions": [
+    {
+      "id": "fac_001",
+      "name": "Utopian Democracy",
+      "government_type": "representative_democracy",
+      "ideology": { ... },
+      "capital_system": "sys_015",
+      "territory": ["sys_015", "sys_023", ...],
+      "founded": 2180,
+      "history": [ ... ],
+      "current_leader": "per_042",
+      "military_strength": 8.5,
+      "economic_strength": 7.2
+    },
+    ...
+  ],
+  
+  "syndicates": [
+    {
+      "id": "syn_001",
+      "name": "Outer Reach Corsairs",
+      "type": "pirate_confederation",
+      "primary_activities": ["piracy", "smuggling", "protection_rackets"],
+      "base_systems": ["sys_045", "sys_067"],
+      "hidden_bases": 12,
+      "strength": {
+        "ships": 150,
+        "members": 8000,
+        "military_rating": 3.5
+      },
+      "founded": 2285,
+      "revenue_credits_annual": 500000000,
+      "history": [ ... ],
+      "current_leader": "per_087",
+      "relationships": {
+        "hostile": ["fac_001", "fac_003", "fac_005"],
+        "neutral": ["fac_004"],
+        "allied": ["syn_003"]
+      }
+    },
+    ...
+  ],
+  
+  "corporations": [
+    {
+      "id": "corp_001",
+      "name": "StarDrive Corporation",
+      "sector": "starship_manufacturing",
+      "headquarters": "sys_010",
+      "founded": 2105,
+      "market_share": 0.35,
+      "reach": ["sys_010", "sys_020", ...],
+      "faction_alignment": "neutral",
+      "history": [ ... ]
+    },
+    ...
+  ],
+  
+  "technologies": [
+    {
+      "id": "tech_001",
+      "name": "FTL Generation 1",
+      "type": "ftl_drive",
+      "discovered": 2095,
+      "inventor": "per_001",
+      "spread_rate": 0.3,
+      "current_adoption": {
+        "fac_001": 1.0,
+        "fac_002": 1.0,
+        ...
+      }
+    },
+    ...
+  ],
+  
+  "timeline": [
+    {
+      "id": "evt_001",
+      "name": "First Voyage",
+      "type": "discovery",
+      "date": 2101,
+      "systems": ["sys_000", "sys_001"],
+      "factions": ["fac_000"],
+      "people": ["per_002"],
+      "description": "...",
+      "impact": { ... }
+    },
+    ...
+  ],
+  
+  "relationships": {
+    "faction_to_faction": {
+      "fac_001": {
+        "fac_002": 20,
+        "fac_003": -30,
+        ...
+      },
+      ...
+    },
+    "corporation_to_faction": {
+      "corp_001": {
+        "fac_001": 75,
+        ...
+      },
+      ...
+    },
+    "corporation_to_corporation": {
+      "corp_001": {
+        "corp_002": -50,
+        ...
+      },
+      ...
+    }
+  },
+  
+  "trade_routes": [
+    {
+      "id": "route_001",
+      "from_system": "sys_010",
+      "to_system": "sys_025",
+      "resources": ["helium3", "rare_earths"],
+      "volume": 1000000,  # Metric tons per year
+      "controlling_corporation": "corp_005",
+      "established": 2215,
+      "status": "active"  # or "disrupted", "closed"
+    },
+    ...
+  ],
+  
+  "notable_people": [
+    {
+      "id": "per_001",
+      "name": "Dr. Elena Vasquez",
+      "birth": 2045,
+      "death": 2125,
+      "faction": "fac_000",
+      "role": "scientist",
+      "accomplishments": ["Invented FTL Gen 1"],
+      "events": ["evt_001", "evt_003"],
+      "legacy": "Regarded as the founder of interstellar civilization"
+    },
+    ...
+  ],
+  
+  "current_state": {
+    "year": 2450,
+    "active_conflicts": [ ... ],
+    "recent_events": [ ... ],
+    "tensions": [ ... ],
+    "opportunities": [ ... ]
+  }
+}
+
+GAME DATA EXPORTS (CSV files):
+-------------------------------
+
+systems.csv:
+system_id,name,x,y,spectral_class,num_planets,inhabited_count,population,
+faction,num_uninhabited_scannable
+
+Example:
+sys_001,Alpha Centauri,52.1,48.3,G2V,4,2,50000000,fac_001,3
+
+installations.csv (INHABITED LOCATIONS):
+install_id,system_id,name,type,population,faction,founded,status,
+industry_profile,produces_1,produces_1_volume,produces_2,produces_2_volume,
+produces_3,produces_3_volume,consumes_1,consumes_1_volume,consumes_2,
+consumes_2_volume,consumes_3,consumes_3_volume,consumes_4,consumes_4_volume
+
+Example inhabited:
+loc_001,sys_001,Centauri Prime,core_world,45000000,fac_001,2105,active,
+core_world,industrial_goods,8000,high_tech,3000,luxury_goods,500,
+mining_output,12000,agricultural,6000,fuel,4000,,
+
+Example space station:
+loc_002,sys_001,Centauri Trade Station,trade_station,250000,fac_001,2115,
+active,trade_hub,,,,,,,agricultural,300,fuel,1200,industrial_goods,150,
+medical,50
+
+uninhabited_resources.csv (SCANNABLE BODIES):
+resource_id,system_id,name,body_type,scan_mining_probability,
+mining_output_richness,mining_output_volume,depletion_rate,
+special_notes
+
+Example asteroid:
+res_001,sys_001,Centauri Belt Alpha-7,asteroid,0.65,good,3500,0.08,
+iron_nickel_rich
+
+Example ice moon:
+res_002,sys_001,Centauri IV-b,ice_moon,0.72,good,8000,0.05,water_ice_volatiles
+
+Example gas giant:
+res_003,sys_001,Centauri V,gas_giant,1.0,excellent,25000,0.01,helium3_rich
+
+Example alien ruin:
+res_004,sys_008,Tau Ceti III Ruins,ancient_site,0.10,motherlode,50,1.0,
+alien_artifacts_one_time
+
+factions.csv:
+faction_id,name,government,ideology,capital,territory_count,population,
+military,economy
+
+syndicates.csv:
+syndicate_id,name,type,primary_activity,base_systems,strength,revenue,
+relationships_hostile,relationships_neutral
+
+Example:
+syn_001,Outer Reach Corsairs,pirate_confederation,piracy,sys_045;sys_067,
+150_ships,high,fac_001;fac_003;fac_005,fac_004
+
+syn_002,Ghost Network,cybercrime_syndicate,data_theft,distributed,
+200_hackers,very_high,fac_001;fac_002;fac_003;corp_005,
+
+corporations.csv:
+corp_id,name,sector,headquarters,founded,market_share,reach,alignment,
+primary_commodity
+
+Example:
+corp_001,StarDrive Corp,starship_manufacturing,sys_010,2105,0.35,45,neutral,
+industrial_goods
+
+corp_005,Helios Refining,energy_production,sys_025,2108,0.28,38,fac_002,fuel
+
+trade_routes.csv:
+route_id,from_system,to_system,commodity,volume_tons_per_year,price_origin,
+price_destination,corporation,established,status,risk_level
+
+Example:
+route_001,sys_010,sys_025,mining_output,1200000,25,35,corp_003,2215,active,low
+
+route_002,sys_012,sys_008,drugs,500,8000,15000,smugglers,2390,active,extreme
+
+commodity_prices.csv:
+system_id,commodity,base_price,current_price,supply_level,demand_level,
+price_trend
+
+Example:
+sys_001,mining_output,30,28,high,medium,stable
+sys_001,agricultural,45,120,low,high,rising
+sys_001,drugs,10000,18000,very_low,high,volatile
+
+history.csv:
+event_id,year,type,name,description,systems,factions,people
+
+relationships.csv:
+entity1_id,entity1_type,entity2_id,entity2_type,relationship_value
+
+HUMAN-READABLE SUMMARY: summary.txt
+------------------------------------
+
+Narrative chronicle of universe history, formatted as readable text:
+
+UNIVERSE CHRONICLE - Generated [DATE]
+=====================================
+Seed: [SEED]
+
+CURRENT STATE (2450)
+--------------------
+[Overview of political landscape, major factions, current conflicts]
+
+POLITICAL FACTIONS
+------------------
+[Detailed profiles of each faction with current status]
+
+MAJOR CORPORATIONS
+------------------
+[Profiles of corporations with market position and influence]
+
+HISTORICAL TIMELINE
+-------------------
+[Narrative description of major events, organized by era]
+
+ERA 1: FIRST EXPANSION (2100-2200)
+[Key events and developments]
+
+ERA 2: COLONIAL PERIOD (2200-2300)
+[Key events and developments]
+
+ERA 3: CONSOLIDATION AND CONFLICT (2300-2400)
+[Key events and developments]
+
+ERA 4: MODERN ERA (2400-2450)
+[Recent history and current situation]
+
+NOTABLE HISTORICAL FIGURES
+---------------------------
+[Biographies of important people who shaped history]
+
+CURRENT TENSIONS AND OPPORTUNITIES
+-----------------------------------
+[Flashpoints for potential conflict or adventure]
+
+VISUAL OUTPUT: star_map.svg
+----------------------------
+
+2D vector graphic showing:
+- System positions on 100x100 grid
+- Faction territorial boundaries (colored regions with transparency)
+- Major trade routes (lines between systems, thickness = volume)
+- System markers sized by population/importance
+- Special markers for:
+  * Faction capitals (special icon)
+  * Abandoned systems (different color)
+  * Alien sites (distinctive marker)
+  * Current conflict zones (highlighted)
+- Legend explaining symbols and colors
+- Scale indicator (light-years)
+- Grid lines for reference
+
+Use distinct colors for each faction (colorblind-friendly palette):
+- Utopian Democracy: Blue
+- Corporate Oligarchy: Orange
+- Military Hegemony: Red
+- Technocratic Collective: Purple
+- Frontier Confederacy: Green
+- Dystopian Autocracy: Dark Gray
+
+================================================================================
+SIMULATION ALGORITHM OVERVIEW
+================================================================================
+
+HIGH-LEVEL PROCESS:
+-------------------
+
+1. INITIALIZATION PHASE
+   - Load configuration parameters
+   - Initialize random number generator with seed
+   - Load real star catalog data from CSV
+   - Select 80-120 suitable systems within specified radius
+   - Project 3D coordinates to 2D grid with scaling
+   - Generate physical properties for each system (stars, planets)
+   - Create faction entities with initial properties and ideologies
+   - Create corporation entities with sectors and starting positions
+
+2. ERA 1 SIMULATION (2100-2200)
+   - Place initial colonies in nearest systems to Sol (Alpha Centauri, etc.)
+   - Generate founding events and early exploration
+   - Invent and deploy Generation 1 FTL technology
+   - Simulate population growth in colonies
+   - Initialize resource extraction and trade
+   - Roll for random events (disasters, discoveries)
+   - Record historical events and generate notable figures
+   - Update faction and corporate relationships
+   - Generate landmark events with proper names
+
+3. ERA 2 SIMULATION (2200-2300)
+   - Deploy Generation 2 FTL, expand colonization range
+   - Generate faction divergence and territorial establishment
+   - Expand to 40-70 systems total
+   - Simulate first conflicts over resources
+   - Create trade networks based on resource distribution
+   - Roll for all event types (wars, discoveries, disasters, politics)
+   - Simulate corporate growth and first mergers
+   - Generate cultural drift in isolated colonies
+   - Update populations, economies, and relationships
+   - Record major historical figures and events
+
+4. ERA 3 SIMULATION (2300-2400)
+   - Peak colonization reaches 80-120 systems
+   - Deploy Generation 3 FTL
+   - Generate "The Great War" and other major conflicts
+   - Simulate corporate consolidation and mega-mergers
+   - Roll for all event types including rare ones
+   - Some systems abandoned due to resource depletion or war
+   - Technology diffusion across factions (with espionage)
+   - Simulate refugee movements and migrations
+   - Update all relationships and power structures
+   - Resource depletion begins in heavily exploited systems
+   - Record war heroes, tyrants, and revolutionaries
+
+5. ERA 4 SIMULATION (2400-2450)
+   - Minimal new colonization, focus on internal development
+   - Deploy Generation 4 FTL as standard
+   - Generate modern political landscape and cold wars
+   - Simulate current conflicts and proxy wars
+   - Roll for recent events (last 50 years of history)
+   - Establish current state of all entities
+   - Finalize trade networks and alliances
+   - Generate current tensions and flashpoints
+   - Record current leaders and notable figures
+   - Some abandoned systems begin reclamation
+
+6. POST-PROCESSING AND VALIDATION
+   - Validate data consistency (no orphaned references)
+   - Calculate final statistics (populations, economies)
+   - Generate relationship matrices
+   - Identify current tensions and opportunities for gameplay
+   - Create trade route network
+   - Verify historical cause-and-effect chains
+
+7. OUTPUT GENERATION
+   - Serialize all data to universe.json
+   - Generate CSV files for game import
+   - Write human-readable chronicle (summary.txt)
+   - Render 2D star map visualization (star_map.svg)
+   - Output statistics and generation report
+   - Save seed and config for reproducibility
+
+DETAILED ALGORITHMS:
+
+Star System Generation:
+1. Load real star data (position, spectral class, luminosity)
+2. Filter by distance (within max_radius_ly of Sol)
+3. Select random subset meeting min/max system count
+4. For each system:
+   a. Generate planets (count based on star type and age)
+   b. Determine planet types (terrestrial, gas giant, ice)
+   c. Generate moons for appropriate planets
+   d. Calculate habitability scores
+   e. Assign resource deposits based on composition
+   f. Roll for special sites (abandoned stations, alien ruins)
+5. Project 3D positions to 2D grid
+   a. Use perspective projection or simple (x,y) with z-compression
+   b. Scale to fit 100x100 grid
+   c. Place Sol at grid center (50, 50)
+
+Colonization Wave:
+1. Start from Sol system
+2. For each era, determine colonization range (based on FTL generation)
+3. Select systems to colonize:
+   a. Prioritize by: proximity, habitability, resources
+   b. Factor in faction ideology (some seek habitable, others resources)
+   c. Limit by available FTL technology range
+4. Assign controlling faction
+5. Generate founding date and circumstances
+6. Initialize population (random within range)
+7. Record founding event in history
+
+Event Generation:
+1. For each system/faction/corporation, roll dice against probabilities
+2. If event triggered, determine type and severity
+3. Generate details:
+   a. Involved parties (people, factions, corps)
+   b. Location (systems affected)
+   c. Duration
+   d. Causes (why it happened)
+   e. Consequences (immediate and long-term)
+4. Create proper event name following naming conventions
+5. Generate or assign notable figures involved
+6. Record in timeline
+7. Update affected entities (relationships, resources, populations)
+
+Relationship Evolution:
+1. Start with initial relationship values
+2. Each era, for each relationship pair:
+   a. Apply base drift (random small changes)
+   b. Check for modifying factors:
+      - Shared borders (tension or cooperation)
+      - Trade volume (improves relations)
+      - Ideological compatibility (bonus or penalty)
+      - Recent events (wars, treaties, incidents)
+   c. Calculate new relationship value
+   d. Check thresholds (alliance, neutrality, hostility, war)
+3. If relationship crosses war threshold and circumstances permit:
+   a. Generate war event
+   b. Determine outcome based on military strength
+   c. Assign territorial changes
+   d. Update relationship to reflect post-war status
+
+Technology Diffusion:
+1. When technology invented, assign to inventor faction/corporation
+2. Each era after invention:
+   a. For each faction/corporation without tech:
+      - Calculate adoption probability:
+        * Base spread rate (open vs proprietary)
+        * Relationship with inventor (good = faster spread)
+        * Embargoes (reduce spread rate)
+        * Espionage (chance to steal despite embargo)
+      - Roll for adoption
+      - If adopted, record date and update entity
+3. Isolated systems may regress (lose technology)
+
+Population Simulation:
+1. For each inhabited location, each decade:
+   a. Calculate base growth rate (births - deaths)
+   b. Apply modifiers:
+      - Economic conditions (boom/bust)
+      - Conflict (war casualties, refugees)
+      - Disease (plague deaths)
+      - Quality of life (healthcare, education)
+   c. Calculate immigration/emigration:
+      - Push factors (leaving bad situations)
+      - Pull factors (moving to opportunities)
+      - Physical accessibility (distance, FTL availability)
+   d. Apply total change to population
+   e. Update demographics if significant migration
+
+Trade Route Generation:
+1. For each pair of systems:
+   a. Calculate complementary resources:
+      - System A has surplus of X, deficit of Y
+      - System B has surplus of Y, deficit of X
+   b. Calculate trade value (based on scarcity and demand)
+   c. Calculate route safety (piracy, war zones)
+   d. If value exceeds threshold and route is safe:
+      - Create trade route
+      - Assign controlling corporation (highest relevant market share)
+      - Set volume based on populations and economies
+2. Update route status each era:
+   a. Increase volume if both systems growing
+   b. Decrease or close if war or piracy
+   c. Reroute around conflict zones
+
+Historical Figure Generation:
+1. Determine category (explorer, politician, scientist, etc.)
+2. Assign to faction or corporation
+3. Generate name (from name lists, culturally appropriate)
+4. Assign birth date within era
+5. Link to relevant events:
+   a. Explorers to discovery events
+   b. Politicians to wars, treaties, reforms
+   c. Scientists to technology inventions
+   d. Corporate leaders to mergers, scandals
+6. Generate accomplishments based on linked events
+7. Determine legacy and how they're remembered
+8. Assign death date (or mark as alive if current era)
+
+Landmark Event Naming:
+1. Determine event type (war, treaty, disaster, etc.)
+2. Apply naming convention:
+   a. Wars: "[Location] War" or "The [Descriptor] War"
+   b. Treaties: "Treaty of [Location]" or "[Location] Accords"
+   c. Disasters: "The [Location] [Type]" 
+   d. Discoveries: "The [Location] [Object]"
+3. Ensure name is unique and memorable
+4. Reference name consistently in all historical records
+
+PSEUDOCODE EXAMPLE:
+
+```python
+def simulate_era(era, systems, factions, corporations):
+    print(f"Simulating {era.name}...")
+    
+    # Expand colonization
+    new_colonies = []
+    for faction in factions:
+        suitable_systems = find_suitable_systems(
+            systems, faction, era.ftl_generation
+        )
+        for system in suitable_systems:
+            if roll_probability(faction.expansion_rate):
+                colony = colonize_system(system, faction, era)
+                new_colonies.append(colony)
+                record_event(f"{faction.name} colonizes {system.name}", 
+                           era)
+    
+    # Simulate events
+    for system in systems:
+        # Natural disasters
+        if roll_probability(CONFIG['disaster_likelihood']):
+            event = generate_disaster(system, era)
+            apply_disaster_effects(system, event)
+            record_event(event.name, era)
+    
+    for faction in factions:
+        # Political upheavals
+        if roll_probability(CONFIG['revolution_likelihood']):
+            event = generate_political_event(faction, era)
+            apply_political_effects(faction, event)
+            record_event(event.name, era)
+        
+        # Wars
+        for other_faction in factions:
+            if faction == other_faction:
+                continue
+            
+            relationship = get_relationship(faction, other_faction)
+            if relationship < CONFIG['war_threshold']:
+                if roll_probability(CONFIG['war_likelihood']):
+                    war = generate_war(faction, other_faction, era)
+                    outcome = simulate_war(war)
+                    apply_war_effects(war, outcome)
+                    record_event(war.name, era)
+    
+    # Corporate events
+    for corp in corporations:
+        if roll_probability(CONFIG['corporate_drama_likelihood']):
+            event = generate_corporate_event(corp, era)
+            apply_corporate_effects(corp, event)
+            record_event(event.name, era)
+    
+    # Technology diffusion
+    for tech in technologies:
+        diffuse_technology(tech, factions, corporations, era)
+    
+    # Population and economy
+    for system in systems:
+        for location in system.inhabited_locations:
+            simulate_population(location, era)
+            simulate_economy(location, era)
+    
+    # Update relationships
+    update_all_relationships(factions, corporations, era)
+    
+    # Generate notable figures
+    figures = generate_notable_figures(era, events, factions, corporations)
+    
+    return new_colonies, events, figures
+```
+
+================================================================================
+SUCCESS CRITERIA
+================================================================================
+
+A successful universe generation produces:
+
+DATA QUALITY:
+- ✅ 80-120 star systems based on real astronomical data within 50 LY of Sol
+- ✅ All systems have realistic physical properties (spectral class, planets)
+- ✅ 60% of systems have inhabited locations
+- ✅ 15% of inhabited locations are abandoned
+- ✅ Rare special sites (<5% alien ruins, <1% active alien sites)
+
+HISTORICAL DEPTH:
+- ✅ Believable 350-year history with clear cause-and-effect chains
+- ✅ Each era has distinct character and major events
+- ✅ 10-20 landmark events per era with proper names
+- ✅ 5-10 notable historical figures per era with biographies
+- ✅ Technology progression from slow/dangerous to fast/reliable FTL
+- ✅ Faction evolution from founding through conflicts to current state
+- ✅ Corporate histories including mergers, scandals, and innovations
+
+POLITICAL COMPLEXITY:
+- ✅ 6 diverse factions spanning ideological spectrum (utopian to dystopian)
+- ✅ Each faction has distinct government, values, and territory (8-25 systems)
+- ✅ Dynamic faction relationships evolved over time (-100 to +100 scale)
+- ✅ Multiple wars with causes, outcomes, and lasting effects
+- ✅ Treaties, alliances, and diplomatic incidents documented
+- ✅ Current tensions that create gameplay opportunities
+
+ECONOMIC REALISM:
+- ✅ Complex economic interdependencies based on resource distribution
+- ✅ Trade routes connecting complementary economies
+- ✅ Resource scarcity/abundance drove colonization patterns
+- ✅ Economic booms from discoveries and busts from depletion/war
+- ✅ Black markets and piracy in frontier regions
+- ✅ Corporate control of key resources creates bottlenecks
+
+CORPORATE LANDSCAPE:
+- ✅ 10 major corporations across diverse industries
+- ✅ Each corporation has market position, reach, and faction alignment
+- ✅ Corporate evolution including mergers, scandals, innovations
+- ✅ Corporate-faction and corporate-corporate relationships tracked
+- ✅ Monopolies and cartels create economic challenges
+
+POPULATION AND CULTURE:
+- ✅ Realistic population growth and migration patterns
+- ✅ Cultural drift in isolated systems
+- ✅ Wide disparity between core and frontier worlds
+- ✅ Refugee movements from war zones and disasters
+- ✅ Labor dynamics affecting economic development
+
+TRAGEDY AND FAILURE:
+- ✅ Some systems abandoned (5-10 total)
+- ✅ Failed terraforming projects
+- ✅ Collapsed factions or territorial losses
+- ✅ Bankrupt corporations
+- ✅ Devastating wars and plagues
+- ✅ Ghost towns and derelict infrastructure
+
+TECHNICAL QUALITY:
+- ✅ Data exported in clean JSON format
+- ✅ CSV files generated for easy game import
+- ✅ Human-readable chronicle provides narrative overview
+- ✅ 2D star map visualization clearly shows territories and trade
+- ✅ All references validated (no orphaned IDs)
+- ✅ Reproducible with seed value
+- ✅ Adjustable via configuration parameters
+- ✅ Runs in reasonable time (<5 minutes for full generation)
+- ✅ Code is maintainable and well-documented
+
+GAMEPLAY POTENTIAL:
+- ✅ Current tensions and flashpoints for player engagement
+- ✅ Trade opportunities based on resource distribution
+- ✅ Exploration opportunities (abandoned sites, alien ruins)
+- ✅ Factional conflicts for player to navigate
+- ✅ Economic gameplay (trading, mining, manufacturing)
+- ✅ Rich background lore for immersion
+
+================================================================================
+IMPLEMENTATION NOTES
+================================================================================
+
+DEVELOPMENT APPROACH:
+---------------------
+1. Start with core data structures (System, Faction, Corporation, etc.)
+2. Implement star system generation from real data
+3. Build event generation system with probabilities
+4. Create timeline simulation engine that progresses era by era
+5. Add relationship tracking and evolution
+6. Implement population and economic simulation
+7. Add historical figure and event naming
+8. Create output serialization (JSON, CSV, TXT, SVG)
+9. Add validation and consistency checks
+10. Create command-line interface with parameters
+11. Test with multiple seeds for variety and consistency
+12. Optimize performance for <5 minute runtime
+13. Document code and create usage examples
+
+LIBRARIES TO USE:
+-----------------
+- numpy: Numerical operations, star position calculations
+- pandas: Data manipulation, CSV handling
+- json: JSON serialization
+- random: Random number generation with seeding
+- datetime: Date handling for timeline
+- argparse: Command-line argument parsing
+- svgwrite: SVG map generation
+- csv: CSV export
+- dataclasses: Clean data structure definitions
+- typing: Type hints for maintainability
+
+TESTING STRATEGY:
+-----------------
+- Test with multiple seeds to ensure variety
+- Test with same seed multiple times to ensure reproducibility
+- Validate all cross-references (no broken IDs)
+- Check that probabilities produce expected distributions
+- Verify timeline consistency (causes before effects)
+- Test edge cases (all wars, no wars, max colonies, min colonies)
+- Performance test for acceptable runtime
+- Validate output formats (valid JSON, parseable CSV)
+
+FUTURE ENHANCEMENTS:
+--------------------
+- Web-based visualization of star map with interactivity
+- Detailed system descriptions with flavor text
+- Character generation (traders, pilots, etc.)
+- Ship design parameters matching corporations
+- Commodity price fluctuations over time
+- News reports from each era
+- Mission/quest generation from current tensions
+- Save/load partial simulation states
+- What-if scenario testing (change parameters mid-simulation)
+
+================================================================================
+END OF SPECIFICATION
+================================================================================
+
+This specification provides a comprehensive framework for generating a living,
+breathing game universe with depth, consistency, and replayability.
+
+Version 1.0 - 2025-12-02
+
