@@ -5,129 +5,362 @@ generate_system_objects.py
 Generate natural system objects (planets, moons, asteroids) for each star
 in a star catalog CSV produced by the star map generator.
 
-Special handling:
-- For SOL (system_id == 0), natural objects are fixed:
-    0: Earth (RP)
-    1: Luna  (RM, moon of Earth)
-    2: Mars  (RP)
-    3: Ceres (AS)
+Phase 1 responsibilities:
+- Read star_catalog.csv (output of Phase 0).
+- For each system, deterministically generate:
+  - Primary natural objects (planets + at most one large asteroid).
+  - Optional moons for planets.
+- Apply deterministic attributes per object:
+  - Local 2D coordinates in a 50x50 system map (local_x, local_y).
+  - Ore and fuel richness (0–3).
+  - Habitability and risk (0–100).
+- Special-case Sol (system_id == 0) with a fixed set of objects.
+
+The output is system_objects.csv.
 
 Input CSV schema (from star_catalog.csv):
     id, proper, dist_ly, grid_x, grid_y, spect
 
-Output CSV schema (system_objects.csv):
-    system_id, object_id, name, class, parent_object_id, is_moon
-
-Object classes:
-    RP  = Rocky Planet
-    DP  = Desert Planet
-    IC  = Ice Planet
-    GG  = Gas Giant
-    RM  = Rocky Moon
-    IM  = Icy Moon
-    AS  = Large Asteroid
+Only the following columns are required:
+    id, proper, spect
 """
 
 import argparse
 import csv
+import hashlib
+import math
 import random
-from typing import List, Dict, Optional
+from typing import Dict, List, Optional, Sequence, Tuple
+
 
 # -------------------------------
-# Configurable distributions
+# Distributions and constants
 # -------------------------------
 
-# Number of natural objects per system (including moons)
-OBJECT_COUNT_DISTRIBUTION = [
-    (0, 0.10),
-    (1, 0.25),
-    (2, 0.30),
-    (3, 0.20),
-    (4, 0.10),
-    (5, 0.05),
+# Per-system primary object count (planets + at most one asteroid).
+# This is the target number of PRIMARY objects; moons are generated on top.
+OBJECT_COUNT_DISTRIBUTION: Sequence[Tuple[int, int]] = [
+    (0, 10),  # 10%
+    (1, 25),  # 25%
+    (2, 30),  # 30%
+    (3, 20),  # 20%
+    (4, 10),  # 10%
+    (5, 5),   # 5%
 ]
 
-# Planet type distribution (primary objects)
-PLANET_TYPE_DISTRIBUTION = [
-    ("RP", 0.60),  # Rocky Planet
-    ("DP", 0.15),  # Desert Planet
-    ("IC", 0.15),  # Ice Planet
-    ("GG", 0.10),  # Gas Giant
+# Primary planet type probabilities
+PLANET_TYPE_DISTRIBUTION: Sequence[Tuple[str, int]] = [
+    ("RP", 60),  # Rocky Planet
+    ("DP", 15),  # Desert Planet
+    ("IC", 15),  # Ice Planet
+    ("GG", 10),  # Gas Giant
 ]
 
-# Chance to include a Large Asteroid if system has >= 2 primary planets
-ASTEROID_PROB_IF_2PLUS_PLANETS = 0.20
-
-# Moon counts per planet type (max values)
-MAX_MOONS_PER_CLASS = {
+# Maximum moons per planet class
+MAX_MOONS_PER_CLASS: Dict[str, int] = {
     "RP": 1,
     "DP": 1,
     "IC": 1,
     "GG": 3,
 }
 
-# Moon type probabilities
-MOON_TYPE_DISTRIBUTION_ROCKY_PARENT = [
-    ("RM", 0.70),
-    ("IM", 0.30),
+# Moon type probabilities for rocky parents
+MOON_TYPES_ROCKY: Sequence[Tuple[str, int]] = [
+    ("RM", 70),  # Rocky Moon
+    ("IM", 30),  # Icy Moon
 ]
 
-MOON_TYPE_DISTRIBUTION_GAS_PARENT = [
-    ("RM", 0.50),
-    ("IM", 0.50),
+# Moon type probabilities for gas giants
+MOON_TYPES_GG: Sequence[Tuple[str, int]] = [
+    ("RM", 50),
+    ("IM", 50),
 ]
 
-MAX_OBJECTS_PER_SYSTEM_DEFAULT = 5
+# Spectral-based habitability and risk baselines
+HAB_STAR_BASE: Dict[str, int] = {
+    "O": 5,
+    "B": 5,
+    "A": 15,
+    "F": 30,
+    "G": 50,
+    "K": 45,
+    "M": 35,
+}
+RISK_STAR_BASE: Dict[str, int] = {
+    "O": 25,
+    "B": 25,
+    "A": 15,
+    "F": 10,
+    "G": 0,
+    "K": -5,
+    "M": -10,
+}
+
+HAB_CLASS_MOD: Dict[str, int] = {
+    "RP": 30,
+    "DP": 10,
+    "IC": 0,
+    "GG": -25,
+    "RM": 20,
+    "IM": 0,
+    "AS": -10,
+}
+RISK_CLASS_BASE: Dict[str, int] = {
+    "RP": 40,
+    "DP": 60,
+    "IC": 50,
+    "GG": 80,
+    "RM": 45,
+    "IM": 55,
+    "AS": 65,
+}
+
+# Local system map constants
+LOCAL_MAP_SIZE = 50
+LOCAL_CENTER_X = LOCAL_MAP_SIZE // 2
+LOCAL_CENTER_Y = LOCAL_MAP_SIZE // 2
+LOCAL_ORBIT_RADII = [5, 8, 11, 14, 17, 20]
 
 
 # -------------------------------
-# Utility functions
+# Helper functions
 # -------------------------------
 
-def choose_weighted(rng: random.Random, choices: List[tuple]):
-    """
-    choices: list of (value, weight)
-    Returns one value according to normalized weights.
-    """
-    total = sum(w for _, w in choices)
-    r = rng.random() * total
+def clamp(value: int, lo: int, hi: int) -> int:
+    return max(lo, min(hi, value))
+
+
+def choose_weighted(rng: random.Random, table: Sequence[Tuple[int, int]]) -> int:
+    """Choose a value from (value, weight) pairs using rng."""
+    total = sum(weight for _, weight in table)
+    r = rng.uniform(0, total)
     acc = 0.0
-    for value, weight in choices:
+    for val, weight in table:
         acc += weight
         if r <= acc:
-            return value
-    # Fallback to last
-    return choices[-1][0]
-
-
-def int_to_roman(n: int) -> str:
-    """
-    Convert integer to Roman numeral (1..3999).
-    We only need small values here.
-    """
-    vals = [
-        (1000, "M"), (900, "CM"), (500, "D"), (400, "CD"),
-        (100, "C"), (90, "XC"), (50, "L"), (40, "XL"),
-        (10, "X"), (9, "IX"), (5, "V"), (4, "IV"),
-        (1, "I"),
-    ]
-    result = []
-    for val, sym in vals:
-        while n >= val:
-            n -= val
-            result.append(sym)
-    return "".join(result)
+            return val
+    # Fallback (should not happen due to floating point):
+    return table[-1][0]
 
 
 def generate_planet_type(rng: random.Random) -> str:
-    return choose_weighted(rng, PLANET_TYPE_DISTRIBUTION)
+    """Weighted choice of primary planet class."""
+    total = sum(w for _, w in PLANET_TYPE_DISTRIBUTION)
+    r = rng.uniform(0, total)
+    acc = 0.0
+    for cls, w in PLANET_TYPE_DISTRIBUTION:
+        acc += w
+        if r <= acc:
+            return cls
+    return PLANET_TYPE_DISTRIBUTION[-1][0]
 
 
-def generate_moon_type(rng: random.Random, parent_class: str) -> str:
+def choose_num_moons(rng: random.Random, parent_class: str) -> int:
+    """Choose how many moons a planet gets, respecting its maximum."""
+    max_m = MAX_MOONS_PER_CLASS.get(parent_class, 0)
+    if max_m == 0:
+        return 0
+
     if parent_class == "GG":
-        return choose_weighted(rng, MOON_TYPE_DISTRIBUTION_GAS_PARENT)
+        # Gas giant: 0–3 with a bias toward 1–2
+        choices = [(0, 20), (1, 40), (2, 30), (3, 10)]
     else:
-        return choose_weighted(rng, MOON_TYPE_DISTRIBUTION_ROCKY_PARENT)
+        # Rocky/desert/ice planets: 0 or 1
+        choices = [(0, 50), (1, 50)]
+
+    # Filter choices to respect max_m
+    filtered = [(val, w) for val, w in choices if val <= max_m]
+    total = sum(w for _, w in filtered)
+    r = rng.uniform(0, total)
+    acc = 0.0
+    for val, w in filtered:
+        acc += w
+        if r <= acc:
+            return val
+    return filtered[-1][0]
+
+
+def choose_moon_class(rng: random.Random, parent_class: str) -> str:
+    """Choose moon class based on parent planet type."""
+    if parent_class == "GG":
+        table = MOON_TYPES_GG
+    else:
+        table = MOON_TYPES_ROCKY
+
+    total = sum(w for _, w in table)
+    r = rng.uniform(0, total)
+    acc = 0.0
+    for cls, w in table:
+        acc += w
+        if r <= acc:
+            return cls
+    return table[-1][0]
+
+
+def parse_spectral_letter(spect: str) -> str:
+    """Extract the first alphabetic spectral type letter (O, B, A, F, G, K, M)."""
+    for ch in spect.upper():
+        if ch.isalpha():
+            return ch
+    return "?"
+
+
+def compute_attributes(
+    system_id: int,
+    object_id: int,
+    obj_class: str,
+    spect: str,
+) -> Tuple[int, int, int, int]:
+    """
+    Compute (habitability, risk, ore_richness, fuel_richness) for a single object.
+
+    - habitability: 0–100, higher is better for human life.
+    - risk: 0–100, higher is more dangerous.
+    - ore_richness: 0–3.
+    - fuel_richness: 0–3.
+    """
+    # Stable 32-bit hash derived from system_id, object_id, class
+    key = f"{system_id}:{object_id}:{obj_class}".encode("utf-8")
+    h_bytes = hashlib.sha256(key).digest()
+    h32 = int.from_bytes(h_bytes[:4], "big")
+
+    spect_letter = parse_spectral_letter(spect)
+    hab_star = HAB_STAR_BASE.get(spect_letter, 30)
+    risk_star = RISK_STAR_BASE.get(spect_letter, 0)
+
+    hab_class = HAB_CLASS_MOD.get(obj_class, 0)
+    risk_class = RISK_CLASS_BASE.get(obj_class, 50)
+
+    # Habitability with small deterministic jitter
+    hab_raw = hab_star + hab_class
+    delta_h = (h32 & 0x0F) - 8  # -8..+7
+    habitability = clamp(hab_raw + delta_h, 0, 100)
+
+    # Risk with small deterministic jitter
+    risk_raw = risk_class + risk_star
+    delta_r = ((h32 >> 4) & 0x0F) - 8
+    risk = clamp(risk_raw + delta_r, 0, 100)
+
+    # Ore and fuel richness from separate bits
+    ore_byte = (h32 >> 8) & 0xFF
+    fuel_byte = (h32 >> 16) & 0xFF
+
+    # Ore richness by class
+    if obj_class in ("RP", "DP", "RM", "AS"):
+        if ore_byte < 25:
+            ore = 0
+        elif ore_byte < 100:
+            ore = 1
+        elif ore_byte < 200:
+            ore = 2
+        else:
+            ore = 3
+    elif obj_class in ("IC", "IM"):
+        if ore_byte < 80:
+            ore = 0
+        elif ore_byte < 180:
+            ore = 1
+        elif ore_byte < 230:
+            ore = 2
+        else:
+            ore = 3
+    else:
+        # Gas giants and unknowns: no meaningful ore
+        ore = 0
+
+    # Fuel richness
+    if obj_class == "GG":
+        # Gas giants are prime fuel sources
+        fuel = 2 if fuel_byte < 128 else 3
+    else:
+        if fuel_byte < 40:
+            fuel = 0
+        elif fuel_byte < 160:
+            fuel = 1
+        elif fuel_byte < 230:
+            fuel = 2
+        else:
+            fuel = 3
+
+    return habitability, risk, ore, fuel
+
+
+def assign_names_for_system(
+    system_name: str,
+    objects: List[Dict],
+    primary_indices: List[int],
+) -> None:
+    """Assign names to primary objects and moons for a system (non-Sol)."""
+    roman = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"]
+    primary_name_map: Dict[int, str] = {}
+
+    # Primary objects first
+    for idx, primary_idx in enumerate(primary_indices):
+        obj = objects[primary_idx]
+        if obj["class"] == "AS":
+            obj_name = f"{system_name} Asteroid"
+        else:
+            rn = roman[idx] if idx < len(roman) else f"{idx+1}"
+            obj_name = f"{system_name} {rn}"
+        obj["name"] = obj_name
+        primary_name_map[primary_idx] = obj_name
+
+    # Moons
+    moon_counters_per_parent: Dict[int, int] = {}
+    for obj in objects:
+        if obj["is_moon"] != 1:
+            continue
+        parent_idx = obj["parent_object_id"]
+        base = primary_name_map.get(parent_idx, system_name)
+        count = moon_counters_per_parent.get(parent_idx, 0) + 1
+        moon_counters_per_parent[parent_idx] = count
+        suffix = chr(ord("a") + (count - 1))  # a, b, c, ...
+        obj["name"] = f"{base}-{suffix}"
+
+
+def assign_local_coordinates(
+    system_id: int,
+    objects: List[Dict],
+) -> None:
+    """Assign local_x/local_y for each object in a 50x50 system map."""
+    # First, assign coordinates for primaries on concentric orbits
+    primary_indices = [i for i, o in enumerate(objects) if o["is_moon"] == 0]
+
+    for orbit_idx, obj_idx in enumerate(primary_indices):
+        radius = LOCAL_ORBIT_RADII[min(orbit_idx, len(LOCAL_ORBIT_RADII) - 1)]
+        key = f"orbit:{system_id}:{obj_idx}".encode("utf-8")
+        h_bytes = hashlib.sha256(key).digest()
+        h32 = int.from_bytes(h_bytes[:4], "big")
+
+        angle = 2.0 * math.pi * (h32 / (2**32))
+        x_f = LOCAL_CENTER_X + radius * math.cos(angle)
+        y_f = LOCAL_CENTER_Y + radius * math.sin(angle)
+
+        x = clamp(int(round(x_f)), 0, LOCAL_MAP_SIZE - 1)
+        y = clamp(int(round(y_f)), 0, LOCAL_MAP_SIZE - 1)
+        objects[obj_idx]["local_x"] = x
+        objects[obj_idx]["local_y"] = y
+
+    # Then, assign coordinates for moons clustered near parents
+    for obj in objects:
+        if obj["is_moon"] != 1:
+            continue
+        parent_idx = obj["parent_object_id"]
+        parent = objects[parent_idx]
+        px = parent.get("local_x", LOCAL_CENTER_X)
+        py = parent.get("local_y", LOCAL_CENTER_Y)
+
+        key = f"moonpos:{system_id}:{obj['object_id']}".encode("utf-8")
+        h_bytes = hashlib.sha256(key).digest()
+        h16 = int.from_bytes(h_bytes[:2], "big")
+
+        dx = (h16 & 0x03) - 1        # -1..2
+        dy = ((h16 >> 2) & 0x03) - 1 # -1..2
+
+        x = clamp(px + dx, 0, LOCAL_MAP_SIZE - 1)
+        y = clamp(py + dy, 0, LOCAL_MAP_SIZE - 1)
+        obj["local_x"] = x
+        obj["local_y"] = y
 
 
 # -------------------------------
@@ -137,36 +370,25 @@ def generate_moon_type(rng: random.Random, parent_class: str) -> str:
 def generate_objects_for_system(
     system_id: int,
     system_name: str,
-    rng: random.Random,
-    max_objects_per_system: int,
+    spect: str,
+    global_seed: int,
+    max_primaries: int,
 ) -> List[Dict]:
     """
     Generate natural objects for a single system.
 
-    For SOL (system_id == 0), returns:
+    For SOL (system_id == 0), returns fixed objects:
         0: Earth  (RP)
         1: Luna   (RM, moon of Earth)
         2: Mars   (RP)
         3: Ceres  (AS)
 
-    For all other systems, generates up to max_objects_per_system objects.
-
-    Returns list of dicts:
-        {
-            "system_id": int,
-            "object_id": int,         # 0..N-1 within system
-            "name": str,
-            "class": str,             # RP, DP, IC, GG, RM, IM, AS
-            "parent_object_id": Optional[int],
-            "is_moon": int            # 0 or 1
-        }
+    For all other systems, generates up to max_primaries primary objects
+    (planets and at most one large asteroid), plus possible moons.
     """
-
     # ---- Special case: Sol / home system ----
     if system_id == 0:
-        # We ignore object_budget and distributions here.
-        # Civilization-era code can later rename or mark these as inhabited.
-        return [
+        objects: List[Dict] = [
             {
                 "system_id": 0,
                 "object_id": 0,
@@ -180,7 +402,7 @@ def generate_objects_for_system(
                 "object_id": 1,
                 "name": "Luna",
                 "class": "RM",
-                "parent_object_id": 0,  # moon of Earth
+                "parent_object_id": 0,
                 "is_moon": 1,
             },
             {
@@ -201,236 +423,183 @@ def generate_objects_for_system(
             },
         ]
 
+        # Decorate with attributes and local coordinates
+        for obj in objects:
+            habitability, risk, ore, fuel = compute_attributes(
+                system_id=obj["system_id"],
+                object_id=obj["object_id"],
+                obj_class=obj["class"],
+                spect=spect,
+            )
+            obj["habitability"] = habitability
+            obj["risk"] = risk
+            obj["ore_richness"] = ore
+            obj["fuel_richness"] = fuel
+
+        assign_local_coordinates(system_id, objects)
+        return objects
+
     # ---- Normal systems below ----
+
+    rng_seed = global_seed ^ (system_id * 0x9E3779B1)
+    rng = random.Random(rng_seed)
 
     objects: List[Dict] = []
 
-    # 1) Decide total object budget for this system
-    object_budget = choose_weighted(rng, OBJECT_COUNT_DISTRIBUTION)
-
-    if object_budget == 0 or max_objects_per_system == 0:
+    # 1) Decide number of primary objects for this system
+    primary_budget = choose_weighted(rng, OBJECT_COUNT_DISTRIBUTION)
+    if primary_budget <= 0 or max_primaries <= 0:
         return []
-
-    object_budget = min(object_budget, max_objects_per_system)
+    primary_budget = min(primary_budget, max_primaries)
 
     # 2) Generate primary planets first
-    primary_planets_indices: List[int] = []
-
-    # Strategy: generate at least 1 primary if budget > 0.
-    primary_target = object_budget
-
-    for _ in range(primary_target):
+    primary_indices: List[int] = []
+    for _ in range(primary_budget):
         planet_class = generate_planet_type(rng)
         obj = {
             "system_id": system_id,
             "object_id": len(objects),
-            "name": "",  # to be set later
+            "name": "",  # to be assigned later
             "class": planet_class,
             "parent_object_id": None,
             "is_moon": 0,
         }
         objects.append(obj)
-        primary_planets_indices.append(obj["object_id"])
+        primary_indices.append(obj["object_id"])
 
-    # 3) Possibly convert one slot into an asteroid if >= 2 planets
-    if len(primary_planets_indices) >= 2:
-        if rng.random() < ASTEROID_PROB_IF_2PLUS_PLANETS:
-            # Replace a random planet with an asteroid
-            idx_to_replace = rng.choice(primary_planets_indices)
-            objects[idx_to_replace]["class"] = "AS"
-            # Remove it from primary planets list
-            primary_planets_indices = [
-                idx for idx in primary_planets_indices if idx != idx_to_replace
-            ]
+    # 3) Optionally replace one primary with a large asteroid (AS)
+    if len(primary_indices) >= 2:
+        if rng.random() < 0.20:  # 20% chance
+            idx = rng.choice(primary_indices)
+            objects[idx]["class"] = "AS"
 
-    # 4) Add moons, respecting total object budget
-    while len(objects) < object_budget:
-        if not primary_planets_indices:
-            break  # nothing to orbit
-
-        parent_idx = rng.choice(primary_planets_indices)
+    # 4) Generate moons for eligible primaries
+    for parent_idx in primary_indices:
         parent = objects[parent_idx]
         parent_class = parent["class"]
-
         if parent_class not in MAX_MOONS_PER_CLASS:
-            # e.g. AS asteroid, skip / try another / maybe exit
-            viable_parents = [
-                idx for idx in primary_planets_indices
-                if objects[idx]["class"] in MAX_MOONS_PER_CLASS
-            ]
-            if not viable_parents:
-                break
-            parent_idx = rng.choice(viable_parents)
-            parent = objects[parent_idx]
-            parent_class = parent["class"]
-
-        # Count existing moons of this parent
-        current_moons = sum(
-            1 for o in objects
-            if o["parent_object_id"] == parent_idx and o["is_moon"] == 1
-        )
-        max_moons = MAX_MOONS_PER_CLASS.get(parent_class, 0)
-
-        if current_moons >= max_moons or max_moons == 0:
-            viable_parents = [
-                idx for idx in primary_planets_indices
-                if objects[idx]["class"] in MAX_MOONS_PER_CLASS and
-                sum(1 for o in objects
-                    if o["parent_object_id"] == idx and o["is_moon"] == 1)
-                < MAX_MOONS_PER_CLASS[objects[idx]["class"]]
-            ]
-            if not viable_parents:
-                break
-            parent_idx = rng.choice(viable_parents)
-            parent = objects[parent_idx]
-            parent_class = parent["class"]
-            current_moons = sum(
-                1 for o in objects
-                if o["parent_object_id"] == parent_idx and o["is_moon"] == 1
-            )
-            max_moons = MAX_MOONS_PER_CLASS.get(parent_class, 0)
-            if current_moons >= max_moons or max_moons == 0:
-                break  # still no room
-
-        # Random chance to actually add a moon
-        if parent_class == "GG":
-            add_moon_chance = 0.7  # giants often have moons
-        else:
-            add_moon_chance = 0.4  # others less likely
-
-        if rng.random() > add_moon_chance:
-            break
-
-        moon_class = generate_moon_type(rng, parent_class)
-        moon_obj = {
-            "system_id": system_id,
-            "object_id": len(objects),
-            "name": "",  # to be assigned later
-            "class": moon_class,
-            "parent_object_id": parent_idx,
-            "is_moon": 1,
-        }
-        objects.append(moon_obj)
-
-        if len(objects) >= object_budget:
-            break
-
-    # 5) Assign names based on system_name and local ordering
-    # Primary objects: Name + Roman numeral
-    # Moons: Primary name + lowercase letter suffix
-    # Asteroids: Name + " Asteroid"
-
-    primary_indices_ordered = [
-        i for i, o in enumerate(objects) if o["parent_object_id"] is None
-    ]
-    primary_indices_ordered.sort()
-
-    planet_counter = 0
-    primary_name_map: Dict[int, str] = {}
-
-    for idx in primary_indices_ordered:
-        obj = objects[idx]
-        if obj["class"] == "AS":
-            obj_name = f"{system_name} Asteroid"
-        else:
-            planet_counter += 1
-            rn = int_to_roman(planet_counter)
-            obj_name = f"{system_name} {rn}"
-
-        obj["name"] = obj_name
-        primary_name_map[idx] = obj_name
-
-    moon_counters_per_parent: Dict[int, int] = {}
-
-    for obj in objects:
-        if obj["is_moon"] != 1:
             continue
-        parent_idx = obj["parent_object_id"]
-        base = primary_name_map.get(parent_idx, system_name)
-        count = moon_counters_per_parent.get(parent_idx, 0) + 1
-        moon_counters_per_parent[parent_idx] = count
-        suffix = chr(ord('a') + (count - 1))  # a, b, c...
-        obj["name"] = f"{base}-{suffix}"
+
+        num_moons = choose_num_moons(rng, parent_class)
+        for _ in range(num_moons):
+            moon_class = choose_moon_class(rng, parent_class)
+            moon_obj = {
+                "system_id": system_id,
+                "object_id": len(objects),
+                "name": "",  # assigned later
+                "class": moon_class,
+                "parent_object_id": parent_idx,
+                "is_moon": 1,
+            }
+            objects.append(moon_obj)
+
+    # 5) Assign names (non-Sol systems)
+    assign_names_for_system(system_name, objects, primary_indices)
+
+    # 6) Compute attributes (habitability, risk, ore, fuel)
+    for obj in objects:
+        habitability, risk, ore, fuel = compute_attributes(
+            system_id=obj["system_id"],
+            object_id=obj["object_id"],
+            obj_class=obj["class"],
+            spect=spect,
+        )
+        obj["habitability"] = habitability
+        obj["risk"] = risk
+        obj["ore_richness"] = ore
+        obj["fuel_richness"] = fuel
+
+    # 7) Assign local map coordinates
+    assign_local_coordinates(system_id, objects)
 
     return objects
 
 
 # -------------------------------
-# Main program
+# CLI and main program
 # -------------------------------
 
-def parse_args():
+def parse_args() -> argparse.Namespace:
     ap = argparse.ArgumentParser(
-        description="Generate natural system objects (planets, moons, asteroids) "
-                    "for each star in a star catalog CSV."
+        description=(
+            "Generate natural system objects (planets, moons, asteroids) "
+            "for each star in a star catalog CSV."
+        )
     )
     ap.add_argument(
         "--input-stars",
         required=True,
-        help="Path to input star CSV (star_catalog.csv from previous step)."
+        help="Path to input star CSV (star_catalog.csv from Phase 0).",
     )
     ap.add_argument(
         "--output-objects",
         default="system_objects.csv",
-        help="Path to output system objects CSV (default: system_objects.csv)."
+        help="Path to output system objects CSV (default: system_objects.csv).",
     )
     ap.add_argument(
         "--max-objects-per-system",
         type=int,
-        default=MAX_OBJECTS_PER_SYSTEM_DEFAULT,
-        help="Maximum total natural objects per system (default: 5)."
+        default=5,
+        help=(
+            "Maximum number of PRIMARY objects per system "
+            "(planets + large asteroid). Moons are generated on top "
+            "(default: 5)."
+        ),
     )
     ap.add_argument(
         "--seed",
         type=int,
         default=0,
-        help="Global seed offset for deterministic generation (default: 0)."
+        help="Global seed offset for deterministic generation (default: 0).",
     )
     return ap.parse_args()
 
 
-def main():
+def main() -> None:
     args = parse_args()
 
-    stars = []
+    # Load stars
+    stars: List[Dict] = []
     with open(args.input_stars, newline="", encoding="utf-8") as f:
         reader = csv.DictReader(f)
-        required_cols = {"id", "proper"}
-        missing = required_cols - set(reader.fieldnames or [])
+        required_cols = {"id", "proper", "spect"}
+        if reader.fieldnames is None:
+            raise SystemExit("Input star CSV has no header row.")
+        missing = required_cols - set(reader.fieldnames)
         if missing:
             raise SystemExit(
-                f"Input star CSV is missing required columns: {', '.join(sorted(missing))}"
+                f"Input star CSV missing required columns: {', '.join(sorted(missing))}"
             )
+
         for row in reader:
             try:
-                sid = int(row["id"])
-            except ValueError:
+                system_id = int(row["id"])
+            except (ValueError, TypeError):
                 continue
-            proper = row.get("proper", "").strip()
-            if not proper:
-                proper = f"System-{sid}"
-            stars.append({"id": sid, "proper": proper})
+            name = (row.get("proper") or "").strip()
+            if not name:
+                name = f"System {system_id}"
+            spect = (row.get("spect") or "").strip()
+            stars.append(
+                {
+                    "id": system_id,
+                    "proper": name,
+                    "spect": spect,
+                }
+            )
 
-    if not stars:
-        raise SystemExit("No stars loaded from input CSV.")
-
-    # Sort by system id just to keep order stable and intuitive
-    stars.sort(key=lambda s: s["id"])
-
+    # Generate objects for all systems
     all_objects: List[Dict] = []
-
     for star in stars:
         system_id = star["id"]
-        system_name = star["proper"]
-
-        # System-specific RNG: combine global seed with system_id
-        rng = random.Random(args.seed ^ (system_id * 0x9E3779B1))
-
+        name = star["proper"]
+        spect = star["spect"]
         objects = generate_objects_for_system(
             system_id=system_id,
-            system_name=system_name,
-            rng=rng,
-            max_objects_per_system=args.max_objects_per_system,
+            system_name=name,
+            spect=spect,
+            global_seed=args.seed,
+            max_primaries=args.max_objects_per_system,
         )
         all_objects.extend(objects)
 
@@ -442,6 +611,12 @@ def main():
         "class",
         "parent_object_id",
         "is_moon",
+        "local_x",
+        "local_y",
+        "ore_richness",
+        "fuel_richness",
+        "habitability",
+        "risk",
     ]
 
     with open(args.output_objects, "w", newline="", encoding="utf-8") as f:
@@ -454,10 +629,16 @@ def main():
                 "name": obj["name"],
                 "class": obj["class"],
                 "parent_object_id": (
-                    "" if obj["parent_object_id"] is None
+                    "" if obj.get("parent_object_id") is None
                     else obj["parent_object_id"]
                 ),
                 "is_moon": obj["is_moon"],
+                "local_x": obj.get("local_x", ""),
+                "local_y": obj.get("local_y", ""),
+                "ore_richness": obj.get("ore_richness", 0),
+                "fuel_richness": obj.get("fuel_richness", 0),
+                "habitability": obj.get("habitability", 0),
+                "risk": obj.get("risk", 0),
             }
             writer.writerow(row)
 
