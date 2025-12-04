@@ -31,19 +31,18 @@ Produces the foundational 2D mapped starfield.
   1. Prefer stars with real proper names
   2. Otherwise keep the brightest
 - Generate:
-  - canonical star_id (0 = Sol)
-  - name or synthetic sector name
-  - spectral class
-  - position_ly_x/y/z
-  - position_grid_x/y
-  - distance_ly
+  - id : canonical star id (0 = Sol)
+  - proper : proper name or synthetic sector name
+  - dist_ly : distance in light years
+  - grid_x : grid position x coordinate
+  - grid_y : grid position y coordinate
+  - spect : spectral class
 
 ### Output
 - CSV sorted by distance from Sol
 - ASCII star map with:
   - “X” = Sol  
   - “*” = star  
-  - digits 2–9 = count clipping  
   - “.” = empty in-bounds  
   - “ ” = out-of-bounds / pruned  
 
@@ -125,8 +124,8 @@ Additionally, the full simulation must maintain a **history event timeline log**
 4. If asked to expand functionality, propose schema updates rather than breaking existing formats.  
 5. When generating large code, include comments and deterministic parsing behavior.  
 6. When continuing this project, always load or reference:
-   - STAR_CATALOG.csv  
-   - SPACE_OBJECTS.csv  
+   - star_catalog.csv  
+   - space_objects.csv  
    - PROJECT_SPEC.md  
 
 ---

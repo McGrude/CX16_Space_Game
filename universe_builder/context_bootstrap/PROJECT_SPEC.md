@@ -12,7 +12,7 @@ It is designed so any new ChatGPT session can load it to regain the entire proje
 See the bootstrap prompt for details, or the dedicated README for implementation notes.
 
 Output:
-- `stars.csv`
+- `star_catalog.csv`
 - `star_map.txt`
 
 ---
