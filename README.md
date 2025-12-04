@@ -1,18 +1,12 @@
 # CX16_Space_Game
-A space trading, exploration, and turn-based combat game for the Commander X16.
 
-Command a small starship, ferry cargo between nearby systems, pick up missions, and upgrade your vessel while surviving turn-based skirmishes across the local stellar neighborhood. Core loops include:
+A space trading, exploration, and turn-based combat
+game for the Commander X16.
+
+Command a small starship, ferry cargo between nearby systems, pick up
+missions, and upgrade your vessel while surviving turn-based
+skirmishes across the local stellar neighborhood. Core loops include:
 
 - Docked mode for trading, outfitting, mission management, and briefings.
-- Spaceflight navigation with fuel management and random encounters between systems.
+- Spaceflight navigation with fuel management and random encounters in systems.
 - Turn-based combat that resolves weapon fire, maneuvers, and post-battle salvage.
-
-## Data files
-
-Structured CSV files in `DATA/` hold the initial galaxy seed used by the BASIC loaders:
-- `systems.csv` – star systems with coordinates, economies, and control.
-- `ports.csv` – per-system stations and the services they provide.
-- `factions.csv` – faction identities for reputation and territory lookups.
-- `ships.csv` – starter hulls spanning every faction, including neutral options.
-- `commodities.csv` – legal and contraband trade goods with base prices.
-- `equipment.csv` – early outfitting upgrades and faction-locked tech.
