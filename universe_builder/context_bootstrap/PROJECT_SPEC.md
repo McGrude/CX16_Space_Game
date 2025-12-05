@@ -1,124 +1,222 @@
-# Project Specification — Commander X16 Space-Trading RPG
+# PROJECT_SPEC.md — Universe Generator Master Specification
+Version 1.0 (Consolidated)
 
-This document defines the full multi‑phase universe generation pipeline and the data files shared between phases. It serves as the authoritative reference for how all generation stages interact.
-
----
-
-# Phase 0 — Star System Generation  
-**Output:** `star_catalog.csv`, `star_map.txt`
-
-Phase 0 constructs the astronomical scaffold of the game universe:
-
-- Selects ~80–150 nearby stars from the HYG catalog.
-- Projects them into a deterministic 2D grid for the starmap.
-- Removes collisions using brightness/name priority rules.
-- Forces Sol (system_id 0) to exist and to sit at the grid center.
-- Produces:
-  - **star_catalog.csv** with columns:
-
-    ```
-    id, proper, dist_ly, grid_x, grid_y, spect
-    ```
-
-  - **star_map.txt** ASCII representation of the 100×100 starmap.
-
-This file is the backbone for all later phases.
+This file contains the authoritative, condensed specification for the multi‑phase universe generator.  
+It is designed so any new ChatGPT session can load it to regain the entire project context.
 
 ---
 
-# Phase 1 — Natural Space Object Generation  
-**Input:** `star_catalog.csv`  
-**Output:** `system_objects.csv`
+# PHASE 0 — STAR GENERATION SYSTEM
+(Complete)
 
-Phase 1 deterministically generates the natural celestial bodies for each star:
+See the bootstrap prompt for details, or the dedicated README for implementation notes.
 
-- 0–5 *primary* objects per system (planets + optional large asteroid)
-- Moons for eligible primaries
-- Fully deterministic seeding per system
-- Special-case Sol with fixed Earth/Luna/Mars/Ceres
-
-The output file **system_objects.csv** contains:
-
-```
-system_id
-object_id
-name
-class
-parent_object_id
-is_moon
-local_x
-local_y
-ore_richness
-fuel_richness
-habitability
-risk
-```
-
-These values are pure data and contain no gameplay logic. Later phases build on top of them.
+Output:
+- `stars.csv`
+- `star_map.txt`
 
 ---
 
-# Phase 2 — Civilization Expansion  
-**Input:** `star_catalog.csv`, `system_objects.csv`  
-**Output:** `civilization.csv` (planned)
+# PHASE 1 — NATURAL SPACE OBJECT GENERATION
+(Complete)
 
-Phase 2 populates the universe with human activity:
+Generates up to 5 natural objects per star system using probabilistic distributions.
 
-- Colonies on habitable worlds
-- Mining and fuel installations
-- Space stations
-- Corporate, political, criminal, or rogue factions
-- Abandoned sites, ruins, derelicts
-- Founding dates, collapse dates, and historical events
+Sol uses fixed objects (Earth, Luna, Mars, Ceres).
 
-This phase generates the *first layer* of lore.
+Output:
+- `space_objects.csv`
 
 ---
 
-# Phase 3 — Economy, Trade, and Missions  
-**Input:** all prior CSVs  
-**Output:** economic data files + mission templates
+# PHASE 2 — COLONIZATION & CIVILIZATION SIMULATION
+(Current Phase to Develop)
 
-Includes:
+## Purpose
+Simulate 350 years of human expansion from Sol outward, producing:
+- Factions
+- Corporations
+- Criminal Syndicates
+- Colonies & Stations
+- Historical timeline
+- Emergent political landscape
+- Trade networks
+- Technology progression
+- Disasters, wars, reforms, revolutions
 
-- Commodity availability and pricing baselines
-- Tech level per system
-- Trade route hints
-- Faction influence modeling
-- Mission seeds tied to specific stars or objects
-
-Spectral type, ore/fuel richness, and habitability may all influence this phase.
-
----
-
-# Phase 4 — Historical Timeline  
-**Input:** prior data outputs  
-**Output:** timeline log
-
-A compact chronological history including:
-
-- System founding events
-- Corporate mergers or collapses
-- Wars, treaties, disasters
-- Technology breakthroughs
-
-Recorded as:
-
-```
-YYYY‑MM‑DD: event text...
-```
+This simulation uses the star map and natural-object data as scaffolding.
 
 ---
 
-# Data File Summary
+# ERA FRAMEWORK
 
-| File | Source | Description |
-|------|--------|-------------|
-| **star_catalog.csv** | Phase 0 | Star list, names, positions, spectral types |
-| **star_map.txt** | Phase 0 | ASCII 2D map of inhabited region |
-| **system_objects.csv** | Phase 1 | Planets, moons, asteroids + resources & habitability |
-| **civilization.csv** | Phase 2 | Colonies, stations, factions, abandoned sites |
-| **economy.csv** | Phase 3 | Trade modifiers, tech levels, commodity availability |
-| **timeline.txt** | Phase 4 | Complete historical log |
+### Era 1 — 2100–2200: First Expansion
+- FTL Generation 1  
+- Slow, careful colonization  
+- 5–15 systems settled  
+- Earth‑centric government  
+- Early disasters, early breakthroughs  
 
-This specification is updated as new phases evolve and new gameplay systems are added.
+### Era 2 — 2200–2300: Colonial Period
+- FTL Gen2  
+- Factions form  
+- Corporations consolidate  
+- 40–70 systems settled  
+- Conflicts begin  
+
+### Era 3 — 2300–2400: Consolidation & Conflict
+- FTL Gen3  
+- The Great War  
+- Refugees, famine, systemic collapse  
+- 80–120 systems inhabited  
+- Some systems abandoned  
+
+### Era 4 — 2400–2450: Modern Era
+- FTL Gen4  
+- Cold wars, espionage, black markets  
+- Mature economy and political map  
+
+---
+
+# ENTITY MODELS
+
+## Factions (6)
+Types:
+- Utopian Democracy  
+- Corporate Oligarchy  
+- Military Hegemony  
+- Technocratic Collective  
+- Frontier Confederacy  
+- Dystopian Autocracy  
+
+Each faction tracks:
+- name, government, ideology  
+- capital system  
+- territory list  
+- military strength  
+- economic strength  
+- relationships to other factions  
+- historical evolution  
+
+---
+
+## Corporations (10)
+Industries:
+- Shipbuilding, Mining, Energy, Weapons, High‑Tech, Logistics, Biotech, Luxury, Finance, Terraforming  
+
+Track:
+- name  
+- sector  
+- HQ system  
+- market share  
+- alignments  
+- history  
+- events  
+
+---
+
+## Criminal Syndicates (3–5)
+Types:
+- Pirates  
+- Drug cartels  
+- Cybercrime networks  
+- Smuggling cartels  
+- Organized crime families  
+
+Track:
+- operations  
+- bases  
+- revenue  
+- hostilities  
+- major events  
+
+---
+
+# COLONY & INSTALLATION TYPES
+
+## Inhabited types
+- Core world  
+- Industrial world  
+- Agricultural world  
+- Mining colony  
+- Tech hub  
+- Military base  
+- Trade station  
+- Refinery  
+- Research station  
+- Frontier colony  
+- Corporate HQ  
+- Luxury resort  
+- Prison colony  
+- Freeport  
+
+## Uninhabited types
+- Barren outpost  
+- Abandoned colony  
+- Derelict station  
+- Ancient alien ruins  
+
+---
+
+# TECHNOLOGY SYSTEM
+
+FTL progression:
+1. Gen1 — dangerous, slow  
+2. Gen2 — practical  
+3. Gen3 — commercial  
+4. Gen4 — ubiquitous  
+
+Diffusion mechanics:
+- open vs proprietary  
+- embargoes  
+- espionage  
+- regression in isolated systems  
+
+---
+
+# EVENT ENGINE
+
+Event categories:
+- Political upheaval  
+- War  
+- Corporate drama  
+- Syndicate activity  
+- Natural disasters  
+- Discoveries  
+- Population shocks  
+
+Each event has:
+- cause  
+- participants  
+- systems affected  
+- consequences  
+- long‑term effects  
+- timeline insertion  
+
+---
+
+# OUTPUT OF FULL SIMULATION
+
+Top‑level file: `universe.json`
+
+Plus multiple CSVs:
+- systems.csv  
+- installations.csv  
+- uninhabited_resources.csv  
+- factions.csv  
+- corporations.csv  
+- syndicates.csv  
+- trade_routes.csv  
+- commodity_prices.csv  
+- history.csv  
+- relationships.csv  
+
+Plus human‑readable:
+- summary.txt
+- history_timeline.log (ISO date + single-line event summary, one event per line)
+
+Plus visualization:
+- star_map.svg  
+
+This master specification is intended for use across multiple scripts and multiple ChatGPT sessions.  
+Always load this file (or paste relevant sections) before asking the model to continue development.
