@@ -160,21 +160,47 @@ Phase 2's outputs are essential inputs for:
 
 ### Phase 3 — Civilization Expansion
 Artifacts drive:
-- Early colony attempts  
-- Faction conflict  
+- Early colony attempts (drawn to artifact sites)
+- Faction conflict over control of ruins
 - Tech acceleration events (especially propulsion breakthroughs)
+- Strategic colony placement near valuable artifact types
 
 ### Phase 4 — Economy & Missions
 Artifacts become:
 - High‑value salvage targets  
 - Scientific or covert mission locations  
 - Strategic positions in trade networks  
+- Sources of rare or unique commodities (recovered tech)
 
 ### Phase 5 — Historical Timeline
 Artifacts anchor key lore moments:
 - "Discovery of the Helios Node"
 - "Decoding of the Proxima Crystal"
 - "Collapse of the Beacon Wars"
+- "First Faster-Than-Light Breakthrough from Artifact Research"
+
+---
+
+## Command-Line Usage
+
+Example:
+
+```bash
+python3 generate_alien_artifacts.py \
+  --input-objects system_objects.csv \
+  --output-objects system_objects.csv \
+  --artifact-rate 0.02 \
+  --seed 42
+```
+
+### Arguments
+
+| Argument | Description |
+|----------|-------------|
+| `--input-objects` | Path to Phase 1 `system_objects.csv` |
+| `--output-objects` | Output file path (overwrites input with augmented version) |
+| `--artifact-rate` | Probability per eligible object (default: 0.02) |
+| `--seed` | Global deterministic seed offset (optional) |
 
 ---
 
@@ -188,4 +214,3 @@ It provides:
 - A narrative & mechanical backbone for future expansion phases  
 
 Artifacts are rare, mysterious, and powerful — exactly the sparks of advancement you want in your universe.
-
