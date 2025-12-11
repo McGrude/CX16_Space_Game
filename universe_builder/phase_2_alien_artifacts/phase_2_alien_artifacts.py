@@ -3,14 +3,14 @@
 
 Phase 2: Alien Ruins & Artifacts Generator.
 
-Reads a Phase‑1 `system_objects.csv` (natural objects only) and writes an
+Reads a Phase-1 `system_objects.csv` (natural objects only) and writes an
 augmented CSV that includes:
 
     artifact_flag  (0/1)
     artifact_type  (ARC, RUI, FAC, BEA, ENG, TEC, or empty)
 
 Artifact placement is deterministic and based solely on (system_id, object_id)
-and object class, so it is stable across runs and independent of Phase‑1 RNG.
+and object class, so it is stable across runs and independent of Phase-1 RNG.
 """
 
 import argparse
@@ -34,7 +34,7 @@ ARTIFACT_TYPES: List[Tuple[str, int]] = [
 
 
 def hash32(key: str) -> int:
-    """Return a 32‑bit integer hash from SHA‑256(key)."""
+    """Return a 32-bit integer hash from SHA-256(key)."""
     h = hashlib.sha256(key.encode("utf-8")).digest()
     return int.from_bytes(h[:4], "big")
 
@@ -51,7 +51,7 @@ def choose_artifact_type(h_extra: int) -> str:
     return ARTIFACT_TYPES[-1][0]
 
 
-def process_file(input_path: str, output_path: str, rate: float) -> None:
+def process_file(input_path: str, output_path: str, rate: float, seed: int) -> None:
     with open(input_path, newline="", encoding="utf-8") as f_in:
         reader = csv.DictReader(f_in)
         if reader.fieldnames is None:
@@ -72,7 +72,9 @@ def process_file(input_path: str, output_path: str, rate: float) -> None:
         sid = (row.get("system_id") or "").strip()
         oid = (row.get("object_id") or "").strip()
 
-        key = f"{sid}:{oid}:artifact"
+        # Include the global seed in the hash key so different seeds
+        # produce different—but still deterministic—artifact layouts.
+        key = f"{seed}:{sid}:{oid}:artifact"
         h = hashlib.sha256(key.encode("utf-8")).digest()
         h_main = int.from_bytes(h[:4], "big")
         h_extra = int.from_bytes(h[4:8], "big")
@@ -104,28 +106,34 @@ def process_file(input_path: str, output_path: str, rate: float) -> None:
 def parse_args() -> argparse.Namespace:
     ap = argparse.ArgumentParser(
         description=(
-            "Phase 2: Add alien artifact flags/types to a Phase‑1 system_objects.csv "
+            "Phase 2: Add alien artifact flags/types to a Phase-1 system_objects.csv "
             "in a deterministic way."
         )
     )
     ap.add_argument(
         "--input-objects",
         required=True,
-        help="Path to input system_objects.csv (Phase‑1 output).",
+        help="Path to input system_objects.csv (Phase-1 output).",
     )
     ap.add_argument(
         "--output-objects",
         required=True,
-        help="Path to output augmented system_objects.csv (Phase‑2 output).",
+        help="Path to output augmented system_objects.csv (Phase-2 output).",
     )
     ap.add_argument(
         "--artifact-rate",
         type=float,
         default=0.02,
         help=(
-            "Per‑object probability for eligible classes to host artifacts, " 
-            "used as a deterministic threshold on hash‑derived p (default: 0.02)." 
+            "Per-object probability for eligible classes to host artifacts, "
+            "used as a deterministic threshold on hash-derived p (default: 0.02)."
         ),
+    )
+    ap.add_argument(
+        "--seed",
+        type=int,
+        default=0,
+        help=("Global deterministic seed offset mixed into artifact hashing (default: 0)."),
     )
     return ap.parse_args()
 
@@ -134,7 +142,7 @@ def main() -> None:
     args = parse_args()
     if not (0.0 <= args.artifact_rate <= 1.0):
         raise SystemExit("--artifact-rate must be between 0.0 and 1.0")
-    process_file(args.input_objects, args.output_objects, args.artifact_rate)
+    process_file(args.input_objects, args.output_objects, args.artifact_rate, args.seed)
 
 
 if __name__ == "__main__":
