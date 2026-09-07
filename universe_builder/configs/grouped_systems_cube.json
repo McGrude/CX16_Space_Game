@@ -1,0 +1,49 @@
+{
+  "schema_version": 2,
+  "source_catalog": "../data/source/hygdata_v42.csv",
+  "phase_0": {
+    "max_stars": 300,
+    "scale": 0.5,
+    "membership_overrides": "system_membership_overrides.json",
+    "reach_candidates_ly": [
+      9.0
+    ],
+    "pruning_trials": 8,
+    "half_extent_ly": 25.0,
+    "shape": "cube"
+  },
+  "phase_1": {
+    "max_objects_per_system": 5,
+    "seed": 42,
+    "total_body_weights": [
+      [
+        0,
+        10
+      ],
+      [
+        1,
+        35
+      ],
+      [
+        2,
+        35
+      ],
+      [
+        3,
+        15
+      ],
+      [
+        4,
+        4
+      ],
+      [
+        5,
+        1
+      ]
+    ]
+  },
+  "phase_2": {
+    "artifact_rate": 0.03,
+    "seed": 1
+  }
+}

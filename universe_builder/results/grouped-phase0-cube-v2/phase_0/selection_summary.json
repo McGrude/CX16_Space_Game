@@ -1,0 +1,138 @@
+{
+  "candidate_catalog_members": 274,
+  "candidate_named_members": 44,
+  "candidate_named_systems": 39,
+  "candidate_systems": 225,
+  "components": 1,
+  "coordinate_rule": "Designated primary position; not a computed mass barycenter",
+  "degree_histogram": {
+    "1": 15,
+    "2": 21,
+    "3": 37,
+    "4": 40,
+    "5": 28,
+    "6": 29
+  },
+  "grouping_rule": "HYG primary links plus sourced overrides; no proximity merges",
+  "invalid_astrometry_ids": [],
+  "max_neighbors": 6,
+  "mean_neighbors": 3.776470588235294,
+  "min_neighbors": 1,
+  "multiple_member_destinations": 36,
+  "named_system_losses": [
+    {
+      "id": 47645,
+      "member_names": [
+        "A\u00f1a\u00f1uca"
+      ],
+      "name": "A\u00f1a\u00f1uca"
+    }
+  ],
+  "neighborhood_half_extent_ly": 25.0,
+  "neighborhood_shape": "cube",
+  "pruned_systems": 55,
+  "pruning_seed": 0,
+  "pruning_trials_per_reach": 8,
+  "quality_flags": [
+    {
+      "flags": [
+        "catalog_member_offset_exceeds_1_ly"
+      ],
+      "id": 45211,
+      "name": "Tauven Arc-16",
+      "retained": true
+    },
+    {
+      "flags": [
+        "catalog_member_offset_exceeds_1_ly"
+      ],
+      "id": 83882,
+      "name": "Luyten Cluster-30",
+      "retained": true
+    },
+    {
+      "flags": [
+        "catalog_member_offset_exceeds_1_ly"
+      ],
+      "id": 82565,
+      "name": "Nomad Expanse-11",
+      "retained": false
+    },
+    {
+      "flags": [
+        "secondary_component_without_cataloged_primary_companion"
+      ],
+      "id": 118187,
+      "name": "Tauven Verge-45",
+      "retained": true
+    },
+    {
+      "flags": [
+        "catalog_member_offset_exceeds_1_ly"
+      ],
+      "id": 118084,
+      "name": "p Eridani",
+      "retained": true
+    },
+    {
+      "flags": [
+        "catalog_member_offset_exceeds_1_ly"
+      ],
+      "id": 101810,
+      "name": "Aurigon Cluster-75",
+      "retained": false
+    }
+  ],
+  "reach_comparison": [
+    {
+      "components": 1,
+      "edges": 321,
+      "max_neighbors": 6,
+      "mean_neighbors": 3.776470588235294,
+      "min_neighbors": 1,
+      "preferred_retained": 38,
+      "radius_ly": 9.0,
+      "removed_count": 55,
+      "retained_count": 170,
+      "seed": 0
+    }
+  ],
+  "reach_ly": 9.0,
+  "retained_catalog_members": 210,
+  "retained_named_members": 43,
+  "retained_named_systems": 38,
+  "retained_systems": 170,
+  "routes": 321,
+  "schema_version": 2,
+  "selection_objective": "named systems retained, then total systems, then smaller reach, then lower seed; heuristic, not globally optimal",
+  "single_member_destinations": 134,
+  "sol_neighbors": [
+    {
+      "distance_ly": 4.320148863664279,
+      "id": 71456,
+      "name": "Alpha Centauri"
+    },
+    {
+      "distance_ly": 5.945191645873049,
+      "id": 87665,
+      "name": "Barnard's Star"
+    },
+    {
+      "distance_ly": 7.799260886020115,
+      "id": 118720,
+      "name": "Wolf 359"
+    },
+    {
+      "distance_ly": 8.304408135887801,
+      "id": 53879,
+      "name": "Lalande 21185"
+    },
+    {
+      "distance_ly": 8.600784535570012,
+      "id": 32263,
+      "name": "Sirius"
+    }
+  ],
+  "source_rows": 119626,
+  "systems_before_budget": 225
+}

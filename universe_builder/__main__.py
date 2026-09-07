@@ -11,7 +11,7 @@ import sys
 ROOT = Path(__file__).resolve().parent.parent
 PACKAGE = ROOT / "universe_builder"
 PHASES = (
-    ("star_catalog", "existing; validation pending"),
+    ("star_catalog", "closed — accepted grouped v1"),
     ("system_objects", "existing; validation pending"),
     ("alien_artifacts", "existing; validation pending"),
     ("initial_scenario", "planned — M2"),
@@ -43,12 +43,26 @@ def load_config(path):
     path = Path(path).resolve()
     config = json.loads(path.read_text())
     exact_keys(config, ("schema_version", "source_catalog", "phase_0", "phase_1", "phase_2"), "config")
-    if type(config["schema_version"]) is not int or config["schema_version"] != 1:
-        raise ValueError("Only config schema_version 1 is supported")
-    exact_keys(config["phase_0"], ("radius_ly", "max_stars", "scale"), "phase_0")
-    exact_keys(config["phase_1"], ("max_objects_per_system", "seed"), "phase_1")
+    if type(config["schema_version"]) is not int or config["schema_version"] not in (1, 2):
+        raise ValueError("Only config schema_version 1 or 2 is supported")
+    shape = config["phase_0"].get("shape", "sphere")
+    if shape not in ("sphere", "cube") or (shape == "cube" and config["schema_version"] != 2):
+        raise ValueError("Cube selection requires grouped schema 2")
+    extent_key = "half_extent_ly" if shape == "cube" else "radius_ly"
+    phase0_keys = [extent_key, "max_stars", "scale"]
+    if "shape" in config["phase_0"]:
+        phase0_keys.append("shape")
+    if config["schema_version"] == 2:
+        phase0_keys += ["membership_overrides", "reach_candidates_ly", "pruning_trials"]
+    exact_keys(config["phase_0"], phase0_keys, "phase_0")
+    p1keys = ["max_objects_per_system", "seed"]
+    if "total_body_weights" in config["phase_1"]:
+        from universe_builder.phases.phase_1_system_objects import validate_weights
+        validate_weights(config["phase_1"]["total_body_weights"])
+        p1keys.append("total_body_weights")
+    exact_keys(config["phase_1"], p1keys, "phase_1")
     exact_keys(config["phase_2"], ("artifact_rate", "seed"), "phase_2")
-    for key in ("radius_ly", "scale"):
+    for key in (extent_key, "scale"):
         number(config["phase_0"][key], f"phase_0.{key}", 0)
         if config["phase_0"][key] == 0:
             raise ValueError(f"phase_0.{key} must be positive")
@@ -62,6 +76,21 @@ def load_config(path):
     source = (path.parent / config["source_catalog"]).resolve()
     if not source.is_file():
         raise ValueError(f"Source catalog does not exist: {source}")
+    if config["schema_version"] == 2:
+        p0 = config["phase_0"]
+        if not isinstance(p0["membership_overrides"], str) or not p0["membership_overrides"]:
+            raise ValueError("membership_overrides must be a path")
+        override = (path.parent / p0["membership_overrides"]).resolve()
+        if not override.is_file():
+            raise ValueError("membership_overrides file does not exist")
+        p0["membership_overrides"] = str(override)
+        if not isinstance(p0["reach_candidates_ly"], list) or not p0["reach_candidates_ly"]:
+            raise ValueError("reach_candidates_ly must be a nonempty list")
+        for reach in p0["reach_candidates_ly"]:
+            number(reach, "reach candidate", 0)
+            if reach == 0:
+                raise ValueError("reach candidate must be positive")
+        number(p0["pruning_trials"], "pruning_trials", 1, 100, integer=True)
     return config, source
 
 
@@ -80,7 +109,7 @@ def verify_baseline():
 def commands(config, source, output, through):
     p0, p1, p2 = (config[f"phase_{i}"] for i in range(3))
     args = [
-        ["--input-csv", str(source), "--radius-ly", str(p0["radius_ly"]),
+        ["--input-csv", str(source), "--radius-ly", str(p0.get("half_extent_ly", p0.get("radius_ly"))),
          "--max-stars", str(p0["max_stars"]), "--scale", str(p0["scale"]),
          "--csv-out", str(output / "phase_0/star_catalog.csv"),
          "--map-out", str(output / "phase_0/star_map.txt")],
@@ -91,10 +120,21 @@ def commands(config, source, output, through):
          "--output-objects", str(output / "phase_2/system_objects.csv"),
          "--artifact-rate", str(p2["artifact_rate"]), "--seed", str(p2["seed"])],
     ]
-    return [
+    jobs = [
         [sys.executable, str(PACKAGE / "phases" / f"phase_{i}_{PHASES[i][0]}.py"), *args[i]]
         for i in range(through + 1)
     ]
+    if config["schema_version"] == 2:
+        jobs[0] = [sys.executable, str(PACKAGE / "phases/phase_0_stellar_systems.py"),
+                   "--input-csv", str(source), "--membership-overrides", p0["membership_overrides"],
+                   "--radius-ly", str(p0.get("half_extent_ly", p0.get("radius_ly"))), "--max-stars", str(p0["max_stars"]),
+                   "--scale", str(p0["scale"]), "--output-dir", str(output / "phase_0"),
+                   "--shape", p0.get("shape", "sphere"),
+                   "--trials", str(p0["pruning_trials"]), "--reach-candidates",
+                   *map(str, p0["reach_candidates_ly"])]
+    if through >= 1 and "total_body_weights" in p1:
+        jobs[1] += ["--total-body-weights", *[str(w) for _, w in p1["total_body_weights"]]]
+    return jobs
 
 
 def generate(config_path, output, through=2):
@@ -121,6 +161,12 @@ def generate(config_path, output, through=2):
         "commands": jobs,
         "outputs": {},
     }
+    if config["schema_version"] == 2:
+        override = Path(config["phase_0"]["membership_overrides"])
+        manifest["membership_overrides"] = {"path": str(override), "sha256": digest(override)}
+        for dependency in ("phases/system_grouping.py", "phases/phase_0_star_catalog.py", "analysis/pruning.py"):
+            file = PACKAGE / dependency
+            manifest["implementations"][str(file.relative_to(ROOT))] = digest(file)
     output.mkdir(parents=True, exist_ok=False)
     manifest_path = output / "manifest.json"
 
@@ -134,6 +180,8 @@ def generate(config_path, output, through=2):
             phase_dir.mkdir()
             subprocess.run(job, check=True, cwd=output)
             expected = ("star_catalog.csv", "star_map.txt") if i == 0 else ("system_objects.csv",)
+            if i == 0 and config["schema_version"] == 2:
+                expected += ("routes.csv", "stellar_members.json", "candidate_systems.json", "selection_summary.json")
             for name in expected:
                 path = phase_dir / name
                 manifest["outputs"][str(path.relative_to(output))] = digest(path)
@@ -158,6 +206,10 @@ def main(argv=None):
     run.add_argument("--config", type=Path, required=True)
     run.add_argument("--output", type=Path, required=True)
     run.add_argument("--through", type=int, choices=(0, 1, 2), default=2)
+    export_ids = sub.add_parser("export-runtime", help="Export compact physical-world IDs and version metadata")
+    export_ids.add_argument("--phase0", type=Path, required=True)
+    export_ids.add_argument("--phase1", type=Path, required=True)
+    export_ids.add_argument("--output", type=Path, required=True)
     args = parser.parse_args(argv)
     try:
         if args.command == "list":
@@ -165,6 +217,10 @@ def main(argv=None):
                 print(f"{i}: {name} — {status}")
         elif args.command == "verify-baseline":
             verify_baseline()
+        elif args.command == "export-runtime":
+            from universe_builder.export.runtime_ids import export
+            result = export(args.phase0, args.phase1, args.output)
+            print(json.dumps(result, indent=2))
         else:
             generate(args.config, args.output, args.through)
     except (ValueError, OSError, subprocess.CalledProcessError) as exc:

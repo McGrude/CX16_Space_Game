@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "config": {
+    "schema_version": 1,
+    "input_catalog": "../results/grouped-phase0-v1/phase_0/star_catalog.csv",
+    "seed": 42,
+    "total_body_weights": [
+      [
+        0,
+        10
+      ],
+      [
+        1,
+        35
+      ],
+      [
+        2,
+        35
+      ],
+      [
+        3,
+        15
+      ],
+      [
+        4,
+        4
+      ],
+      [
+        5,
+        1
+      ]
+    ],
+    "sol_policy": "existing_earth_luna_mars_ceres"
+  },
+  "python": "3.9.6",
+  "input_catalog_sha256": "1f2eff3c8767fd9422611b30d7c2290f60b849a103c5aef9852ae9ddb6b067c1",
+  "config_sha256": "29d1b09f044970fe5c91e5cc2431200940a813dc0255d04d996375d48a378f81",
+  "implementations": {
+    "analysis/phase1_density.py": "0d9111974119cf5bbaeead1e086d284126b1ab69fce7f97fc4d48d32da1156bb",
+    "phases/phase_1_system_objects.py": "eeaf92d816f4ade55ced3c7a9cd0dbd83a3551158e26793ad6e798d23fb7dff9"
+  },
+  "outputs": {
+    "system_objects.csv": "86279f04e3f4e6866d5a5e7144a291c295113af390c11fa740bf482da58eb403",
+    "summary.json": "5c1dd3fb0db39fffb4d2caa7ba142bf145c1dba43ff876600ca56df6734f75fe"
+  }
+}

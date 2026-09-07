@@ -4,7 +4,7 @@ These are the current phase boundaries. Phases 0–2 retain existing implementat
 
 | Phase | Purpose | Implementation | Contract |
 |---|---|---|---|
-| 0 | Physical star catalog and map | Existing; validation pending | [Stars](00-star-catalog.md) |
+| 0 | Grouped stellar systems, routes and map | Closed: accepted v1 | [Stars](00-star-catalog.md) |
 | 1 | Natural bodies and resources | Existing; validation pending | [Objects](01-system-objects.md) |
 | 2 | Hidden ancient artifacts | Existing; validation pending | [Artifacts](02-alien-artifacts.md) |
 | 3 | Initial Earth scenario | Planned, M2 | [Scenario](03-initial-scenario.md) |

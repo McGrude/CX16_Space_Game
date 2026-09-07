@@ -1,0 +1,275 @@
+system_id,object_id,name,class,parent_object_id,is_moon,local_x,local_y,ore_richness,fuel_richness,habitability,risk
+0,0,Earth,RP,,0,27,29,3,1,82,33
+0,1,Luna,RM,0,1,28,28,2,0,68,39
+0,2,Mars,RP,,0,19,30,2,1,80,35
+0,3,Ceres,AS,,0,35,30,1,0,40,72
+71456,0,Alpha Centauri I,RP,,0,23,30,2,1,85,44
+71456,1,Alpha Centauri II,RP,,0,25,17,2,2,82,46
+71456,2,Alpha Centauri III,RP,,0,19,34,3,2,72,40
+87665,0,Barnard's Star I,RP,,0,29,22,1,1,53,35
+118720,0,Wolf 359 I,RP,,0,26,20,2,1,69,31
+118720,1,Wolf 359 I-a,RM,0,1,27,19,3,1,51,31
+53879,0,Lalande 21185 I,RP,,0,20,24,2,2,62,30
+53879,1,Lalande 21185 I-a,RM,0,1,19,25,1,3,55,27
+53879,2,Lalande 21185 II,RP,,0,21,32,3,3,58,26
+32263,0,Sirius I,RP,,0,25,30,1,2,51,58
+92115,0,Ross 154 I,GG,,0,30,26,0,2,17,68
+119585,0,Ross 248 I,RP,,0,25,20,1,0,60,44
+16496,0,Ran I,RP,,0,28,29,3,0,78,38
+16496,1,Ran II,RP,,0,31,20,1,0,81,31
+113687,0,Lacaille 9352 I,RP,,0,20,25,1,0,59,25
+57375,0,Ross 128 I,RP,,0,30,27,3,2,63,26
+57375,1,Ross 128 II,RP,,0,17,23,3,1,62,35
+119518,0,EZ Aqr I,DP,,0,23,30,0,0,38,52
+37173,0,Procyon I,RP,,0,20,27,1,1,54,42
+37173,1,Procyon II,IC,,0,17,27,1,2,36,56
+91484,0,Struve 2398 I,GG,,0,20,24,0,2,15,74
+91484,1,Struve 2398 I-a,RM,0,1,20,24,3,0,57,32
+1472,0,Groombridge 34 I,DP,,0,29,23,2,1,45,47
+5632,0,Talios Belt-14 I,GG,,0,20,24,0,3,10,63
+5632,1,Talios Belt-14 I-a,RM,0,1,21,26,0,2,53,35
+5632,2,Talios Belt-14 I-b,IM,0,1,20,25,1,1,30,42
+82472,0,Koros Reach-10 I,DP,,0,22,29,2,2,48,52
+36107,0,Luyten's Star I,RP,,0,30,23,2,1,72,24
+24129,0,Kapteyn's Star I,RP,,0,29,21,3,2,63,34
+24129,1,Kapteyn's Star II,IC,,0,33,23,0,0,32,38
+24129,2,Kapteyn's Star II-a,RM,1,1,32,25,2,3,49,30
+24129,3,Kapteyn's Star III,RP,,0,35,20,2,1,65,32
+104751,0,Lacaille 8760 I,IC,,0,30,25,1,2,27,32
+104751,1,Lacaille 8760 I-a,RM,0,1,29,27,2,1,58,33
+110547,0,Kruger 60 I,RP,,0,30,25,2,2,67,27
+30847,0,Ross 614 I,DP,,0,30,26,3,2,42,52
+30847,1,Ross 614 II,RP,,0,20,32,2,2,72,22
+30847,2,Ross 614 II-a,RM,1,1,21,34,1,3,56,42
+82473,0,Nomad Reach-26 I,RP,,0,24,20,0,1,60,40
+118236,0,Meridian Sector-40 I,DP,,0,28,21,1,1,52,53
+80579,0,Wolf 1061 I,DP,,0,30,25,2,1,50,54
+118100,0,Pioneer Arc-18 I,RP,,0,21,22,1,1,63,47
+118704,0,Epsara Expanse-45 I,DP,,0,20,25,2,3,52,49
+118707,0,Vegaine Sector-02 I,RP,,0,20,25,2,1,62,26
+118707,1,Vegaine Sector-02 I-a,RM,0,1,20,27,2,2,55,37
+85264,0,Talios Verge-90 I,RP,,0,21,23,2,1,72,27
+85264,1,Talios Verge-90 II,DP,,0,26,33,1,0,52,47
+57194,0,Cygnera Sector-34 I,IC,,0,30,23,1,0,28,57
+57194,1,Cygnera Sector-34 Asteroid,AS,,0,22,33,2,0,18,65
+54052,0,Vegaine Arc-98 I,RP,,0,22,21,2,1,63,37
+49767,0,Talios Cluster-75 I,GG,,0,24,30,0,3,24,76
+49767,1,Talios Cluster-75 I-a,RM,0,1,25,29,1,0,69,37
+19799,0,Keid I,GG,,0,30,23,0,3,27,70
+19799,1,Keid I-a,RM,0,1,32,23,2,1,71,39
+19799,2,Keid Asteroid,AS,,0,26,17,1,1,36,64
+1240,0,Khoras Arc-46 I,RP,,0,25,30,1,2,64,32
+1240,1,Khoras Arc-46 I-a,RM,0,1,24,30,0,3,58,27
+88327,0,Triarch Verge-49 I,RP,,0,23,20,3,0,81,27
+88327,1,Triarch Verge-49 II,RP,,0,29,18,1,0,73,35
+88327,2,Triarch Verge-49 II-a,RM,1,1,28,20,2,3,68,37
+97338,0,Altair I,GG,,0,26,30,0,3,0,98
+97338,1,Altair I-a,RM,0,1,27,31,3,1,34,57
+118578,0,Tauven Arc-87 I,GG,,0,21,22,0,3,16,72
+118578,1,Tauven Arc-87 I-a,RM,0,1,20,23,3,1,60,28
+67380,0,Sigmar Cluster-51 I,IC,,0,22,29,1,1,26,44
+57371,0,Procyon Arc-47 I,RP,,0,26,20,2,0,61,27
+66943,0,Tauven Expanse-52 I,GG,,0,20,27,0,2,4,64
+66943,1,Tauven Expanse-52 I-a,RM,0,1,21,29,2,2,51,36
+58735,0,Khoras Cluster-30 I,DP,,0,25,30,3,0,34,63
+58735,1,Khoras Cluster-30 II,RP,,0,28,18,1,1,59,42
+58735,2,Khoras Cluster-30 II-a,IM,1,1,29,17,3,1,35,66
+21036,0,Procyon Cluster-73 I,RP,,0,24,20,3,0,59,45
+21036,1,Procyon Cluster-73 II,RP,,0,18,22,1,1,60,37
+21036,2,Procyon Cluster-73 II-a,IM,1,1,20,24,3,1,34,57
+33139,0,Pioneer Expanse-53 I,RP,,0,20,27,1,2,70,27
+102708,0,Pioneer Sector-05 I,GG,,0,20,27,0,3,0,87
+95799,0,Alsafi I,RP,,0,24,30,3,0,68,35
+95799,1,Alsafi II,RP,,0,19,20,1,3,79,30
+118447,0,Vegaine Expanse-27 I,GG,,0,26,20,0,3,0,73
+118447,1,Vegaine Expanse-27 I-a,RM,0,1,26,20,1,3,57,38
+118447,2,Vegaine Expanse-27 II,DP,,0,18,20,1,1,34,65
+45211,0,Tauven Arc-16 I,RP,,0,21,28,1,3,68,22
+26792,0,Aurigon Sector-88 I,RP,,0,28,29,3,3,65,30
+72957,0,Luyten Reach-27 I,IC,,0,27,30,1,2,42,41
+72957,1,Luyten Reach-27 II,RP,,0,29,32,3,2,82,32
+72957,2,Luyten Reach-27 III,RP,,0,28,14,2,3,71,33
+118532,0,Serpentis Belt-03 I,RP,,0,30,23,3,0,58,34
+84147,0,Guniibuu I,DP,,0,24,30,0,1,58,57
+84147,1,Guniibuu Asteroid,AS,,0,18,30,2,1,34,55
+3814,0,Achird I,RP,,0,20,26,2,3,73,44
+3814,1,Achird II,RP,,0,21,18,1,3,80,39
+3814,2,Achird III,RP,,0,30,15,2,1,78,33
+3814,3,Achird III-a,RM,2,1,31,16,2,3,70,38
+37659,0,Procyon Reach-01 I,RP,,0,23,30,3,0,72,22
+117106,0,Meridian Sector-01 I,RP,,0,25,30,1,2,61,32
+117106,1,Meridian Sector-01 II,GG,,0,17,27,0,3,6,69
+83882,0,Luyten Cluster-30 I,RP,,0,21,23,0,1,78,35
+83882,1,Luyten Cluster-30 I-a,RM,0,1,22,24,2,1,70,43
+99143,0,Zethys Belt-34 I,RP,,0,24,30,1,1,69,34
+15471,0,82 G. Eri I,RP,,0,23,30,2,2,75,43
+71027,0,Serpentis Belt-44 I,IC,,0,23,21,1,1,40,38
+71027,1,Serpentis Belt-44 II,RP,,0,18,29,2,0,67,22
+98924,0,Velarn Reach-04 I,DP,,0,27,30,1,0,63,67
+118344,0,Frontier Verge-85 I,DP,,0,22,29,2,2,41,57
+99382,0,Vegaine Cluster-25 I,DP,,0,24,20,2,1,40,56
+118644,0,Talios Cluster-80 I,RP,,0,29,28,1,2,60,30
+118644,1,Talios Cluster-80 I-a,RM,0,1,31,28,3,1,57,33
+118995,0,Aurigon Sector-11 I,RP,,0,23,20,0,1,59,42
+118995,1,Aurigon Sector-11 II,IC,,0,30,19,0,2,24,54
+74766,0,Khoras Expanse-43 I,RP,,0,26,20,3,2,69,24
+74766,1,Khoras Expanse-43 I-a,RM,0,1,27,20,3,2,53,29
+74766,2,Khoras Expanse-43 II,IC,,0,20,31,0,1,42,33
+74766,3,Khoras Expanse-43 III,RP,,0,17,17,0,1,58,30
+34511,0,Velarn Sector-80 I,RP,,0,20,27,2,0,68,36
+118865,0,Arcturon Sector-12 I,GG,,0,24,20,0,3,7,74
+118399,0,Meridian Reach-13 I,GG,,0,23,20,0,3,6,74
+80218,0,Velarn Expanse-33 I,RP,,0,20,26,2,0,66,32
+118812,0,Luyten Arc-42 I,RP,,0,30,27,1,1,65,40
+114260,0,Khoras Verge-37 I,RP,,0,25,30,2,1,82,31
+114260,1,Khoras Verge-37 I-a,IM,0,1,25,31,0,3,39,46
+53612,0,Altaris Reach-40 I,DP,,0,22,29,1,0,37,54
+53612,1,Altaris Reach-40 II,IC,,0,32,22,2,1,41,34
+105765,0,Tauven Belt-32 I,RP,,0,24,30,3,1,66,23
+105765,1,Tauven Belt-32 Asteroid,AS,,0,21,18,3,1,24,52
+82557,0,Cygnera Belt-38 I,DP,,0,20,24,2,1,49,49
+82557,1,Cygnera Belt-38 II,RP,,0,27,17,2,0,70,32
+118530,0,Nomad Verge-04 I,RP,,0,20,24,0,1,54,34
+118530,1,Nomad Verge-04 II,RP,,0,22,18,3,1,67,35
+119513,0,Helion Belt-47 I,RP,,0,20,25,2,1,58,37
+112936,0,Procyon Cluster-29 I,IC,,0,24,30,0,1,31,33
+112936,1,Procyon Cluster-29 II,RP,,0,29,32,3,0,60,36
+112936,2,Procyon Cluster-29 III,RP,,0,30,15,2,0,69,26
+118510,0,Khoras Belt-04 I,RP,,0,24,20,3,1,58,41
+102765,0,Arcturon Sector-81 I,RP,,0,22,29,0,3,57,35
+102765,1,Arcturon Sector-81 II,RP,,0,33,22,3,1,70,29
+102765,2,Arcturon Sector-81 III,RP,,0,36,27,2,2,62,34
+102765,3,Arcturon Sector-81 III-a,IM,2,1,38,28,1,2,28,41
+51172,0,Talios Cluster-62 I,IC,,0,20,23,2,1,29,35
+51172,1,Talios Cluster-62 II,IC,,0,29,32,1,2,36,34
+12082,0,268 G. Cet I,RP,,0,26,30,2,1,67,38
+12082,1,268 G. Cet I-a,IM,0,1,25,29,0,0,41,56
+119571,0,Meridian Expanse-62 I,RP,,0,30,24,2,2,64,37
+119571,1,Meridian Expanse-62 I-a,RM,0,1,29,24,1,0,56,35
+119212,0,Talios Arc-20 I,RP,,0,20,24,2,1,60,26
+119229,0,Talios Verge-81 I,IC,,0,21,28,1,2,44,52
+3759,0,96 G. Psc I,RP,,0,26,20,2,1,73,28
+3759,1,96 G. Psc Asteroid,AS,,0,33,27,3,1,37,61
+2016,0,Arcturon Expanse-58 I,RP,,0,27,20,3,1,80,47
+2016,1,Arcturon Expanse-58 II,GG,,0,26,33,0,3,24,84
+117987,0,Luyten Verge-41 I,RP,,0,26,30,1,0,64,25
+7966,0,Nomad Arc-15 I,RP,,0,30,24,2,1,71,34
+119199,0,Nadir Sector-98 Asteroid,AS,,0,27,29,2,1,22,51
+119199,1,Nadir Sector-98 II,IC,,0,32,29,1,3,34,32
+119199,2,Nadir Sector-98 II-a,RM,1,1,33,29,3,2,54,39
+5325,0,Arcturon Expanse-67 I,RP,,0,30,26,0,2,83,44
+118405,0,Aurigon Arc-74 I,RP,,0,20,26,3,2,64,34
+118405,1,Aurigon Arc-74 I-a,RM,0,1,20,27,2,0,55,35
+118187,0,Tauven Verge-45 I,RP,,0,29,28,2,2,63,29
+65653,0,Cygnera Cluster-40 I,DP,,0,28,29,2,1,47,51
+85036,0,Pioneer Cluster-32 I,RP,,0,29,27,2,3,72,41
+85036,1,Pioneer Cluster-32 I-a,RM,0,1,30,26,3,2,67,36
+113008,0,Fomalhaut I,IC,,0,22,21,1,2,12,66
+113008,1,Fomalhaut Asteroid,AS,,0,26,33,1,3,11,76
+118451,0,Nadir Verge-92 I,RP,,0,25,30,1,1,67,33
+119615,0,Talios Verge-12 I,IC,,0,28,29,2,2,25,45
+119615,1,Talios Verge-12 II,RP,,0,33,24,1,2,67,41
+119615,2,Talios Verge-12 III,GG,,0,14,23,0,3,0,74
+119615,3,Talios Verge-12 III-a,RM,2,1,15,25,2,1,51,42
+49845,0,Draxis Belt-84 I,IC,,0,23,20,1,1,36,43
+49845,1,Draxis Belt-84 I-a,RM,0,1,23,19,2,0,56,31
+118894,0,Cygnera Expanse-84 I,GG,,0,23,20,0,2,3,72
+100854,0,Koros Sector-71 I,IC,,0,23,20,2,1,39,33
+100854,1,Koros Sector-71 II,RP,,0,18,30,1,2,65,33
+119536,0,Epsara Verge-87 I,RP,,0,30,24,2,0,54,41
+80105,0,Helion Arc-87 I,RP,,0,21,27,2,2,58,34
+119224,0,Talios Belt-23 I,RP,,0,25,30,1,3,65,24
+22396,0,Tabit Asteroid,AS,,0,29,22,1,2,20,68
+22396,1,Tabit II,DP,,0,25,33,2,2,44,68
+86022,0,Procyon Reach-53 I,GG,,0,22,21,0,2,14,66
+86022,1,Procyon Reach-53 I-a,IM,0,1,23,20,3,2,31,50
+118084,0,p Eridani I,GG,,0,28,21,0,3,25,72
+118084,1,p Eridani I-a,RM,0,1,30,23,1,0,69,34
+118084,2,p Eridani Asteroid,AS,,0,22,32,2,2,31,52
+119260,0,Meridian Cluster-74 I,RP,,0,27,20,3,2,60,36
+118902,0,Meridian Cluster-33 I,IC,,0,27,29,2,1,24,50
+5485,0,Koros Sector-37 I,DP,,0,30,23,3,1,61,51
+118777,0,Koros Arc-03 I,RP,,0,24,30,3,0,72,36
+113216,0,Serpentis Verge-32 I,IC,,0,30,25,3,1,44,42
+113216,1,Serpentis Verge-32 II,RP,,0,18,22,1,1,77,30
+119218,0,Zethys Belt-25 I,DP,,0,29,22,2,0,42,57
+119218,1,Zethys Belt-25 II,RP,,0,33,28,2,1,70,33
+105913,0,Tauven Reach-19 I,GG,,0,27,20,0,3,11,65
+105913,1,Tauven Reach-19 I-a,RM,0,1,27,20,1,1,56,36
+105913,2,Tauven Reach-19 II,IC,,0,21,18,0,1,29,46
+86705,0,Khoras Sector-97 I,RP,,0,27,21,2,1,81,46
+86705,1,Khoras Sector-97 II,IC,,0,23,17,1,1,44,49
+86705,2,Khoras Sector-97 III,DP,,0,19,16,3,0,58,55
+118425,0,Vegaine Belt-22 I,RP,,0,21,22,2,3,60,33
+118425,1,Vegaine Belt-22 I-a,IM,0,1,20,24,0,1,39,47
+118128,0,Zethys Cluster-51 I,DP,,0,29,28,2,1,45,45
+118128,1,Zethys Cluster-51 I-a,IM,0,1,29,27,2,2,29,38
+118201,0,Meridian Sector-94 I,GG,,0,21,28,0,3,7,64
+93578,0,Sigmar Arc-16 I,RP,,0,21,22,0,2,72,37
+93578,1,Sigmar Arc-16 I-a,RM,0,1,23,23,3,1,54,41
+93578,2,Sigmar Arc-16 II,IC,,0,28,18,1,2,35,35
+18852,0,Epsara Sector-34 I,IC,,0,25,20,1,1,24,49
+118572,0,Meridian Belt-11 I,RP,,0,21,28,2,1,62,34
+57629,0,Procyon Verge-45 I,RP,,0,24,20,0,0,65,35
+57629,1,Procyon Verge-45 II,RP,,0,20,19,2,0,61,35
+38846,0,Vegaine Sector-55 I,RP,,0,29,28,1,2,72,35
+38846,1,Vegaine Sector-55 I-a,IM,0,1,28,28,1,2,33,45
+38846,2,Vegaine Sector-55 Asteroid,AS,,0,31,20,3,2,26,62
+111450,0,Nomad Reach-54 I,RP,,0,27,30,2,2,66,25
+118955,0,Helion Sector-50 I,RP,,0,20,23,3,3,59,29
+84462,0,Pioneer Cluster-09 I,RP,,0,20,26,1,2,65,37
+93930,0,Epsara Verge-13 I,RP,,0,22,21,2,0,53,43
+118104,0,Velarn Arc-14 I,IC,,0,22,29,0,1,40,35
+17336,0,Rana I,RP,,0,23,20,3,1,73,40
+57767,0,Groombridge 1830 I,GG,,0,23,30,0,3,27,77
+40386,0,Frontier Cluster-17 I,RP,,0,20,23,1,0,65,33
+15419,0,Zethys Verge-79 I,RP,,0,24,20,1,1,85,35
+15419,1,Zethys Verge-79 I-a,IM,0,1,25,22,0,2,56,59
+9702,0,Aurigon Verge-97 I,RP,,0,30,23,1,2,70,31
+9702,1,Aurigon Verge-97 II,RP,,0,27,33,2,0,63,23
+118459,0,Serpentis Arc-71 I,RP,,0,21,28,1,2,57,22
+9764,0,Zethys Reach-71 I,RP,,0,25,20,0,3,71,35
+9764,1,Zethys Reach-71 II,IC,,0,19,20,0,1,47,51
+118409,0,Zethys Sector-22 I,RP,,0,25,20,3,2,59,27
+118409,1,Zethys Sector-22 I-a,RM,0,1,26,21,2,2,62,27
+118409,2,Zethys Sector-22 II,RP,,0,19,31,1,1,72,35
+66694,0,Meridian Expanse-18 I,RP,,0,24,20,1,1,58,29
+66694,1,Meridian Expanse-18 Asteroid,AS,,0,33,23,2,0,23,55
+14067,0,Veyra Reach-99 I,IC,,0,20,24,1,3,25,50
+14067,1,Veyra Reach-99 I-a,RM,0,1,21,23,1,2,42,50
+14067,2,Veyra Reach-99 II,RP,,0,26,33,2,0,63,35
+86509,0,Khoras Verge-97 I,GG,,0,29,23,0,3,11,75
+119126,0,Draxis Sector-14 I,RP,,0,27,29,1,2,67,34
+119102,0,Arcturon Verge-62 Asteroid,AS,,0,30,26,1,1,22,58
+119102,1,Arcturon Verge-62 II,RP,,0,19,19,1,1,59,22
+117956,0,Serpentis Sector-72 I,GG,,0,22,21,0,2,14,75
+72717,0,Tauven Reach-27 I,IC,,0,21,22,2,2,40,47
+72717,1,Tauven Reach-27 I-a,RM,0,1,22,24,2,0,54,33
+85794,0,Luyten Verge-32 I,RP,,0,23,20,2,3,75,29
+85794,1,Luyten Verge-32 I-a,RM,0,1,25,22,1,2,60,35
+118152,0,Serpentis Cluster-02 I,RP,,0,22,21,2,1,65,24
+118152,1,Serpentis Cluster-02 I-a,IM,0,1,24,20,0,1,40,39
+118710,0,Cygnera Arc-54 I,DP,,0,21,28,2,1,40,57
+118012,0,Frontier Belt-61 I,DP,,0,21,28,2,1,43,56
+118012,1,Frontier Belt-61 II,RP,,0,21,18,3,2,59,26
+119090,0,Talios Arc-71 I,IC,,0,20,25,2,1,40,38
+72665,0,Luyten Verge-37 I,RP,,0,25,20,1,1,53,47
+72665,1,Luyten Verge-37 I-a,RM,0,1,26,22,2,0,56,48
+72665,2,Luyten Verge-37 II,RP,,0,33,25,2,2,60,46
+118129,0,Luyten Belt-67 I,RP,,0,30,24,1,1,70,25
+118129,1,Luyten Belt-67 I-a,IM,0,1,29,26,1,1,37,52
+118585,0,Zethys Cluster-40 I,GG,,0,25,20,0,3,8,69
+118585,1,Zethys Cluster-40 I-a,IM,0,1,27,19,1,1,42,49
+13368,0,Pioneer Arc-34 I,RP,,0,29,28,2,2,76,36
+118972,0,Helion Reach-41 Asteroid,AS,,0,30,25,2,2,13,64
+118972,1,Helion Reach-41 II,GG,,0,31,19,0,2,1,80
+10620,0,Deltoton I,RP,,0,28,21,3,2,85,36
+10620,1,Deltoton II,RP,,0,27,17,1,0,84,45
+119048,0,Altaris Expanse-41 I,RP,,0,21,28,2,1,59,36
+119048,1,Altaris Expanse-41 I-a,RM,0,1,23,28,2,1,48,31
+46945,0,Vegaine Verge-86 I,RP,,0,30,27,2,1,84,35
+46945,1,Vegaine Verge-86 I-a,RM,0,1,30,26,1,1,67,46
+46945,2,Vegaine Verge-86 II,DP,,0,17,27,3,1,63,56
+46945,3,Vegaine Verge-86 III,IC,,0,35,21,2,2,55,48
+118993,0,Koros Reach-04 I,DP,,0,24,20,3,1,49,56
+118993,1,Koros Reach-04 I-a,RM,0,1,24,21,3,2,56,28

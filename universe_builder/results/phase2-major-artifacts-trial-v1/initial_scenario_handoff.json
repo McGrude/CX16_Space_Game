@@ -1,0 +1,11 @@
+{
+  "discoverer": null,
+  "discovery_date": null,
+  "initial_beneficiaries": null,
+  "initial_technology": "interstellar_propulsion",
+  "origin_site_id": "site:0:2",
+  "other_sites": "hidden until explicit discovery and knowledge propagation",
+  "status": "proposed initial-scenario handoff; not an executed historical event",
+  "technology_effects": "not implemented; no placement field grants knowledge or bonuses",
+  "timing": "discovered and exploited before simulation epoch"
+}

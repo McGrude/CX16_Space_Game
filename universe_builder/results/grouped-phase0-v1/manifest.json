@@ -1,0 +1,106 @@
+{
+  "commands": [
+    [
+      "/Library/Developer/CommandLineTools/usr/bin/python3",
+      "/Users/hogsett/Documents/REPOS/CX16_Space_Game/universe_builder/phases/phase_0_stellar_systems.py",
+      "--input-csv",
+      "/Users/hogsett/Documents/REPOS/CX16_Space_Game/universe_builder/data/source/hygdata_v42.csv",
+      "--membership-overrides",
+      "/Users/hogsett/Documents/REPOS/CX16_Space_Game/universe_builder/configs/system_membership_overrides.json",
+      "--radius-ly",
+      "25.0",
+      "--max-stars",
+      "300",
+      "--scale",
+      "0.5",
+      "--output-dir",
+      "/Users/hogsett/Documents/REPOS/CX16_Space_Game/universe_builder/results/grouped-phase0-v1/phase_0",
+      "--trials",
+      "8",
+      "--reach-candidates",
+      "7.0",
+      "7.5",
+      "8.0",
+      "8.5",
+      "9.0",
+      "9.1",
+      "9.2",
+      "9.3",
+      "9.4",
+      "9.5",
+      "9.6",
+      "9.7",
+      "9.8",
+      "9.9",
+      "10.0",
+      "10.3"
+    ]
+  ],
+  "completed_phases": [
+    0
+  ],
+  "config": {
+    "phase_0": {
+      "max_stars": 300,
+      "membership_overrides": "/Users/hogsett/Documents/REPOS/CX16_Space_Game/universe_builder/configs/system_membership_overrides.json",
+      "pruning_trials": 8,
+      "radius_ly": 25.0,
+      "reach_candidates_ly": [
+        7.0,
+        7.5,
+        8.0,
+        8.5,
+        9.0,
+        9.1,
+        9.2,
+        9.3,
+        9.4,
+        9.5,
+        9.6,
+        9.7,
+        9.8,
+        9.9,
+        10.0,
+        10.3
+      ],
+      "scale": 0.5
+    },
+    "phase_1": {
+      "max_objects_per_system": 5,
+      "seed": 42
+    },
+    "phase_2": {
+      "artifact_rate": 0.03,
+      "seed": 1
+    },
+    "schema_version": 2,
+    "source_catalog": "../data/source/hygdata_v42.csv"
+  },
+  "implementations": {
+    "universe_builder/analysis/pruning.py": "4d69770b71515f6178698da68411493e4d841c706f097e4ee56771492dd64603",
+    "universe_builder/phases/phase_0_star_catalog.py": "1f845321aef327e5794e4e9014e1929dab16194791204eed850acedbdeb3ab6d",
+    "universe_builder/phases/phase_0_stellar_systems.py": "1da253fe1eaa905595508db26dacab9fc431be77db4d6b29c30ebc8721b0ed48",
+    "universe_builder/phases/system_grouping.py": "918a716de9afa879896bad0298d4d358e137fd1ec6b88f7a0eb065f2617c1593"
+  },
+  "membership_overrides": {
+    "path": "/Users/hogsett/Documents/REPOS/CX16_Space_Game/universe_builder/configs/system_membership_overrides.json",
+    "sha256": "4849f9c1289a13ee789369d4c472d83994db6ec73529a2a4809a547a589efae7"
+  },
+  "outputs": {
+    "phase_0/candidate_systems.json": "04dd48cd12737186103b76ef4116069c09a0810ae527bfef3481a1b5a7aeb26d",
+    "phase_0/routes.csv": "2c6051448d2ae3901c813e6f42e14eb5cac51b568cb6602967d609292eea1456",
+    "phase_0/selection_summary.json": "8fe2a66b5a0f8ca8eb2bce97319dd76c3a2c30768fc783c122cd0f5d32a8d603",
+    "phase_0/star_catalog.csv": "1f2eff3c8767fd9422611b30d7c2290f60b849a103c5aef9852ae9ddb6b067c1",
+    "phase_0/star_map.txt": "14274c6aac1c056c4d0a60d2a0e131e8495dd3ecee0635140c4e3cd513425b43",
+    "phase_0/stellar_members.json": "8de72b1b81233f843bba7fd8f5a317b10b29d4ce00cc9d831bababbb45770c43"
+  },
+  "python_version": "3.9.6",
+  "runner_sha256": "4543fc07e686048302c024b06cf0766182e1c5d532c67d7256b3dd2bb18ea71f",
+  "schema_version": 1,
+  "source": {
+    "path": "/Users/hogsett/Documents/REPOS/CX16_Space_Game/universe_builder/data/source/hygdata_v42.csv",
+    "sha256": "b2983a8d934e4f031cdb67bdd6c3437f8c5143cd6606a9573a9a9ac4b6375fd2"
+  },
+  "status": "complete",
+  "through_phase": 0
+}

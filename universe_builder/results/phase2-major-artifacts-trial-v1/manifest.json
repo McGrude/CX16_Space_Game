@@ -1,0 +1,66 @@
+{
+  "config": {
+    "archaeological_sites": 32,
+    "input_run": "../results/physical-phase1-v1",
+    "origin_site": {
+      "object_id": 2,
+      "system_id": 0
+    },
+    "schema_version": 1,
+    "seed": 1,
+    "technologies": [
+      {
+        "id": "interstellar_propulsion",
+        "name": "Interstellar propulsion",
+        "role": "Enables the initial interstellar era; does not alter the fixed route graph."
+      },
+      {
+        "id": "advanced_propulsion",
+        "name": "Advanced propulsion",
+        "role": "Reduces travel time along existing routes."
+      },
+      {
+        "id": "ftl_communications",
+        "name": "FTL communications",
+        "role": "Enables communication faster than courier ships; requires later infrastructure rules."
+      },
+      {
+        "id": "advanced_power",
+        "name": "Advanced power generation",
+        "role": "Supports greater industrial and settlement capacity."
+      },
+      {
+        "id": "advanced_materials",
+        "name": "Advanced materials",
+        "role": "Improves construction and durability."
+      },
+      {
+        "id": "closed_ecology",
+        "name": "Closed ecological systems",
+        "role": "Supports settlements in otherwise difficult environments."
+      },
+      {
+        "id": "advanced_sensors",
+        "name": "Advanced sensors",
+        "role": "Improves exploration and site detection; does not confer undiscovered knowledge."
+      },
+      {
+        "id": "automated_industry",
+        "name": "Automated industry",
+        "role": "Improves production capacity, subject to resources and infrastructure."
+      }
+    ]
+  },
+  "config_sha256": "1759c749601d7fd723838eeb3ebf2f6f19fd9fc6ccf4757f884066570523c35b",
+  "implementation_sha256": "a9530bef97a1750535194036a4601a91c3aa2aa3b55f3752fbafb018a17ec860",
+  "input_manifest_sha256": "94ec3c0065ec74b8d9861cc8fc604ef94346330bfec77474d3c88fcfdb5f2449",
+  "input_sha256": "f59c4f9369f28a04a2b088a01f7635bf43a1c8dd6e44da26ec52385e954298e8",
+  "outputs": {
+    "initial_scenario_handoff.json": "4b517453a4604ded7bc9ba6aa16a48d5576d7fd42d0bd8ab3b4fd559b3ef409c",
+    "summary.json": "fb621fe7c2e33f48fc45eca43c81b4f311d7f02c4d485e735f38470701ba6410",
+    "system_objects.csv": "7ac3953cabf35bdfbb5dd52599cd88e90e2c7e67a347916daeab61e033d28c7e",
+    "technologies.json": "0bceec85fa3bf9446904b029c0c6ffdbaf6a398dc467d37f3c08237643002e62"
+  },
+  "python_version": "3.9.6",
+  "schema_version": 1
+}

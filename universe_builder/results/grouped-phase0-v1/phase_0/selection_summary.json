@@ -1,0 +1,293 @@
+{
+  "candidate_catalog_members": 167,
+  "candidate_named_members": 34,
+  "candidate_named_systems": 30,
+  "candidate_systems": 133,
+  "components": 1,
+  "coordinate_rule": "Designated primary position; not a computed mass barycenter",
+  "degree_histogram": {
+    "1": 6,
+    "2": 14,
+    "3": 27,
+    "4": 17,
+    "5": 17,
+    "6": 18
+  },
+  "grouping_rule": "HYG primary links plus sourced overrides; no proximity merges",
+  "invalid_astrometry_ids": [],
+  "max_neighbors": 6,
+  "mean_neighbors": 3.797979797979798,
+  "min_neighbors": 1,
+  "multiple_member_destinations": 24,
+  "named_system_losses": [],
+  "neighborhood_radius_ly": 25.0,
+  "pruned_systems": 34,
+  "pruning_seed": 0,
+  "pruning_trials_per_reach": 8,
+  "quality_flags": [
+    {
+      "flags": [
+        "catalog_member_offset_exceeds_1_ly"
+      ],
+      "id": 45211,
+      "name": "Tauven Arc-16",
+      "retained": true
+    },
+    {
+      "flags": [
+        "catalog_member_offset_exceeds_1_ly"
+      ],
+      "id": 83882,
+      "name": "Luyten Cluster-30",
+      "retained": true
+    },
+    {
+      "flags": [
+        "catalog_member_offset_exceeds_1_ly"
+      ],
+      "id": 82565,
+      "name": "Nomad Expanse-11",
+      "retained": true
+    },
+    {
+      "flags": [
+        "secondary_component_without_cataloged_primary_companion"
+      ],
+      "id": 118187,
+      "name": "Tauven Verge-45",
+      "retained": false
+    }
+  ],
+  "reach_comparison": [
+    {
+      "components": 1,
+      "edges": 4,
+      "max_neighbors": 3,
+      "mean_neighbors": 2.0,
+      "min_neighbors": 1,
+      "preferred_retained": 4,
+      "radius_ly": 7.0,
+      "removed_count": 129,
+      "retained_count": 4,
+      "seed": 0
+    },
+    {
+      "components": 1,
+      "edges": 144,
+      "max_neighbors": 6,
+      "mean_neighbors": 3.4285714285714284,
+      "min_neighbors": 1,
+      "preferred_retained": 23,
+      "radius_ly": 7.5,
+      "removed_count": 49,
+      "retained_count": 84,
+      "seed": 0
+    },
+    {
+      "components": 1,
+      "edges": 145,
+      "max_neighbors": 6,
+      "mean_neighbors": 3.580246913580247,
+      "min_neighbors": 1,
+      "preferred_retained": 23,
+      "radius_ly": 8.0,
+      "removed_count": 52,
+      "retained_count": 81,
+      "seed": 0
+    },
+    {
+      "components": 1,
+      "edges": 147,
+      "max_neighbors": 6,
+      "mean_neighbors": 3.5421686746987953,
+      "min_neighbors": 1,
+      "preferred_retained": 24,
+      "radius_ly": 8.5,
+      "removed_count": 50,
+      "retained_count": 83,
+      "seed": 0
+    },
+    {
+      "components": 1,
+      "edges": 188,
+      "max_neighbors": 6,
+      "mean_neighbors": 3.797979797979798,
+      "min_neighbors": 1,
+      "preferred_retained": 30,
+      "radius_ly": 9.0,
+      "removed_count": 34,
+      "retained_count": 99,
+      "seed": 0
+    },
+    {
+      "components": 1,
+      "edges": 184,
+      "max_neighbors": 6,
+      "mean_neighbors": 3.8333333333333335,
+      "min_neighbors": 1,
+      "preferred_retained": 29,
+      "radius_ly": 9.1,
+      "removed_count": 37,
+      "retained_count": 96,
+      "seed": 2
+    },
+    {
+      "components": 1,
+      "edges": 185,
+      "max_neighbors": 6,
+      "mean_neighbors": 3.7755102040816326,
+      "min_neighbors": 1,
+      "preferred_retained": 29,
+      "radius_ly": 9.2,
+      "removed_count": 35,
+      "retained_count": 98,
+      "seed": 2
+    },
+    {
+      "components": 1,
+      "edges": 193,
+      "max_neighbors": 6,
+      "mean_neighbors": 3.8217821782178216,
+      "min_neighbors": 1,
+      "preferred_retained": 29,
+      "radius_ly": 9.3,
+      "removed_count": 32,
+      "retained_count": 101,
+      "seed": 3
+    },
+    {
+      "components": 1,
+      "edges": 204,
+      "max_neighbors": 6,
+      "mean_neighbors": 4.03960396039604,
+      "min_neighbors": 1,
+      "preferred_retained": 29,
+      "radius_ly": 9.4,
+      "removed_count": 32,
+      "retained_count": 101,
+      "seed": 3
+    },
+    {
+      "components": 1,
+      "edges": 193,
+      "max_neighbors": 6,
+      "mean_neighbors": 3.938775510204082,
+      "min_neighbors": 1,
+      "preferred_retained": 29,
+      "radius_ly": 9.5,
+      "removed_count": 35,
+      "retained_count": 98,
+      "seed": 3
+    },
+    {
+      "components": 1,
+      "edges": 171,
+      "max_neighbors": 6,
+      "mean_neighbors": 3.842696629213483,
+      "min_neighbors": 1,
+      "preferred_retained": 29,
+      "radius_ly": 9.6,
+      "removed_count": 44,
+      "retained_count": 89,
+      "seed": 4
+    },
+    {
+      "components": 1,
+      "edges": 176,
+      "max_neighbors": 6,
+      "mean_neighbors": 3.911111111111111,
+      "min_neighbors": 1,
+      "preferred_retained": 28,
+      "radius_ly": 9.7,
+      "removed_count": 43,
+      "retained_count": 90,
+      "seed": 3
+    },
+    {
+      "components": 1,
+      "edges": 168,
+      "max_neighbors": 6,
+      "mean_neighbors": 3.8181818181818183,
+      "min_neighbors": 1,
+      "preferred_retained": 28,
+      "radius_ly": 9.8,
+      "removed_count": 45,
+      "retained_count": 88,
+      "seed": 4
+    },
+    {
+      "components": 1,
+      "edges": 173,
+      "max_neighbors": 6,
+      "mean_neighbors": 3.9318181818181817,
+      "min_neighbors": 1,
+      "preferred_retained": 28,
+      "radius_ly": 9.9,
+      "removed_count": 45,
+      "retained_count": 88,
+      "seed": 3
+    },
+    {
+      "components": 1,
+      "edges": 166,
+      "max_neighbors": 6,
+      "mean_neighbors": 3.9058823529411764,
+      "min_neighbors": 1,
+      "preferred_retained": 28,
+      "radius_ly": 10.0,
+      "removed_count": 48,
+      "retained_count": 85,
+      "seed": 1
+    },
+    {
+      "components": 1,
+      "edges": 177,
+      "max_neighbors": 6,
+      "mean_neighbors": 3.9775280898876404,
+      "min_neighbors": 1,
+      "preferred_retained": 28,
+      "radius_ly": 10.3,
+      "removed_count": 44,
+      "retained_count": 89,
+      "seed": 4
+    }
+  ],
+  "reach_ly": 9.0,
+  "retained_catalog_members": 127,
+  "retained_named_members": 34,
+  "retained_named_systems": 30,
+  "retained_systems": 99,
+  "routes": 188,
+  "schema_version": 2,
+  "selection_objective": "named systems retained, then total systems, then smaller reach, then lower seed; heuristic, not globally optimal",
+  "single_member_destinations": 75,
+  "sol_neighbors": [
+    {
+      "distance_ly": 4.320148863664279,
+      "id": 71456,
+      "name": "Alpha Centauri"
+    },
+    {
+      "distance_ly": 5.945191645873049,
+      "id": 87665,
+      "name": "Barnard's Star"
+    },
+    {
+      "distance_ly": 7.799260886020115,
+      "id": 118720,
+      "name": "Wolf 359"
+    },
+    {
+      "distance_ly": 8.304408135887801,
+      "id": 53879,
+      "name": "Lalande 21185"
+    },
+    {
+      "distance_ly": 8.600784535570012,
+      "id": 32263,
+      "name": "Sirius"
+    }
+  ],
+  "source_rows": 119626,
+  "systems_before_budget": 133
+}

@@ -1,0 +1,127 @@
+{
+  "commands": [
+    [
+      "/Library/Developer/CommandLineTools/usr/bin/python3",
+      "/Users/hogsett/Documents/REPOS/CX16_Space_Game/universe_builder/phases/phase_0_stellar_systems.py",
+      "--input-csv",
+      "/Users/hogsett/Documents/REPOS/CX16_Space_Game/universe_builder/data/source/hygdata_v42.csv",
+      "--membership-overrides",
+      "/Users/hogsett/Documents/REPOS/CX16_Space_Game/universe_builder/configs/system_membership_overrides.json",
+      "--radius-ly",
+      "25.0",
+      "--max-stars",
+      "300",
+      "--scale",
+      "0.5",
+      "--output-dir",
+      "/Users/hogsett/Documents/REPOS/CX16_Space_Game/universe_builder/results/physical-phase1-v1/phase_0",
+      "--shape",
+      "cube",
+      "--trials",
+      "8",
+      "--reach-candidates",
+      "9.0"
+    ],
+    [
+      "/Library/Developer/CommandLineTools/usr/bin/python3",
+      "/Users/hogsett/Documents/REPOS/CX16_Space_Game/universe_builder/phases/phase_1_system_objects.py",
+      "--input-stars",
+      "/Users/hogsett/Documents/REPOS/CX16_Space_Game/universe_builder/results/physical-phase1-v1/phase_0/star_catalog.csv",
+      "--output-objects",
+      "/Users/hogsett/Documents/REPOS/CX16_Space_Game/universe_builder/results/physical-phase1-v1/phase_1/system_objects.csv",
+      "--max-objects-per-system",
+      "5",
+      "--seed",
+      "42",
+      "--total-body-weights",
+      "10",
+      "35",
+      "35",
+      "15",
+      "4",
+      "1"
+    ]
+  ],
+  "completed_phases": [
+    0,
+    1
+  ],
+  "config": {
+    "phase_0": {
+      "half_extent_ly": 25.0,
+      "max_stars": 300,
+      "membership_overrides": "/Users/hogsett/Documents/REPOS/CX16_Space_Game/universe_builder/configs/system_membership_overrides.json",
+      "pruning_trials": 8,
+      "reach_candidates_ly": [
+        9.0
+      ],
+      "scale": 0.5,
+      "shape": "cube"
+    },
+    "phase_1": {
+      "max_objects_per_system": 5,
+      "seed": 42,
+      "total_body_weights": [
+        [
+          0,
+          10
+        ],
+        [
+          1,
+          35
+        ],
+        [
+          2,
+          35
+        ],
+        [
+          3,
+          15
+        ],
+        [
+          4,
+          4
+        ],
+        [
+          5,
+          1
+        ]
+      ]
+    },
+    "phase_2": {
+      "artifact_rate": 0.03,
+      "seed": 1
+    },
+    "schema_version": 2,
+    "source_catalog": "../data/source/hygdata_v42.csv"
+  },
+  "implementations": {
+    "universe_builder/analysis/pruning.py": "4d69770b71515f6178698da68411493e4d841c706f097e4ee56771492dd64603",
+    "universe_builder/phases/phase_0_star_catalog.py": "ff50b74ef250df4ef27ed24cf83cc12c1c021105a286f104f5d161e9388df17e",
+    "universe_builder/phases/phase_0_stellar_systems.py": "21d7f4f9ffab2c3f427089862928b24cd06b44f9cec943667b5d0afe56092ed0",
+    "universe_builder/phases/phase_1_system_objects.py": "c737fe69a82643082e37294c9e97d2987e727ff734287d7ae7489c27152a3421",
+    "universe_builder/phases/system_grouping.py": "aa0dcabe97d04a282ae86b5d77159699d9c7d65b65998e46ffb58cece59ad3ff"
+  },
+  "membership_overrides": {
+    "path": "/Users/hogsett/Documents/REPOS/CX16_Space_Game/universe_builder/configs/system_membership_overrides.json",
+    "sha256": "4849f9c1289a13ee789369d4c472d83994db6ec73529a2a4809a547a589efae7"
+  },
+  "outputs": {
+    "phase_0/candidate_systems.json": "3eacb049f73ea96753403a016d369bddf2f394c6ccb01dc7eb77b2032cd75c7e",
+    "phase_0/routes.csv": "d17dab12458bf8c6a09bc4e5d11c09949a99ba9665bb2f3cbab271e8b9649ddd",
+    "phase_0/selection_summary.json": "32e454a9bee0d4a233ff3c780d4854c0da235386d918fe8e39466c58a0de5015",
+    "phase_0/star_catalog.csv": "44d4edb1d5a3788df7806822661b5a09483100adffe73170ccac55cda656d391",
+    "phase_0/star_map.txt": "dfdf37b254f3fd3a85166f0213b3a24ccccd28709260b8ba85664c555d8803b4",
+    "phase_0/stellar_members.json": "81babba79cc3e6202003f291556796657b9f75c1efc8f6b28e13787f9a514638",
+    "phase_1/system_objects.csv": "f59c4f9369f28a04a2b088a01f7635bf43a1c8dd6e44da26ec52385e954298e8"
+  },
+  "python_version": "3.9.6",
+  "runner_sha256": "bb9e181115302c4ac9e5482f20821711d38909c303ba6cc708ea88b781ce38f7",
+  "schema_version": 1,
+  "source": {
+    "path": "/Users/hogsett/Documents/REPOS/CX16_Space_Game/universe_builder/data/source/hygdata_v42.csv",
+    "sha256": "b2983a8d934e4f031cdb67bdd6c3437f8c5143cd6606a9573a9a9ac4b6375fd2"
+  },
+  "status": "complete",
+  "through_phase": 1
+}

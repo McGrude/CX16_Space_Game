@@ -6,7 +6,7 @@ Build a Commander X16 BASIC space RPG and an offline deterministic Python histor
 
 ## Scope and workflow
 
-- Work on the current milestone. The next milestone after repository organization is validation of phases 0–2; phase 3 follows that validation.
+- Phases 0–1 are accepted for the current scope. Read `docs/PHASE_1_CLOSEOUT.md`; current standard output is `universe_builder/results/physical-phase1-v1/`. Phase 2 discussion and validation is next. Preserve all previous artifacts; do not silently regenerate or migrate them. Phase 3 follows M1.
 - Future phase documents are specifications, not claims of working code. Do not fabricate implementations, outputs, test results, or completion statuses.
 - Ask about material simulation choices when they become necessary; record decisions in `docs/DECISIONS.md`. Resolve routine engineering choices independently.
 - Keep changes reviewable; do not commit, push, publish, or send messages unless requested.
@@ -14,7 +14,8 @@ Build a Commander X16 BASIC space RPG and an offline deterministic Python histor
 
 ## Data and reproducibility
 
-- Preserve `universe_builder/data/baseline/` and the HYG source. Never regenerate or replace them without an explicit request. Experiments go into a new output directory.
+- Preserve `universe_builder/results/grouped-phase0-v1/` and the new `universe_builder/results/grouped-phase0-cube-v2/`. Existing Phase 1 trials reference v1; migrate through a new run when proceeding with v2. Preserve `universe_builder/data/baseline/` and the HYG source. Never regenerate or replace them without an explicit request. Experiments go into a new output directory.
+- Use `configs/grouped_systems_cube.json` (schema 2) for current cube rules; `grouped_systems.json` preserves the sphere configuration. `baseline.json` is legacy single-entry mode. Grouping uses catalog links plus sourced overrides, never proximity. Sparse primary HYG IDs are offline identities; compact runtime indices are a later export concern.
 - Preserve system IDs and composite object identities `(system_id, object_id)`. Older `game/data/legacy/` files use a different ID space and schema; do not join them to generated data without a migration.
 - Use stable seeds, sorted iteration, explicit configuration, versioned schemas, and recorded input hashes. Do not use Python's process-randomized `hash()` for seeds.
 - Distinguish simulation truth from an actor's knowledge. Hidden artifacts and discoveries must not influence decisions before information arrives.

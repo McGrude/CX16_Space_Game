@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "seed": 1,
+  "input_run": "../results/physical-phase1-v1",
+  "archaeological_sites": 32,
+  "origin_site": {"system_id": 0, "object_id": 2},
+  "technologies": [
+    {"id": "interstellar_propulsion", "name": "Interstellar propulsion", "role": "Enables the initial interstellar era; does not alter the fixed route graph."},
+    {"id": "advanced_propulsion", "name": "Advanced propulsion", "role": "Reduces travel time along existing routes."},
+    {"id": "ftl_communications", "name": "FTL communications", "role": "Enables communication faster than courier ships; requires later infrastructure rules."},
+    {"id": "advanced_power", "name": "Advanced power generation", "role": "Supports greater industrial and settlement capacity."},
+    {"id": "advanced_materials", "name": "Advanced materials", "role": "Improves construction and durability."},
+    {"id": "closed_ecology", "name": "Closed ecological systems", "role": "Supports settlements in otherwise difficult environments."},
+    {"id": "advanced_sensors", "name": "Advanced sensors", "role": "Improves exploration and site detection; does not confer undiscovered knowledge."},
+    {"id": "automated_industry", "name": "Automated industry", "role": "Improves production capacity, subject to resources and infrastructure."}
+  ]
+}

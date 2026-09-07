@@ -25,7 +25,9 @@ Use stable, purpose-specific random streams or keys. Record deterministic tie-br
 
 ## M4: technology and knowledge
 
-Propulsion improvements require research or discoveries and deployment through construction/refits. Old vessels do not automatically acquire new performance. Initially messages move aboard ships: source, destination, content, observation date, and arrival date matter. Actors act only on available knowledge. Discovery, decoding, exploitation, and diffusion are different events.
+Every artifact-associated technology can also be developed through independent research. Sites can accelerate progress toward that technology; they are not exclusive sources or mandatory prerequisites. Discovery alone does not automatically grant mastery, deployment or shared faction knowledge. The magnitude and mechanism of acceleration remain to be designed.
+
+Propulsion improvements increase speed and decrease travel time, never reach. The physical reachability network is fixed across technology levels. Improvements require research or discoveries and deployment through construction/refits. Old vessels do not automatically acquire new performance. Initially messages move aboard ships: source, destination, content, observation date, and arrival date matter. Actors act only on available knowledge. Discovery, decoding, exploitation, and diffusion are different events.
 
 ## M5: political evolution
 

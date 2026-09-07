@@ -318,6 +318,26 @@ def assign_names_for_system(
         obj["name"] = f"{base}-{suffix}"
 
 
+def resolve_local_coordinate_overlaps(objects: List[Dict]) -> None:
+    """Keep preferred cells, moving collisions deterministically on the display only."""
+    if len(objects) > LOCAL_MAP_SIZE ** 2:
+        raise ValueError("Local map capacity exceeded")
+    occupied = set()
+    for obj in sorted(objects, key=lambda o: (o["is_moon"], o["object_id"])):
+        x, y = obj["local_x"], obj["local_y"]
+        if not (0 <= x < LOCAL_MAP_SIZE and 0 <= y < LOCAL_MAP_SIZE):
+            raise ValueError("Preferred local coordinate outside map")
+        if (x, y) in occupied:
+            _, y, x = min(
+                ((cx - x) ** 2 + (cy - y) ** 2, cy, cx)
+                for cy in range(LOCAL_MAP_SIZE)
+                for cx in range(LOCAL_MAP_SIZE)
+                if (cx, cy) not in occupied
+            )
+        obj["local_x"], obj["local_y"] = x, y
+        occupied.add((x, y))
+
+
 def assign_local_coordinates(
     system_id: int,
     objects: List[Dict],
@@ -362,12 +382,14 @@ def assign_local_coordinates(
         obj["local_x"] = x
         obj["local_y"] = y
 
+    resolve_local_coordinate_overlaps(objects)
+
 
 # -------------------------------
 # Core generation logic
 # -------------------------------
 
-def generate_objects_for_system(
+def generate_legacy_objects_for_system(
     system_id: int,
     system_name: str,
     spect: str,
@@ -515,6 +537,59 @@ def generate_objects_for_system(
     return objects
 
 
+TOTAL_BODY_WEIGHTS = [(0,10),(1,35),(2,35),(3,15),(4,4),(5,1)]
+
+
+def validate_weights(weights):
+    if (not isinstance(weights, (list, tuple)) or len(weights) != 6
+        or any(not isinstance(row, (list, tuple)) or len(row) != 2 for row in weights)
+        or [r[0] for r in weights] != list(range(6))
+        or any(type(w) is not int or w < 0 for _, w in weights)
+        or sum(w for _, w in weights) != 100):
+        raise ValueError("Weights must specify 0–5 with integer percentages totaling 100")
+
+
+def generate_objects_for_system(system_id, system_name, spect, global_seed,
+                                max_primaries=5, weights=None):
+    """Curated total-body budget; max_primaries is retained as a legacy argument name."""
+    if type(max_primaries) is not int or not 0 <= max_primaries <= 5:
+        raise ValueError("Total object cap must be 0–5")
+    weights = TOTAL_BODY_WEIGHTS if weights is None else weights
+    validate_weights(weights)
+    star = dict(id=system_id, proper=system_name, spect=spect)
+    seed = global_seed
+    sid=int(star['id'])
+    if sid==0:
+        return generate_legacy_objects_for_system(sid,star['proper'],star['spect'],seed,5)
+    rng=random.Random(seed ^ (sid*0x9E3779B1))
+    budget=min(choose_weighted(rng,weights),max_primaries)
+    objects=[]
+    primaries=[]
+    while len(objects)<budget:
+        index=len(objects)
+        cls=generate_planet_type(rng)
+        objects.append({'system_id':sid,'object_id':index,'name':'','class':cls,
+                        'parent_object_id':None,'is_moon':0})
+        primaries.append(index)
+        # Existing per-class moon probabilities, clipped to the remaining budget.
+        count=min(choose_num_moons(rng,cls),budget-len(objects))
+        for _ in range(count):
+            objects.append({'system_id':sid,'object_id':len(objects),'name':'',
+                            'class':choose_moon_class(rng,cls),
+                            'parent_object_id':index,'is_moon':1})
+    # Retain the old optional asteroid concept without creating asteroid moons.
+    parents={o['parent_object_id'] for o in objects if o['is_moon']}
+    eligible=[i for i in primaries if i not in parents]
+    if len(primaries)>=2 and eligible and rng.random()<.20:
+        objects[rng.choice(eligible)]['class']='AS'
+    assign_names_for_system(star['proper'],objects,primaries)
+    for o in objects:
+        values=compute_attributes(sid,o['object_id'],o['class'],star['spect'])
+        o.update(zip(('habitability','risk','ore_richness','fuel_richness'),values))
+    assign_local_coordinates(sid,objects)
+    return objects
+
+
 # -------------------------------
 # CLI and main program
 # -------------------------------
@@ -541,8 +616,8 @@ def parse_args() -> argparse.Namespace:
         type=int,
         default=5,
         help=(
-            "Maximum number of PRIMARY objects per system "
-            "(planets + large asteroid). Moons are generated on top "
+            "Maximum total natural objects per ordinary system, including moons "
+            "(Sol retains its four-object exception) "
             "(default: 5)."
         ),
     )
@@ -552,11 +627,14 @@ def parse_args() -> argparse.Namespace:
         default=0,
         help="Global seed offset for deterministic generation (default: 0).",
     )
+    ap.add_argument("--total-body-weights", type=int, nargs=6, default=[w for _,w in TOTAL_BODY_WEIGHTS])
     return ap.parse_args()
 
 
 def main() -> None:
     args = parse_args()
+
+    validate_weights(list(enumerate(args.total_body_weights)))
 
     # Load stars
     stars: List[Dict] = []
@@ -574,8 +652,8 @@ def main() -> None:
         for row in reader:
             try:
                 system_id = int(row["id"])
-            except (ValueError, TypeError):
-                continue
+            except (ValueError, TypeError) as exc:
+                raise ValueError("Invalid input system ID") from exc
             name = (row.get("proper") or "").strip()
             if not name:
                 name = f"System {system_id}"
@@ -587,6 +665,9 @@ def main() -> None:
                     "spect": spect,
                 }
             )
+
+    if len({s["id"] for s in stars}) != len(stars) or sum(s["id"] == 0 for s in stars) != 1:
+        raise ValueError("Input requires unique system IDs and exactly one Sol")
 
     # Generate objects for all systems
     all_objects: List[Dict] = []
@@ -600,6 +681,7 @@ def main() -> None:
             spect=spect,
             global_seed=args.seed,
             max_primaries=args.max_objects_per_system,
+            weights=list(enumerate(args.total_body_weights)),
         )
         all_objects.extend(objects)
 

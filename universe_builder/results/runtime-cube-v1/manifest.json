@@ -1,0 +1,30 @@
+{
+  "exporter_sha256": "7fd30df0e6ddba117f868be40416f3a62ad6714b752933791c79486c7bb171b9",
+  "format_version": 1,
+  "inputs": {
+    "phase0/candidate_systems.json": "3eacb049f73ea96753403a016d369bddf2f394c6ccb01dc7eb77b2032cd75c7e",
+    "phase0/routes.csv": "d17dab12458bf8c6a09bc4e5d11c09949a99ba9665bb2f3cbab271e8b9649ddd",
+    "phase0/selection_summary.json": "32e454a9bee0d4a233ff3c780d4854c0da235386d918fe8e39466c58a0de5015",
+    "phase0/star_catalog.csv": "44d4edb1d5a3788df7806822661b5a09483100adffe73170ccac55cda656d391",
+    "phase0/star_map.txt": "dfdf37b254f3fd3a85166f0213b3a24ccccd28709260b8ba85664c555d8803b4",
+    "phase0/stellar_members.json": "81babba79cc3e6202003f291556796657b9f75c1efc8f6b28e13787f9a514638",
+    "phase1/manifest.json": "9acfbd3c3be128ad9aedb31e215100d62604112e114a6f2f9b3d601a60b97830",
+    "phase1/summary.json": "3fbc7cf7f8ae49d3baed802989e1b644206f2ceca44626b60a821534fdb14461",
+    "phase1/system_objects.csv": "f59c4f9369f28a04a2b088a01f7635bf43a1c8dd6e44da26ec52385e954298e8"
+  },
+  "no_reference": 255,
+  "outputs": {
+    "neighbors.bin": "2b1e16fd0d1678dffdd4c35224c02fdc2e158bcd810d4d35e6aa6afafee49781",
+    "routes.csv": "c405db530a406d199f7d0f8a0c0e51124ee19b887357365bfff847630fc3461d",
+    "spob_id_map.csv": "72e2d67aa4bc6667bec4f7ab6dca4879b929acd40872314a0bd81cfeae03dde0",
+    "spob_refs.bin": "e8783de2185598065f4e584e0c803e9773eb5dcb1779b8ae562e3919ad3ead3e",
+    "spobs.csv": "31451dea6dbde7f92c31b2b1f9fafe9e9ebe4ff00e7b1fcb855cf59d3550955b",
+    "system_id_map.csv": "b098b82e252962211524f1a5d8f5b53a87fd80ae7a6fb86bbf328f1505831c8e",
+    "systems.csv": "f9647bb8b9a157e80eeab273db45cca9f29e7eea5aaa1ade3d8571e8188ac744",
+    "world_header.bin": "fd858de04901a2122a7b7a342292e3a6728d218c79ed4b435668b941869fe5b2"
+  },
+  "scope": "physical identity export; not a complete Phase 6 playable snapshot",
+  "spob_count": 274,
+  "system_count": 170,
+  "world_id": "04553d7d76b227c95a5e3392cf62e29ec8639105444195b171ba81a5e1b89d3f"
+}

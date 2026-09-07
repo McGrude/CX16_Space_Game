@@ -1,0 +1,3037 @@
+{
+  "schema_version": 2,
+  "systems": [
+    {
+      "dist_ly": 1.63078e-05,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 0,
+      "is_named": true,
+      "max_member_offset_ly": 0.0,
+      "member_count": 1,
+      "member_hyg_ids": [
+        "0"
+      ],
+      "member_names": [
+        "Sol"
+      ],
+      "point": [
+        1.63078e-05,
+        0.0,
+        0.0
+      ],
+      "primary_hyg_id": "0",
+      "proper": "Sol",
+      "quality_flags": [],
+      "retained": true,
+      "system_key": "hyg:0"
+    },
+    {
+      "dist_ly": 4.320148863664279,
+      "grouping_basis": "sourced_override",
+      "id": 71456,
+      "is_named": true,
+      "max_member_offset_ly": 0.18808925458500358,
+      "member_count": 3,
+      "member_hyg_ids": [
+        "71456",
+        "70666",
+        "71453"
+      ],
+      "member_names": [
+        "Rigil Kentaurus",
+        "Proxima Centauri",
+        "Toliman"
+      ],
+      "point": [
+        -1.61513429668,
+        -1.35055981104,
+        -3.7724018349999997
+      ],
+      "primary_hyg_id": "71456",
+      "proper": "Alpha Centauri",
+      "quality_flags": [],
+      "retained": true,
+      "system_key": "hyg:71456"
+    },
+    {
+      "dist_ly": 5.945191645873049,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 87665,
+      "is_named": true,
+      "max_member_offset_ly": 0.0,
+      "member_count": 1,
+      "member_hyg_ids": [
+        "87665"
+      ],
+      "member_names": [
+        "Barnard's Star"
+      ],
+      "point": [
+        -0.056663081879999994,
+        -5.92499229628,
+        0.48637361188
+      ],
+      "primary_hyg_id": "87665",
+      "proper": "Barnard's Star",
+      "quality_flags": [],
+      "retained": true,
+      "system_key": "hyg:87665"
+    },
+    {
+      "dist_ly": 7.799260886020115,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 118720,
+      "is_named": true,
+      "max_member_offset_ly": 0.0,
+      "member_count": 1,
+      "member_hyg_ids": [
+        "118720"
+      ],
+      "member_names": [
+        "Wolf 359"
+      ],
+      "point": [
+        -7.44552504516,
+        2.11784180104,
+        0.95256142892
+      ],
+      "primary_hyg_id": "118720",
+      "proper": "Wolf 359",
+      "quality_flags": [],
+      "retained": true,
+      "system_key": "hyg:118720"
+    },
+    {
+      "dist_ly": 8.304408135887801,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 53879,
+      "is_named": true,
+      "max_member_offset_ly": 0.0,
+      "member_count": 1,
+      "member_hyg_ids": [
+        "53879"
+      ],
+      "member_names": [
+        "Lalande 21185"
+      ],
+      "point": [
+        -6.51659688,
+        1.6448210157999998,
+        4.87767602624
+      ],
+      "primary_hyg_id": "53879",
+      "proper": "Lalande 21185",
+      "quality_flags": [],
+      "retained": true,
+      "system_key": "hyg:53879"
+    },
+    {
+      "dist_ly": 8.571980311760843,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 118079,
+      "is_named": false,
+      "max_member_offset_ly": 0.0004984321071501082,
+      "member_count": 2,
+      "member_hyg_ids": [
+        "118079",
+        "118080"
+      ],
+      "member_names": [],
+      "point": [
+        7.40536871844,
+        3.4147554731999996,
+        -2.6417429222799997
+      ],
+      "primary_hyg_id": "118079",
+      "proper": "Procyon Cluster-41",
+      "quality_flags": [],
+      "retained": false,
+      "system_key": "hyg:118079"
+    },
+    {
+      "dist_ly": 8.600784535570012,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 32263,
+      "is_named": true,
+      "max_member_offset_ly": 0.0003302077826833095,
+      "member_count": 2,
+      "member_hyg_ids": [
+        "32263",
+        "118441"
+      ],
+      "member_names": [
+        "Sirius"
+      ],
+      "point": [
+        -1.61226412388,
+        8.07800676036,
+        -2.4738443365999996
+      ],
+      "primary_hyg_id": "32263",
+      "proper": "Sirius",
+      "quality_flags": [],
+      "retained": true,
+      "system_key": "hyg:32263"
+    },
+    {
+      "dist_ly": 9.685826306806668,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 92115,
+      "is_named": true,
+      "max_member_offset_ly": 0.0,
+      "member_count": 1,
+      "member_hyg_ids": [
+        "92115"
+      ],
+      "member_names": [
+        "Ross 154"
+      ],
+      "point": [
+        1.91089255748,
+        -8.65113786824,
+        -3.91427317188
+      ],
+      "primary_hyg_id": "92115",
+      "proper": "Ross 154",
+      "quality_flags": [],
+      "retained": true,
+      "system_key": "hyg:92115"
+    },
+    {
+      "dist_ly": 10.32162018863335,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 119585,
+      "is_named": true,
+      "max_member_offset_ly": 0.0,
+      "member_count": 1,
+      "member_hyg_ids": [
+        "119585"
+      ],
+      "member_names": [
+        "Ross 248"
+      ],
+      "point": [
+        7.37976547244,
+        -0.5838909943199999,
+        7.19263346744
+      ],
+      "primary_hyg_id": "119585",
+      "proper": "Ross 248",
+      "quality_flags": [],
+      "retained": true,
+      "system_key": "hyg:119585"
+    },
+    {
+      "dist_ly": 10.489995226665103,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 16496,
+      "is_named": true,
+      "max_member_offset_ly": 0.0,
+      "member_count": 1,
+      "member_hyg_ids": [
+        "16496"
+      ],
+      "member_names": [
+        "Ran"
+      ],
+      "point": [
+        6.1936045932,
+        8.289013384559999,
+        -1.7238094758799998
+      ],
+      "primary_hyg_id": "16496",
+      "proper": "Ran",
+      "quality_flags": [],
+      "retained": true,
+      "system_key": "hyg:16496"
+    },
+    {
+      "dist_ly": 10.684821199999458,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 113687,
+      "is_named": true,
+      "max_member_offset_ly": 0.0,
+      "member_count": 1,
+      "member_hyg_ids": [
+        "113687"
+      ],
+      "member_names": [
+        "Lacaille 9352"
+      ],
+      "point": [
+        8.41982150992,
+        -2.02658009068,
+        -6.25819326588
+      ],
+      "primary_hyg_id": "113687",
+      "proper": "Lacaille 9352",
+      "quality_flags": [],
+      "retained": true,
+      "system_key": "hyg:113687"
+    },
+    {
+      "dist_ly": 10.942604364361426,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 57375,
+      "is_named": true,
+      "max_member_offset_ly": 0.0,
+      "member_count": 1,
+      "member_hyg_ids": [
+        "57375"
+      ],
+      "member_names": [
+        "Ross 128"
+      ],
+      "point": [
+        -10.92587375152,
+        0.58503254032,
+        0.15365535315999998
+      ],
+      "primary_hyg_id": "57375",
+      "proper": "Ross 128",
+      "quality_flags": [],
+      "retained": true,
+      "system_key": "hyg:57375"
+    },
+    {
+      "dist_ly": 11.072451041922324,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 119518,
+      "is_named": true,
+      "max_member_offset_ly": 0.0,
+      "member_count": 1,
+      "member_hyg_ids": [
+        "119518"
+      ],
+      "member_names": [
+        "EZ Aqr"
+      ],
+      "point": [
+        10.01264021308,
+        -3.7157778918399997,
+        -2.92219142044
+      ],
+      "primary_hyg_id": "119518",
+      "proper": "EZ Aqr",
+      "quality_flags": [],
+      "retained": true,
+      "system_key": "hyg:119518"
+    },
+    {
+      "dist_ly": 11.369538998174315,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 103879,
+      "is_named": false,
+      "max_member_offset_ly": 0.03756133457257835,
+      "member_count": 2,
+      "member_hyg_ids": [
+        "103879",
+        "103883"
+      ],
+      "member_names": [],
+      "point": [
+        6.455788355359999,
+        -6.07836063216,
+        7.11637167152
+      ],
+      "primary_hyg_id": "103879",
+      "proper": "Helion Arc-09",
+      "quality_flags": [],
+      "retained": false,
+      "system_key": "hyg:103879"
+    },
+    {
+      "dist_ly": 11.461656904722267,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 37173,
+      "is_named": true,
+      "max_member_offset_ly": 0.05467614444647051,
+      "member_count": 2,
+      "member_hyg_ids": [
+        "37173",
+        "118493"
+      ],
+      "member_names": [
+        "Procyon"
+      ],
+      "point": [
+        -4.79224924672,
+        10.3592690252,
+        1.04377747744
+      ],
+      "primary_hyg_id": "37173",
+      "proper": "Procyon",
+      "quality_flags": [],
+      "retained": true,
+      "system_key": "hyg:37173"
+    },
+    {
+      "dist_ly": 11.640808818899934,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 91484,
+      "is_named": true,
+      "max_member_offset_ly": 0.37371759121360304,
+      "member_count": 2,
+      "member_hyg_ids": [
+        "91484",
+        "91487"
+      ],
+      "member_names": [
+        "Struve 2398 A",
+        "Struve 2398 B"
+      ],
+      "point": [
+        1.09215293536,
+        -5.783088343799999,
+        10.043481524439999
+      ],
+      "primary_hyg_id": "91484",
+      "proper": "Struve 2398",
+      "quality_flags": [],
+      "retained": true,
+      "system_key": "hyg:91484"
+    },
+    {
+      "dist_ly": 11.70054855543899,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 1472,
+      "is_named": true,
+      "max_member_offset_ly": 0.061418317630163345,
+      "member_count": 2,
+      "member_hyg_ids": [
+        "1472",
+        "117979"
+      ],
+      "member_names": [
+        "Groombridge 34"
+      ],
+      "point": [
+        8.386367689,
+        0.6740666052,
+        8.131254988919999
+      ],
+      "primary_hyg_id": "1472",
+      "proper": "Groombridge 34",
+      "quality_flags": [],
+      "retained": true,
+      "system_key": "hyg:1472"
+    },
+    {
+      "dist_ly": 11.813495958907158,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 108526,
+      "is_named": false,
+      "max_member_offset_ly": 0.0,
+      "member_count": 1,
+      "member_hyg_ids": [
+        "108526"
+      ],
+      "member_names": [],
+      "point": [
+        5.65094297884,
+        -3.1529989753999996,
+        -9.88352809892
+      ],
+      "primary_hyg_id": "108526",
+      "proper": "Cygnera Cluster-48",
+      "quality_flags": [],
+      "retained": false,
+      "system_key": "hyg:108526"
+    },
+    {
+      "dist_ly": 11.824930719402033,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 118541,
+      "is_named": false,
+      "max_member_offset_ly": 0.0,
+      "member_count": 1,
+      "member_hyg_ids": [
+        "118541"
+      ],
+      "member_names": [],
+      "point": [
+        -6.42022430512,
+        8.38009244756,
+        5.327640843839999
+      ],
+      "primary_hyg_id": "118541",
+      "proper": "Helion Cluster-68",
+      "quality_flags": [],
+      "retained": false,
+      "system_key": "hyg:118541"
+    },
+    {
+      "dist_ly": 11.904850178799817,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 8087,
+      "is_named": false,
+      "max_member_offset_ly": 0.0,
+      "member_count": 1,
+      "member_hyg_ids": [
+        "8087"
+      ],
+      "member_names": [],
+      "point": [
+        10.28723094948,
+        5.02119771248,
+        -3.2689311255999995
+      ],
+      "primary_hyg_id": "8087",
+      "proper": "Procyon Verge-58",
+      "quality_flags": [],
+      "retained": false,
+      "system_key": "hyg:8087"
+    },
+    {
+      "dist_ly": 12.035648811607874,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 5632,
+      "is_named": false,
+      "max_member_offset_ly": 0.0,
+      "member_count": 1,
+      "member_hyg_ids": [
+        "5632"
+      ],
+      "member_names": [],
+      "point": [
+        10.93852860432,
+        3.5811113409999997,
+        -3.51867529792
+      ],
+      "primary_hyg_id": "5632",
+      "proper": "Talios Belt-14",
+      "quality_flags": [],
+      "retained": true,
+      "system_key": "hyg:5632"
+    },
+    {
+      "dist_ly": 12.056029565804504,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 82472,
+      "is_named": false,
+      "max_member_offset_ly": 0.0,
+      "member_count": 1,
+      "member_hyg_ids": [
+        "82472"
+      ],
+      "member_names": [],
+      "point": [
+        -1.57387882424,
+        -5.359232314,
+        -10.6840714778
+      ],
+      "primary_hyg_id": "82472",
+      "proper": "Koros Reach-10",
+      "quality_flags": [],
+      "retained": true,
+      "system_key": "hyg:82472"
+    },
+    {
+      "dist_ly": 12.402939053079132,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 36107,
+      "is_named": true,
+      "max_member_offset_ly": 0.0,
+      "member_count": 1,
+      "member_hyg_ids": [
+        "36107"
+      ],
+      "member_names": [
+        "Luyten's Star"
+      ],
+      "point": [
+        -4.5973286364399994,
+        11.463913735359998,
+        1.1296673984799999
+      ],
+      "primary_hyg_id": "36107",
+      "proper": "Luyten's Star",
+      "quality_flags": [],
+      "retained": true,
+      "system_key": "hyg:36107"
+    },
+    {
+      "dist_ly": 12.764433259063292,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 24129,
+      "is_named": true,
+      "max_member_offset_ly": 0.0,
+      "member_count": 1,
+      "member_hyg_ids": [
+        "24129"
+      ],
+      "member_names": [
+        "Kapteyn's Star"
+      ],
+      "point": [
+        1.8884334553199997,
+        8.82308731144,
+        -9.028715623199998
+      ],
+      "primary_hyg_id": "24129",
+      "proper": "Kapteyn's Star",
+      "quality_flags": [],
+      "retained": true,
+      "system_key": "hyg:24129"
+    },
+    {
+      "dist_ly": 12.87159310232832,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 104751,
+      "is_named": true,
+      "max_member_offset_ly": 0.0,
+      "member_count": 1,
+      "member_hyg_ids": [
+        "104751"
+      ],
+      "member_names": [
+        "Lacaille 8760"
+      ],
+      "point": [
+        7.59944784624,
+        -6.53341348336,
+        -8.07717832412
+      ],
+      "primary_hyg_id": "104751",
+      "proper": "Lacaille 8760",
+      "quality_flags": [],
+      "retained": true,
+      "system_key": "hyg:104751"
+    },
+    {
+      "dist_ly": 13.048527611805836,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 110547,
+      "is_named": true,
+      "max_member_offset_ly": 0.017539429418560848,
+      "member_count": 2,
+      "member_hyg_ids": [
+        "110547",
+        "119505"
+      ],
+      "member_names": [
+        "Kruger 60"
+      ],
+      "point": [
+        6.418857711479999,
+        -2.7249355332,
+        11.02891947816
+      ],
+      "primary_hyg_id": "110547",
+      "proper": "Kruger 60",
+      "quality_flags": [],
+      "retained": true,
+      "system_key": "hyg:110547"
+    },
+    {
+      "dist_ly": 13.460291245022258,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 30847,
+      "is_named": true,
+      "max_member_offset_ly": 0.03212499926139459,
+      "member_count": 2,
+      "member_hyg_ids": [
+        "30847",
+        "118428"
+      ],
+      "member_names": [
+        "Ross 614"
+      ],
+      "point": [
+        -1.7193183077599998,
+        13.33366823656,
+        -0.66081488692
+      ],
+      "primary_hyg_id": "30847",
+      "proper": "Ross 614",
+      "quality_flags": [],
+      "retained": true,
+      "system_key": "hyg:30847"
+    },
+    {
+      "dist_ly": 13.524061269576988,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 82473,
+      "is_named": false,
+      "max_member_offset_ly": 0.0,
+      "member_count": 1,
+      "member_hyg_ids": [
+        "82473"
+      ],
+      "member_names": [],
+      "point": [
+        -1.76515301044,
+        -6.01114314212,
+        -11.9854339178
+      ],
+      "primary_hyg_id": "82473",
+      "proper": "Nomad Reach-26",
+      "quality_flags": [],
+      "retained": true,
+      "system_key": "hyg:82473"
+    },
+    {
+      "dist_ly": 13.904301295288326,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 3820,
+      "is_named": true,
+      "max_member_offset_ly": 0.0,
+      "member_count": 1,
+      "member_hyg_ids": [
+        "3820"
+      ],
+      "member_names": [
+        "Van Maanen's Star"
+      ],
+      "point": [
+        13.525549072919997,
+        2.94688142964,
+        1.3057590228799998
+      ],
+      "primary_hyg_id": "3820",
+      "proper": "Van Maanen's Star",
+      "quality_flags": [],
+      "retained": true,
+      "system_key": "hyg:3820"
+    },
+    {
+      "dist_ly": 13.994626902014241,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 118236,
+      "is_named": false,
+      "max_member_offset_ly": 0.0,
+      "member_count": 1,
+      "member_hyg_ids": [
+        "118236"
+      ],
+      "member_names": [],
+      "point": [
+        5.86593849092,
+        8.07365910088,
+        -9.8110334048
+      ],
+      "primary_hyg_id": "118236",
+      "proper": "Meridian Sector-40",
+      "quality_flags": [],
+      "retained": true,
+      "system_key": "hyg:118236"
+    },
+    {
+      "dist_ly": 13.998887103896264,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 80579,
+      "is_named": true,
+      "max_member_offset_ly": 0.0,
+      "member_count": 1,
+      "member_hyg_ids": [
+        "80579"
+      ],
+      "member_names": [
+        "Wolf 1061"
+      ],
+      "point": [
+        -5.21026708412,
+        -12.62557377588,
+        -3.0686876493999997
+      ],
+      "primary_hyg_id": "80579",
+      "proper": "Wolf 1061",
+      "quality_flags": [],
+      "retained": true,
+      "system_key": "hyg:80579"
+    },
+    {
+      "dist_ly": 14.046233168610527,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 118830,
+      "is_named": false,
+      "max_member_offset_ly": 0.0,
+      "member_count": 2,
+      "member_hyg_ids": [
+        "118830",
+        "118831"
+      ],
+      "member_names": [],
+      "point": [
+        -13.726454645799997,
+        -2.0076989198399997,
+        2.2023292512799997
+      ],
+      "primary_hyg_id": "118830",
+      "proper": "Cygnera Reach-54",
+      "quality_flags": [],
+      "retained": false,
+      "system_key": "hyg:118830"
+    },
+    {
+      "dist_ly": 14.155513339807518,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 442,
+      "is_named": false,
+      "max_member_offset_ly": 0.0,
+      "member_count": 1,
+      "member_hyg_ids": [
+        "442"
+      ],
+      "member_names": [],
+      "point": [
+        11.248611636639998,
+        0.26543879903999995,
+        -8.58934435248
+      ],
+      "primary_hyg_id": "442",
+      "proper": "Aurigon Expanse-57",
+      "quality_flags": [],
+      "retained": false,
+      "system_key": "hyg:442"
+    },
+    {
+      "dist_ly": 14.560581619966294,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 118583,
+      "is_named": false,
+      "max_member_offset_ly": 0.0,
+      "member_count": 1,
+      "member_hyg_ids": [
+        "118583"
+      ],
+      "member_names": [],
+      "point": [
+        -10.13598588916,
+        10.23068854532,
+        2.14600537164
+      ],
+      "primary_hyg_id": "118583",
+      "proper": "Sigmar Sector-90",
+      "quality_flags": [],
+      "retained": false,
+      "system_key": "hyg:118583"
+    },
+    {
+      "dist_ly": 14.568457170284699,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 118100,
+      "is_named": false,
+      "max_member_offset_ly": 0.0,
+      "member_count": 1,
+      "member_hyg_ids": [
+        "118100"
+      ],
+      "member_names": [],
+      "point": [
+        12.2839808124,
+        7.10756545952,
+        3.2903302207599996
+      ],
+      "primary_hyg_id": "118100",
+      "proper": "Pioneer Arc-18",
+      "quality_flags": [],
+      "retained": true,
+      "system_key": "hyg:118100"
+    },
+    {
+      "dist_ly": 14.63885974501298,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 118704,
+      "is_named": false,
+      "max_member_offset_ly": 0.0,
+      "member_count": 1,
+      "member_hyg_ids": [
+        "118704"
+      ],
+      "member_names": [],
+      "point": [
+        -6.674701001,
+        2.28121007988,
+        -12.827340400599999
+      ],
+      "primary_hyg_id": "118704",
+      "proper": "Epsara Expanse-45",
+      "quality_flags": [],
+      "retained": true,
+      "system_key": "hyg:118704"
+    },
+    {
+      "dist_ly": 14.757066330975864,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 118707,
+      "is_named": false,
+      "max_member_offset_ly": 0.0,
+      "member_count": 1,
+      "member_hyg_ids": [
+        "118707"
+      ],
+      "member_names": [],
+      "point": [
+        -13.7650389006,
+        4.45866341304,
+        -2.9008673411599997
+      ],
+      "primary_hyg_id": "118707",
+      "proper": "Vegaine Sector-02",
+      "quality_flags": [],
+      "retained": true,
+      "system_key": "hyg:118707"
+    },
+    {
+      "dist_ly": 14.768318606276656,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 85899,
+      "is_named": false,
+      "max_member_offset_ly": 0.0,
+      "member_count": 1,
+      "member_hyg_ids": [
+        "85899"
+      ],
+      "member_names": [],
+      "point": [
+        -0.5595923723199999,
+        -5.422363069359999,
+        13.72545334688
+      ],
+      "primary_hyg_id": "85899",
+      "proper": "Draxis Verge-58",
+      "quality_flags": [],
+      "retained": false,
+      "system_key": "hyg:85899"
+    },
+    {
+      "dist_ly": 14.808817368431914,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 85264,
+      "is_named": false,
+      "max_member_offset_ly": 0.0,
+      "member_count": 1,
+      "member_hyg_ids": [
+        "85264"
+      ],
+      "member_names": [],
+      "point": [
+        -1.37922892344,
+        -10.024952602079999,
+        -10.811989860999999
+      ],
+      "primary_hyg_id": "85264",
+      "proper": "Talios Verge-90",
+      "quality_flags": [],
+      "retained": false,
+      "system_key": "hyg:85264"
+    },
+    {
+      "dist_ly": 15.029593109121146,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 57194,
+      "is_named": false,
+      "max_member_offset_ly": 0.0,
+      "member_count": 1,
+      "member_hyg_ids": [
+        "57194"
+      ],
+      "member_names": [],
+      "point": [
+        -6.377024942919999,
+        0.39798533588,
+        -13.60381672824
+      ],
+      "primary_hyg_id": "57194",
+      "proper": "Cygnera Sector-34",
+      "quality_flags": [],
+      "retained": true,
+      "system_key": "hyg:57194"
+    },
+    {
+      "dist_ly": 15.292433886605268,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 112660,
+      "is_named": false,
+      "max_member_offset_ly": 0.0,
+      "member_count": 1,
+      "member_hyg_ids": [
+        "112660"
+      ],
+      "member_names": [],
+      "point": [
+        14.197352155479999,
+        -4.254082062039999,
+        -3.7678258663199995
+      ],
+      "primary_hyg_id": "112660",
+      "proper": "Velarn Reach-30",
+      "quality_flags": [],
+      "retained": false,
+      "system_key": "hyg:112660"
+    },
+    {
+      "dist_ly": 15.31971857215823,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 117960,
+      "is_named": false,
+      "max_member_offset_ly": 0.0,
+      "member_count": 1,
+      "member_hyg_ids": [
+        "117960"
+      ],
+      "member_names": [],
+      "point": [
+        15.180735326399999,
+        0.44584220576,
+        -2.01004398148
+      ],
+      "primary_hyg_id": "117960",
+      "proper": "Luyten Sector-22",
+      "quality_flags": [],
+      "retained": false,
+      "system_key": "hyg:117960"
+    },
+    {
+      "dist_ly": 15.38477820788661,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 119312,
+      "is_named": false,
+      "max_member_offset_ly": 0.0008027745415099494,
+      "member_count": 2,
+      "member_hyg_ids": [
+        "119312",
+        "119313"
+      ],
+      "member_names": [],
+      "point": [
+        5.239539585119999,
+        -9.6597785598,
+        10.766954240519999
+      ],
+      "primary_hyg_id": "119312",
+      "proper": "Vegaine Belt-78",
+      "quality_flags": [],
+      "retained": false,
+      "system_key": "hyg:119312"
+    },
+    {
+      "dist_ly": 15.814049125302306,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 54052,
+      "is_named": false,
+      "max_member_offset_ly": 0.053263602480367524,
+      "member_count": 2,
+      "member_hyg_ids": [
+        "54052",
+        "118727"
+      ],
+      "member_names": [],
+      "point": [
+        -11.143064293479998,
+        2.7021567981599994,
+        10.8910337676
+      ],
+      "primary_hyg_id": "54052",
+      "proper": "Vegaine Arc-98",
+      "quality_flags": [],
+      "retained": true,
+      "system_key": "hyg:54052"
+    },
+    {
+      "dist_ly": 15.89316623864477,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 49767,
+      "is_named": false,
+      "max_member_offset_ly": 0.0,
+      "member_count": 1,
+      "member_hyg_ids": [
+        "49767"
+      ],
+      "member_names": [],
+      "point": [
+        -9.1924296274,
+        4.71570043352,
+        12.077008737919998
+      ],
+      "primary_hyg_id": "49767",
+      "proper": "Talios Cluster-75",
+      "quality_flags": [],
+      "retained": true,
+      "system_key": "hyg:49767"
+    },
+    {
+      "dist_ly": 15.998045661341518,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 118676,
+      "is_named": false,
+      "max_member_offset_ly": 0.0,
+      "member_count": 1,
+      "member_hyg_ids": [
+        "118676"
+      ],
+      "member_names": [],
+      "point": [
+        -13.625069053199997,
+        6.38180638988,
+        5.43760107768
+      ],
+      "primary_hyg_id": "118676",
+      "proper": "Khoras Sector-57",
+      "quality_flags": [],
+      "retained": false,
+      "system_key": "hyg:118676"
+    },
+    {
+      "dist_ly": 16.156907857898492,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 106098,
+      "is_named": false,
+      "max_member_offset_ly": 0.0,
+      "member_count": 1,
+      "member_hyg_ids": [
+        "106098"
+      ],
+      "member_names": [],
+      "point": [
+        8.50730307224,
+        -6.32002592036,
+        -12.19543924308
+      ],
+      "primary_hyg_id": "106098",
+      "proper": "Veyra Cluster-21",
+      "quality_flags": [],
+      "retained": false,
+      "system_key": "hyg:106098"
+    },
+    {
+      "dist_ly": 16.2559974931373,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 19799,
+      "is_named": true,
+      "max_member_offset_ly": 0.1932493139889765,
+      "member_count": 3,
+      "member_hyg_ids": [
+        "19799",
+        "118281",
+        "118282"
+      ],
+      "member_names": [
+        "Keid"
+      ],
+      "point": [
+        7.1086482974399985,
+        14.458149754639999,
+        -2.1648278344
+      ],
+      "primary_hyg_id": "19799",
+      "proper": "Keid",
+      "quality_flags": [],
+      "retained": true,
+      "system_key": "hyg:19799"
+    },
+    {
+      "dist_ly": 16.26390076384259,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 1240,
+      "is_named": false,
+      "max_member_offset_ly": 0.0,
+      "member_count": 1,
+      "member_hyg_ids": [
+        "1240"
+      ],
+      "member_names": [],
+      "point": [
+        15.58778127596,
+        1.0536795736,
+        -4.5194360605199995
+      ],
+      "primary_hyg_id": "1240",
+      "proper": "Khoras Arc-46",
+      "quality_flags": [],
+      "retained": true,
+      "system_key": "hyg:1240"
+    },
+    {
+      "dist_ly": 16.562732396917312,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 85951,
+      "is_named": false,
+      "max_member_offset_ly": 0.0,
+      "member_count": 1,
+      "member_hyg_ids": [
+        "85951"
+      ],
+      "member_names": [],
+      "point": [
+        -1.1840832655199998,
+        -11.79064050836,
+        -11.5716398006
+      ],
+      "primary_hyg_id": "85951",
+      "proper": "Meridian Expanse-58",
+      "quality_flags": [],
+      "retained": false,
+      "system_key": "hyg:85951"
+    },
+    {
+      "dist_ly": 16.579615102979734,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 88327,
+      "is_named": false,
+      "max_member_offset_ly": 0.00704019190853275,
+      "member_count": 2,
+      "member_hyg_ids": [
+        "88327",
+        "119198"
+      ],
+      "member_names": [],
+      "point": [
+        0.39419866472,
+        -16.559142336719997,
+        0.7232215759599999
+      ],
+      "primary_hyg_id": "88327",
+      "proper": "Triarch Verge-49",
+      "quality_flags": [],
+      "retained": true,
+      "system_key": "hyg:88327"
+    },
+    {
+      "dist_ly": 16.706998018997993,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 112106,
+      "is_named": false,
+      "max_member_offset_ly": 0.0,
+      "member_count": 1,
+      "member_hyg_ids": [
+        "112106"
+      ],
+      "member_names": [],
+      "point": [
+        11.34625295836,
+        -3.7508266156,
+        11.67551396348
+      ],
+      "primary_hyg_id": "112106",
+      "proper": "Helion Reach-16",
+      "quality_flags": [],
+      "retained": false,
+      "system_key": "hyg:112106"
+    },
+    {
+      "dist_ly": 16.729410427300568,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 97338,
+      "is_named": true,
+      "max_member_offset_ly": 0.0,
+      "member_count": 1,
+      "member_hyg_ids": [
+        "97338"
+      ],
+      "member_names": [
+        "Altair"
+      ],
+      "point": [
+        7.68250021008,
+        -14.635598188,
+        2.5790753084399998
+      ],
+      "primary_hyg_id": "97338",
+      "proper": "Altair",
+      "quality_flags": [],
+      "retained": true,
+      "system_key": "hyg:97338"
+    },
+    {
+      "dist_ly": 17.043805505012187,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 118578,
+      "is_named": false,
+      "max_member_offset_ly": 0.005693959856887958,
+      "member_count": 2,
+      "member_hyg_ids": [
+        "118578",
+        "118579"
+      ],
+      "member_names": [],
+      "point": [
+        -11.255027125159998,
+        11.42813442216,
+        5.7631080272399995
+      ],
+      "primary_hyg_id": "118578",
+      "proper": "Tauven Arc-87",
+      "quality_flags": [],
+      "retained": true,
+      "system_key": "hyg:118578"
+    },
+    {
+      "dist_ly": 17.37074246412014,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 67380,
+      "is_named": false,
+      "max_member_offset_ly": 0.0,
+      "member_count": 1,
+      "member_hyg_ids": [
+        "67380"
+      ],
+      "member_names": [],
+      "point": [
+        -14.06654076856,
+        -7.40455006688,
+        7.0034108024799995
+      ],
+      "primary_hyg_id": "67380",
+      "proper": "Sigmar Cluster-51",
+      "quality_flags": [],
+      "retained": true,
+      "system_key": "hyg:67380"
+    },
+    {
+      "dist_ly": 17.451289808124628,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 57371,
+      "is_named": false,
+      "max_member_offset_ly": 0.0,
+      "member_count": 1,
+      "member_hyg_ids": [
+        "57371"
+      ],
+      "member_names": [],
+      "point": [
+        -3.417217951,
+        0.18373019791999998,
+        17.11246272916
+      ],
+      "primary_hyg_id": "57371",
+      "proper": "Procyon Arc-47",
+      "quality_flags": [],
+      "retained": true,
+      "system_key": "hyg:57371"
+    },
+    {
+      "dist_ly": 17.507073305392073,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 118406,
+      "is_named": false,
+      "max_member_offset_ly": 0.0,
+      "member_count": 1,
+      "member_hyg_ids": [
+        "118406"
+      ],
+      "member_names": [],
+      "point": [
+        -0.00453682996,
+        17.48753560604,
+        0.82685764496
+      ],
+      "primary_hyg_id": "118406",
+      "proper": "Khoras Belt-38",
+      "quality_flags": [],
+      "retained": false,
+      "system_key": "hyg:118406"
+    },
+    {
+      "dist_ly": 17.583862798039704,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 66943,
+      "is_named": false,
+      "max_member_offset_ly": 0.0,
+      "member_count": 1,
+      "member_hyg_ids": [
+        "66943"
+      ],
+      "member_names": [],
+      "point": [
+        -15.216817964679999,
+        -7.5644219534,
+        4.518871810639999
+      ],
+      "primary_hyg_id": "66943",
+      "proper": "Tauven Expanse-52",
+      "quality_flags": [],
+      "retained": true,
+      "system_key": "hyg:66943"
+    },
+    {
+      "dist_ly": 17.993700510165997,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 58735,
+      "is_named": false,
+      "max_member_offset_ly": 0.0,
+      "member_count": 1,
+      "member_hyg_ids": [
+        "58735"
+      ],
+      "member_names": [],
+      "point": [
+        -8.44503336872,
+        -0.17740277152,
+        -15.887831749719998
+      ],
+      "primary_hyg_id": "58735",
+      "proper": "Khoras Cluster-30",
+      "quality_flags": [],
+      "retained": true,
+      "system_key": "hyg:58735"
+    },
+    {
+      "dist_ly": 18.19413117713089,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 21036,
+      "is_named": false,
+      "max_member_offset_ly": 0.21021665094246383,
+      "member_count": 2,
+      "member_hyg_ids": [
+        "21036",
+        "118311"
+      ],
+      "member_names": [],
+      "point": [
+        3.5432837681199993,
+        8.68168237764,
+        15.591662532359999
+      ],
+      "primary_hyg_id": "21036",
+      "proper": "Procyon Cluster-73",
+      "quality_flags": [],
+      "retained": false,
+      "system_key": "hyg:21036"
+    },
+    {
+      "dist_ly": 18.220822190875023,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 33139,
+      "is_named": false,
+      "max_member_offset_ly": 0.0,
+      "member_count": 1,
+      "member_hyg_ids": [
+        "33139"
+      ],
+      "member_names": [],
+      "point": [
+        -3.6091770647999994,
+        14.80096254156,
+        9.99518434396
+      ],
+      "primary_hyg_id": "33139",
+      "proper": "Pioneer Expanse-53",
+      "quality_flags": [],
+      "retained": true,
+      "system_key": "hyg:33139"
+    },
+    {
+      "dist_ly": 18.315290971382623,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 83352,
+      "is_named": false,
+      "max_member_offset_ly": 0.0,
+      "member_count": 1,
+      "member_hyg_ids": [
+        "83352"
+      ],
+      "member_names": [],
+      "point": [
+        -3.5965385197999997,
+        -14.794644899839998,
+        -10.18004304164
+      ],
+      "primary_hyg_id": "83352",
+      "proper": "Veyra Sector-43",
+      "quality_flags": [],
+      "retained": false,
+      "system_key": "hyg:83352"
+    },
+    {
+      "dist_ly": 18.45121914860871,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 25813,
+      "is_named": false,
+      "max_member_offset_ly": 0.0,
+      "member_count": 1,
+      "member_hyg_ids": [
+        "25813"
+      ],
+      "member_names": [],
+      "point": [
+        2.2873352895599997,
+        18.27061006956,
+        -1.18338203012
+      ],
+      "primary_hyg_id": "25813",
+      "proper": "Koros Verge-28",
+      "quality_flags": [],
+      "retained": false,
+      "system_key": "hyg:25813"
+    },
+    {
+      "dist_ly": 18.565842930687342,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 119276,
+      "is_named": false,
+      "max_member_offset_ly": 0.0,
+      "member_count": 1,
+      "member_hyg_ids": [
+        "119276"
+      ],
+      "member_names": [],
+      "point": [
+        4.48873499624,
+        -12.199604255199999,
+        -13.25561910576
+      ],
+      "primary_hyg_id": "119276",
+      "proper": "Draxis Sector-60",
+      "quality_flags": [],
+      "retained": false,
+      "system_key": "hyg:119276"
+    },
+    {
+      "dist_ly": 18.6342686223411,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 102708,
+      "is_named": false,
+      "max_member_offset_ly": 0.0,
+      "member_count": 1,
+      "member_hyg_ids": [
+        "102708"
+      ],
+      "member_names": [],
+      "point": [
+        12.18613727396,
+        -13.005284591079999,
+        -5.44027555688
+      ],
+      "primary_hyg_id": "102708",
+      "proper": "Pioneer Sector-05",
+      "quality_flags": [],
+      "retained": true,
+      "system_key": "hyg:102708"
+    },
+    {
+      "dist_ly": 18.765210826712458,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 29222,
+      "is_named": false,
+      "max_member_offset_ly": 0.0,
+      "member_count": 1,
+      "member_hyg_ids": [
+        "29222"
+      ],
+      "member_names": [],
+      "point": [
+        -0.80344290572,
+        17.396815314639998,
+        -6.98845002676
+      ],
+      "primary_hyg_id": "29222",
+      "proper": "Frontier Belt-43",
+      "quality_flags": [],
+      "retained": false,
+      "system_key": "hyg:29222"
+    },
+    {
+      "dist_ly": 18.770123428586732,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 95799,
+      "is_named": true,
+      "max_member_offset_ly": 0.0,
+      "member_count": 1,
+      "member_hyg_ids": [
+        "95799"
+      ],
+      "member_names": [
+        "Alsafi"
+      ],
+      "point": [
+        2.55853726512,
+        -6.00132258496,
+        17.59987351712
+      ],
+      "primary_hyg_id": "95799",
+      "proper": "Alsafi",
+      "quality_flags": [],
+      "retained": true,
+      "system_key": "hyg:95799"
+    },
+    {
+      "dist_ly": 18.79170861016783,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 118447,
+      "is_named": false,
+      "max_member_offset_ly": 0.0,
+      "member_count": 1,
+      "member_hyg_ids": [
+        "118447"
+      ],
+      "member_names": [],
+      "point": [
+        -3.72163239204,
+        15.2643780326,
+        10.309050785879998
+      ],
+      "primary_hyg_id": "118447",
+      "proper": "Vegaine Expanse-27",
+      "quality_flags": [],
+      "retained": true,
+      "system_key": "hyg:118447"
+    },
+    {
+      "dist_ly": 18.954304548441904,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 45211,
+      "is_named": false,
+      "max_member_offset_ly": 1.8933652334414834,
+      "member_count": 2,
+      "member_hyg_ids": [
+        "45211",
+        "45214"
+      ],
+      "member_names": [],
+      "point": [
+        -8.617817771279999,
+        7.59897165848,
+        15.0749629356
+      ],
+      "primary_hyg_id": "45211",
+      "proper": "Tauven Arc-16",
+      "quality_flags": [
+        "catalog_member_offset_exceeds_1_ly"
+      ],
+      "retained": true,
+      "system_key": "hyg:45211"
+    },
+    {
+      "dist_ly": 19.015369159970952,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 26792,
+      "is_named": false,
+      "max_member_offset_ly": 0.0,
+      "member_count": 1,
+      "member_hyg_ids": [
+        "26792"
+      ],
+      "member_names": [],
+      "point": [
+        1.4441535368,
+        18.509140998599996,
+        4.1122237714
+      ],
+      "primary_hyg_id": "26792",
+      "proper": "Aurigon Sector-88",
+      "quality_flags": [],
+      "retained": true,
+      "system_key": "hyg:26792"
+    },
+    {
+      "dist_ly": 19.016756973205588,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 86722,
+      "is_named": false,
+      "max_member_offset_ly": 0.0,
+      "member_count": 1,
+      "member_hyg_ids": [
+        "86722"
+      ],
+      "member_names": [],
+      "point": [
+        -0.60135338656,
+        -10.250675385,
+        -16.0062198546
+      ],
+      "primary_hyg_id": "86722",
+      "proper": "Nomad Reach-18",
+      "quality_flags": [],
+      "retained": true,
+      "system_key": "hyg:86722"
+    },
+    {
+      "dist_ly": 19.049668193737826,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 72957,
+      "is_named": false,
+      "max_member_offset_ly": 0.2765495840545243,
+      "member_count": 2,
+      "member_hyg_ids": [
+        "72957",
+        "72955"
+      ],
+      "member_names": [],
+      "point": [
+        -12.677980521959999,
+        -12.40075444508,
+        -6.955570240399999
+      ],
+      "primary_hyg_id": "72957",
+      "proper": "Luyten Reach-27",
+      "quality_flags": [],
+      "retained": false,
+      "system_key": "hyg:72957"
+    },
+    {
+      "dist_ly": 19.14608934191798,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 94466,
+      "is_named": false,
+      "max_member_offset_ly": 0.012993266232657735,
+      "member_count": 2,
+      "member_hyg_ids": [
+        "94466",
+        "119275"
+      ],
+      "member_names": [],
+      "point": [
+        6.280407751039999,
+        -18.00427434152,
+        1.7249118831599999
+      ],
+      "primary_hyg_id": "94466",
+      "proper": "Luyten Reach-14",
+      "quality_flags": [],
+      "retained": true,
+      "system_key": "hyg:94466"
+    },
+    {
+      "dist_ly": 19.185798372239717,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 118532,
+      "is_named": false,
+      "max_member_offset_ly": 0.0,
+      "member_count": 1,
+      "member_hyg_ids": [
+        "118532"
+      ],
+      "member_names": [],
+      "point": [
+        -9.763072164999999,
+        14.93679999244,
+        -7.0476440792
+      ],
+      "primary_hyg_id": "118532",
+      "proper": "Serpentis Belt-03",
+      "quality_flags": [],
+      "retained": true,
+      "system_key": "hyg:118532"
+    },
+    {
+      "dist_ly": 19.338561877908884,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 75841,
+      "is_named": false,
+      "max_member_offset_ly": 0.0,
+      "member_count": 1,
+      "member_hyg_ids": [
+        "75841"
+      ],
+      "member_names": [],
+      "point": [
+        -8.735742734639999,
+        -11.61543276672,
+        -12.75729187648
+      ],
+      "primary_hyg_id": "75841",
+      "proper": "Velarn Arc-12",
+      "quality_flags": [],
+      "retained": true,
+      "system_key": "hyg:75841"
+    },
+    {
+      "dist_ly": 19.351843271658993,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 84147,
+      "is_named": true,
+      "max_member_offset_ly": 0.1693293108699504,
+      "member_count": 2,
+      "member_hyg_ids": [
+        "84147",
+        "119135"
+      ],
+      "member_names": [
+        "Guniibuu",
+        "Guniibuu B"
+      ],
+      "point": [
+        -3.3497721517599994,
+        -16.97576096488,
+        -8.6658181498
+      ],
+      "primary_hyg_id": "84147",
+      "proper": "Guniibuu",
+      "quality_flags": [],
+      "retained": true,
+      "system_key": "hyg:84147"
+    },
+    {
+      "dist_ly": 19.416634425947965,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 3814,
+      "is_named": true,
+      "max_member_offset_ly": 0.0015581657010533528,
+      "member_count": 2,
+      "member_hyg_ids": [
+        "3814",
+        "118021"
+      ],
+      "member_names": [
+        "Achird"
+      ],
+      "point": [
+        10.10581972072,
+        2.19903181412,
+        16.43296562656
+      ],
+      "primary_hyg_id": "3814",
+      "proper": "Achird",
+      "quality_flags": [],
+      "retained": true,
+      "system_key": "hyg:3814"
+    },
+    {
+      "dist_ly": 19.42859147360961,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 37659,
+      "is_named": false,
+      "max_member_offset_ly": 0.0,
+      "member_count": 1,
+      "member_hyg_ids": [
+        "37659"
+      ],
+      "member_names": [],
+      "point": [
+        -8.55144828684,
+        17.403840714879998,
+        1.20383853444
+      ],
+      "primary_hyg_id": "37659",
+      "proper": "Procyon Reach-01",
+      "quality_flags": [],
+      "retained": true,
+      "system_key": "hyg:37659"
+    },
+    {
+      "dist_ly": 19.47314088702971,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 84220,
+      "is_named": false,
+      "max_member_offset_ly": 0.0,
+      "member_count": 1,
+      "member_hyg_ids": [
+        "84220"
+      ],
+      "member_names": [],
+      "point": [
+        -3.3073099021199996,
+        -17.1033434074,
+        -8.70290534856
+      ],
+      "primary_hyg_id": "84220",
+      "proper": "Nadir Arc-92",
+      "quality_flags": [],
+      "retained": false,
+      "system_key": "hyg:84220"
+    },
+    {
+      "dist_ly": 19.494219243062993,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 117106,
+      "is_named": false,
+      "max_member_offset_ly": 0.0,
+      "member_count": 1,
+      "member_hyg_ids": [
+        "117106"
+      ],
+      "member_names": [],
+      "point": [
+        19.455515248199998,
+        -0.91674950012,
+        0.8167500705199999
+      ],
+      "primary_hyg_id": "117106",
+      "proper": "Meridian Sector-01",
+      "quality_flags": [],
+      "retained": true,
+      "system_key": "hyg:117106"
+    },
+    {
+      "dist_ly": 19.49542518398137,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 83882,
+      "is_named": false,
+      "max_member_offset_ly": 1.1251384112478973,
+      "member_count": 2,
+      "member_hyg_ids": [
+        "83882",
+        "119134"
+      ],
+      "member_names": [],
+      "point": [
+        -2.8249806246399998,
+        -13.328087707399998,
+        13.944646486679998
+      ],
+      "primary_hyg_id": "83882",
+      "proper": "Luyten Cluster-30",
+      "quality_flags": [
+        "catalog_member_offset_exceeds_1_ly"
+      ],
+      "retained": true,
+      "system_key": "hyg:83882"
+    },
+    {
+      "dist_ly": 19.614492379730564,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 99143,
+      "is_named": false,
+      "max_member_offset_ly": 0.12381828869284857,
+      "member_count": 2,
+      "member_hyg_ids": [
+        "99143",
+        "119334"
+      ],
+      "member_names": [],
+      "point": [
+        8.584967338959999,
+        -13.321394986279998,
+        -11.55712259704
+      ],
+      "primary_hyg_id": "99143",
+      "proper": "Zethys Belt-34",
+      "quality_flags": [],
+      "retained": true,
+      "system_key": "hyg:99143"
+    },
+    {
+      "dist_ly": 19.713440619596796,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 15471,
+      "is_named": true,
+      "max_member_offset_ly": 0.0,
+      "member_count": 1,
+      "member_hyg_ids": [
+        "15471"
+      ],
+      "member_names": [
+        "82 G. Eri"
+      ],
+      "point": [
+        9.26034509128,
+        11.028961878439999,
+        -13.46208563844
+      ],
+      "primary_hyg_id": "15471",
+      "proper": "82 G. Eri",
+      "quality_flags": [],
+      "retained": true,
+      "system_key": "hyg:15471"
+    },
+    {
+      "dist_ly": 19.768579684219137,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 71027,
+      "is_named": false,
+      "max_member_offset_ly": 0.0,
+      "member_count": 1,
+      "member_hyg_ids": [
+        "71027"
+      ],
+      "member_names": [],
+      "point": [
+        -15.088485363359998,
+        -12.03206770268,
+        -4.28528866812
+      ],
+      "primary_hyg_id": "71027",
+      "proper": "Serpentis Belt-44",
+      "quality_flags": [],
+      "retained": true,
+      "system_key": "hyg:71027"
+    },
+    {
+      "dist_ly": 19.92228178063481,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 98924,
+      "is_named": false,
+      "max_member_offset_ly": 0.0,
+      "member_count": 1,
+      "member_hyg_ids": [
+        "98924"
+      ],
+      "member_names": [],
+      "point": [
+        4.28494620432,
+        -6.80920121228,
+        -18.225567925959997
+      ],
+      "primary_hyg_id": "98924",
+      "proper": "Velarn Reach-04",
+      "quality_flags": [],
+      "retained": true,
+      "system_key": "hyg:98924"
+    },
+    {
+      "dist_ly": 20.009668477552605,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 118344,
+      "is_named": false,
+      "max_member_offset_ly": 0.0,
+      "member_count": 1,
+      "member_hyg_ids": [
+        "118344"
+      ],
+      "member_names": [],
+      "point": [
+        4.97758413216,
+        19.229052091159996,
+        -2.41951327012
+      ],
+      "primary_hyg_id": "118344",
+      "proper": "Frontier Verge-85",
+      "quality_flags": [],
+      "retained": true,
+      "system_key": "hyg:118344"
+    },
+    {
+      "dist_ly": 20.0341326686484,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 119184,
+      "is_named": false,
+      "max_member_offset_ly": 0.0,
+      "member_count": 1,
+      "member_hyg_ids": [
+        "119184"
+      ],
+      "member_names": [],
+      "point": [
+        -0.34039597095999996,
+        -6.55496587184,
+        18.928365613199997
+      ],
+      "primary_hyg_id": "119184",
+      "proper": "Arcturon Verge-55",
+      "quality_flags": [],
+      "retained": true,
+      "system_key": "hyg:119184"
+    },
+    {
+      "dist_ly": 20.13295602498638,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 118488,
+      "is_named": false,
+      "max_member_offset_ly": 0.0,
+      "member_count": 1,
+      "member_hyg_ids": [
+        "118488"
+      ],
+      "member_names": [],
+      "point": [
+        -8.159620776239999,
+        18.2372736648,
+        2.48160358784
+      ],
+      "primary_hyg_id": "118488",
+      "proper": "Aurigon Arc-64",
+      "quality_flags": [],
+      "retained": false,
+      "system_key": "hyg:118488"
+    },
+    {
+      "dist_ly": 20.16299871401613,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 115766,
+      "is_named": false,
+      "max_member_offset_ly": 0.21404867191128107,
+      "member_count": 2,
+      "member_hyg_ids": [
+        "115766",
+        "119568"
+      ],
+      "member_names": [],
+      "point": [
+        18.8119605368,
+        -2.3206814789999997,
+        6.875397834039999
+      ],
+      "primary_hyg_id": "115766",
+      "proper": "Velarn Reach-09",
+      "quality_flags": [],
+      "retained": true,
+      "system_key": "hyg:115766"
+    },
+    {
+      "dist_ly": 20.207020222975387,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 82565,
+      "is_named": false,
+      "max_member_offset_ly": 1.4872996415511317,
+      "member_count": 3,
+      "member_hyg_ids": [
+        "82565",
+        "119112",
+        "119113"
+      ],
+      "member_names": [],
+      "point": [
+        -5.5546160657999994,
+        -19.206426649439997,
+        -2.92968974688
+      ],
+      "primary_hyg_id": "82565",
+      "proper": "Nomad Expanse-11",
+      "quality_flags": [
+        "catalog_member_offset_exceeds_1_ly"
+      ],
+      "retained": true,
+      "system_key": "hyg:82565"
+    },
+    {
+      "dist_ly": 20.214565961282023,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 99382,
+      "is_named": false,
+      "max_member_offset_ly": 0.0,
+      "member_count": 1,
+      "member_hyg_ids": [
+        "99382"
+      ],
+      "member_names": [],
+      "point": [
+        7.86098255796,
+        -11.88905155824,
+        -14.33471601644
+      ],
+      "primary_hyg_id": "99382",
+      "proper": "Vegaine Cluster-25",
+      "quality_flags": [],
+      "retained": true,
+      "system_key": "hyg:99382"
+    },
+    {
+      "dist_ly": 20.254699092105945,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 118644,
+      "is_named": false,
+      "max_member_offset_ly": 0.0,
+      "member_count": 1,
+      "member_hyg_ids": [
+        "118644"
+      ],
+      "member_names": [],
+      "point": [
+        -6.029078460559999,
+        4.10946449164,
+        -18.894849822639998
+      ],
+      "primary_hyg_id": "118644",
+      "proper": "Talios Cluster-80",
+      "quality_flags": [],
+      "retained": true,
+      "system_key": "hyg:118644"
+    },
+    {
+      "dist_ly": 20.25820118089269,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 118995,
+      "is_named": false,
+      "max_member_offset_ly": 0.0,
+      "member_count": 1,
+      "member_hyg_ids": [
+        "118995"
+      ],
+      "member_names": [],
+      "point": [
+        -12.812467687,
+        -12.4418240086,
+        -9.56223834644
+      ],
+      "primary_hyg_id": "118995",
+      "proper": "Aurigon Sector-11",
+      "quality_flags": [],
+      "retained": true,
+      "system_key": "hyg:118995"
+    },
+    {
+      "dist_ly": 20.2693429394224,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 74766,
+      "is_named": false,
+      "max_member_offset_ly": 0.0,
+      "member_count": 1,
+      "member_hyg_ids": [
+        "74766"
+      ],
+      "member_names": [],
+      "point": [
+        -12.9478061192,
+        -15.355209217039999,
+        -2.72362438608
+      ],
+      "primary_hyg_id": "74766",
+      "proper": "Khoras Expanse-43",
+      "quality_flags": [],
+      "retained": true,
+      "system_key": "hyg:74766"
+    },
+    {
+      "dist_ly": 20.53099658726432,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 34511,
+      "is_named": false,
+      "max_member_offset_ly": 0.0,
+      "member_count": 1,
+      "member_hyg_ids": [
+        "34511"
+      ],
+      "member_names": [],
+      "point": [
+        -4.83172064584,
+        15.3171500734,
+        12.789105132719998
+      ],
+      "primary_hyg_id": "34511",
+      "proper": "Velarn Sector-80",
+      "quality_flags": [],
+      "retained": true,
+      "system_key": "hyg:34511"
+    },
+    {
+      "dist_ly": 20.906408706880136,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 118865,
+      "is_named": false,
+      "max_member_offset_ly": 0.0,
+      "member_count": 1,
+      "member_hyg_ids": [
+        "118865"
+      ],
+      "member_names": [],
+      "point": [
+        -18.71180129076,
+        -5.6349287192399995,
+        7.42926616856
+      ],
+      "primary_hyg_id": "118865",
+      "proper": "Arcturon Sector-12",
+      "quality_flags": [],
+      "retained": true,
+      "system_key": "hyg:118865"
+    },
+    {
+      "dist_ly": 21.069356692980293,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 118399,
+      "is_named": false,
+      "max_member_offset_ly": 0.0,
+      "member_count": 1,
+      "member_hyg_ids": [
+        "118399"
+      ],
+      "member_names": [],
+      "point": [
+        0.44367326836000004,
+        21.00890169096,
+        -1.53199060916
+      ],
+      "primary_hyg_id": "118399",
+      "proper": "Meridian Reach-13",
+      "quality_flags": [],
+      "retained": true,
+      "system_key": "hyg:118399"
+    },
+    {
+      "dist_ly": 21.253263190937872,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 80218,
+      "is_named": false,
+      "max_member_offset_ly": 0.0,
+      "member_count": 1,
+      "member_hyg_ids": [
+        "80218"
+      ],
+      "member_names": [],
+      "point": [
+        -4.974097524519999,
+        -11.35962861592,
+        17.26031250552
+      ],
+      "primary_hyg_id": "80218",
+      "proper": "Velarn Expanse-33",
+      "quality_flags": [],
+      "retained": true,
+      "system_key": "hyg:80218"
+    },
+    {
+      "dist_ly": 21.33125690460132,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 118812,
+      "is_named": false,
+      "max_member_offset_ly": 0.0,
+      "member_count": 1,
+      "member_hyg_ids": [
+        "118812"
+      ],
+      "member_names": [],
+      "point": [
+        -20.858472020639997,
+        -1.73369200268,
+        4.1159419498
+      ],
+      "primary_hyg_id": "118812",
+      "proper": "Luyten Arc-42",
+      "quality_flags": [],
+      "retained": true,
+      "system_key": "hyg:118812"
+    },
+    {
+      "dist_ly": 21.350293664030197,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 114260,
+      "is_named": false,
+      "max_member_offset_ly": 0.0,
+      "member_count": 1,
+      "member_hyg_ids": [
+        "114260"
+      ],
+      "member_names": [],
+      "point": [
+        11.33588119756,
+        -2.3432710435599997,
+        17.939953116759998
+      ],
+      "primary_hyg_id": "114260",
+      "proper": "Khoras Verge-37",
+      "quality_flags": [],
+      "retained": true,
+      "system_key": "hyg:114260"
+    },
+    {
+      "dist_ly": 21.72925166733643,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 53612,
+      "is_named": false,
+      "max_member_offset_ly": 0.0,
+      "member_count": 1,
+      "member_hyg_ids": [
+        "53612"
+      ],
+      "member_names": [],
+      "point": [
+        -19.3457637542,
+        5.177263358479999,
+        8.43194799
+      ],
+      "primary_hyg_id": "53612",
+      "proper": "Altaris Reach-40",
+      "quality_flags": [],
+      "retained": true,
+      "system_key": "hyg:53612"
+    },
+    {
+      "dist_ly": 21.86705322340458,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 105765,
+      "is_named": false,
+      "max_member_offset_ly": 0.0,
+      "member_count": 1,
+      "member_hyg_ids": [
+        "105765"
+      ],
+      "member_names": [],
+      "point": [
+        16.510854940919998,
+        -12.71351521816,
+        6.6276856136
+      ],
+      "primary_hyg_id": "105765",
+      "proper": "Tauven Belt-32",
+      "quality_flags": [],
+      "retained": true,
+      "system_key": "hyg:105765"
+    },
+    {
+      "dist_ly": 21.892633631937652,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 72432,
+      "is_named": false,
+      "max_member_offset_ly": 0.040644638668464295,
+      "member_count": 2,
+      "member_hyg_ids": [
+        "72432",
+        "118988"
+      ],
+      "member_names": [],
+      "point": [
+        -15.167300960759999,
+        -14.06840311932,
+        7.163827369519999
+      ],
+      "primary_hyg_id": "72432",
+      "proper": "Tauven Cluster-71",
+      "quality_flags": [],
+      "retained": true,
+      "system_key": "hyg:72432"
+    },
+    {
+      "dist_ly": 21.900963659517462,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 82557,
+      "is_named": false,
+      "max_member_offset_ly": 0.0,
+      "member_count": 1,
+      "member_hyg_ids": [
+        "82557"
+      ],
+      "member_names": [],
+      "point": [
+        -6.025810377439999,
+        -20.815677091879998,
+        -3.17007976512
+      ],
+      "primary_hyg_id": "82557",
+      "proper": "Cygnera Belt-38",
+      "quality_flags": [],
+      "retained": true,
+      "system_key": "hyg:82557"
+    },
+    {
+      "dist_ly": 22.031886438309144,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 118530,
+      "is_named": false,
+      "max_member_offset_ly": 0.0,
+      "member_count": 1,
+      "member_hyg_ids": [
+        "118530"
+      ],
+      "member_names": [],
+      "point": [
+        -11.85564992228,
+        18.26332374452,
+        3.3613376435199998
+      ],
+      "primary_hyg_id": "118530",
+      "proper": "Nomad Verge-04",
+      "quality_flags": [],
+      "retained": true,
+      "system_key": "hyg:118530"
+    },
+    {
+      "dist_ly": 22.0494245425772,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 52866,
+      "is_named": false,
+      "max_member_offset_ly": 0.0,
+      "member_count": 1,
+      "member_hyg_ids": [
+        "52866"
+      ],
+      "member_names": [],
+      "point": [
+        -20.90540586904,
+        6.504529108,
+        2.61385332272
+      ],
+      "primary_hyg_id": "52866",
+      "proper": "Nomad Expanse-80",
+      "quality_flags": [],
+      "retained": true,
+      "system_key": "hyg:52866"
+    },
+    {
+      "dist_ly": 22.187414593626773,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 119513,
+      "is_named": false,
+      "max_member_offset_ly": 0.0,
+      "member_count": 1,
+      "member_hyg_ids": [
+        "119513"
+      ],
+      "member_names": [],
+      "point": [
+        8.511914918079999,
+        -3.18204969032,
+        -20.241127205399998
+      ],
+      "primary_hyg_id": "119513",
+      "proper": "Helion Belt-47",
+      "quality_flags": [],
+      "retained": true,
+      "system_key": "hyg:119513"
+    },
+    {
+      "dist_ly": 22.21155001528494,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 85345,
+      "is_named": false,
+      "max_member_offset_ly": 0.0,
+      "member_count": 1,
+      "member_hyg_ids": [
+        "85345"
+      ],
+      "member_names": [],
+      "point": [
+        -2.6694694438399997,
+        -20.00952709136,
+        9.265296139359998
+      ],
+      "primary_hyg_id": "85345",
+      "proper": "Draxis Sector-51",
+      "quality_flags": [],
+      "retained": true,
+      "system_key": "hyg:85345"
+    },
+    {
+      "dist_ly": 22.29507146314297,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 84451,
+      "is_named": false,
+      "max_member_offset_ly": 0.4417582139215273,
+      "member_count": 3,
+      "member_hyg_ids": [
+        "84451",
+        "119143",
+        "119144"
+      ],
+      "member_names": [],
+      "point": [
+        -3.25388881088,
+        -17.973162320679997,
+        -12.78467267268
+      ],
+      "primary_hyg_id": "84451",
+      "proper": "Nomad Sector-62",
+      "quality_flags": [],
+      "retained": true,
+      "system_key": "hyg:84451"
+    },
+    {
+      "dist_ly": 22.324887697863353,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 112936,
+      "is_named": false,
+      "max_member_offset_ly": 0.0,
+      "member_count": 1,
+      "member_hyg_ids": [
+        "112936"
+      ],
+      "member_names": [],
+      "point": [
+        20.585499018,
+        -5.846450669919999,
+        6.36057037272
+      ],
+      "primary_hyg_id": "112936",
+      "proper": "Procyon Cluster-29",
+      "quality_flags": [],
+      "retained": true,
+      "system_key": "hyg:112936"
+    },
+    {
+      "dist_ly": 22.54031920941167,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 118510,
+      "is_named": false,
+      "max_member_offset_ly": 0.0,
+      "member_count": 1,
+      "member_hyg_ids": [
+        "118510"
+      ],
+      "member_names": [],
+      "point": [
+        -4.04075320712,
+        7.5004138384,
+        -20.86820777724
+      ],
+      "primary_hyg_id": "118510",
+      "proper": "Khoras Belt-04",
+      "quality_flags": [],
+      "retained": true,
+      "system_key": "hyg:118510"
+    },
+    {
+      "dist_ly": 22.989260508950373,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 102765,
+      "is_named": false,
+      "max_member_offset_ly": 0.0,
+      "member_count": 1,
+      "member_hyg_ids": [
+        "102765"
+      ],
+      "member_names": [],
+      "point": [
+        7.36879032304,
+        -7.810702349,
+        20.32732045152
+      ],
+      "primary_hyg_id": "102765",
+      "proper": "Arcturon Sector-81",
+      "quality_flags": [],
+      "retained": true,
+      "system_key": "hyg:102765"
+    },
+    {
+      "dist_ly": 23.050013824924704,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 51172,
+      "is_named": false,
+      "max_member_offset_ly": 0.0,
+      "member_count": 1,
+      "member_hyg_ids": [
+        "51172"
+      ],
+      "member_names": [],
+      "point": [
+        -21.251571539639997,
+        8.91960665652,
+        0.3383216188
+      ],
+      "primary_hyg_id": "51172",
+      "proper": "Talios Cluster-62",
+      "quality_flags": [],
+      "retained": true,
+      "system_key": "hyg:51172"
+    },
+    {
+      "dist_ly": 23.419738358734605,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 12082,
+      "is_named": true,
+      "max_member_offset_ly": 0.09836142675295474,
+      "member_count": 2,
+      "member_hyg_ids": [
+        "12082",
+        "118157"
+      ],
+      "member_names": [
+        "268 G. Cet"
+      ],
+      "point": [
+        18.064026120719998,
+        14.638608607879998,
+        2.80824556028
+      ],
+      "primary_hyg_id": "12082",
+      "proper": "268 G. Cet",
+      "quality_flags": [],
+      "retained": true,
+      "system_key": "hyg:12082"
+    },
+    {
+      "dist_ly": 23.464316920391408,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 118835,
+      "is_named": false,
+      "max_member_offset_ly": 0.0,
+      "member_count": 1,
+      "member_hyg_ids": [
+        "118835"
+      ],
+      "member_names": [],
+      "point": [
+        -18.13201007736,
+        -3.10071943016,
+        -14.566740133279998
+      ],
+      "primary_hyg_id": "118835",
+      "proper": "Velarn Belt-55",
+      "quality_flags": [],
+      "retained": false,
+      "system_key": "hyg:118835"
+    },
+    {
+      "dist_ly": 23.53215713385879,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 119571,
+      "is_named": false,
+      "max_member_offset_ly": 0.0,
+      "member_count": 1,
+      "member_hyg_ids": [
+        "119571"
+      ],
+      "member_names": [],
+      "point": [
+        23.3739045088,
+        -2.54159672248,
+        -0.98147515832
+      ],
+      "primary_hyg_id": "119571",
+      "proper": "Meridian Expanse-62",
+      "quality_flags": [],
+      "retained": true,
+      "system_key": "hyg:119571"
+    },
+    {
+      "dist_ly": 23.754920151409873,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 119212,
+      "is_named": false,
+      "max_member_offset_ly": 0.0,
+      "member_count": 1,
+      "member_hyg_ids": [
+        "119212"
+      ],
+      "member_names": [],
+      "point": [
+        0.7924677563199999,
+        -9.556347969079999,
+        21.733486599
+      ],
+      "primary_hyg_id": "119212",
+      "proper": "Talios Arc-20",
+      "quality_flags": [],
+      "retained": true,
+      "system_key": "hyg:119212"
+    },
+    {
+      "dist_ly": 23.981922223002776,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 119229,
+      "is_named": false,
+      "max_member_offset_ly": 0.0006956686522250912,
+      "member_count": 2,
+      "member_hyg_ids": [
+        "119229",
+        "119230"
+      ],
+      "member_names": [],
+      "point": [
+        3.8886079562399996,
+        -21.422914332679998,
+        10.05336078968
+      ],
+      "primary_hyg_id": "119229",
+      "proper": "Talios Verge-81",
+      "quality_flags": [],
+      "retained": true,
+      "system_key": "hyg:119229"
+    },
+    {
+      "dist_ly": 24.283943229645246,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 83688,
+      "is_named": false,
+      "max_member_offset_ly": 0.0,
+      "member_count": 1,
+      "member_hyg_ids": [
+        "83688"
+      ],
+      "member_names": [],
+      "point": [
+        -3.83657628956,
+        -17.13776265008,
+        16.77163297072
+      ],
+      "primary_hyg_id": "83688",
+      "proper": "Luyten Reach-02",
+      "quality_flags": [],
+      "retained": true,
+      "system_key": "hyg:83688"
+    },
+    {
+      "dist_ly": 24.314310582017637,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 3759,
+      "is_named": true,
+      "max_member_offset_ly": 0.0,
+      "member_count": 1,
+      "member_hyg_ids": [
+        "3759"
+      ],
+      "member_names": [
+        "96 G. Psc"
+      ],
+      "point": [
+        23.67360273408,
+        5.0733402722,
+        2.2377334850799997
+      ],
+      "primary_hyg_id": "3759",
+      "proper": "96 G. Psc",
+      "quality_flags": [],
+      "retained": true,
+      "system_key": "hyg:3759"
+    },
+    {
+      "dist_ly": 24.321779857313114,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 119492,
+      "is_named": false,
+      "max_member_offset_ly": 0.0,
+      "member_count": 1,
+      "member_hyg_ids": [
+        "119492"
+      ],
+      "member_names": [],
+      "point": [
+        21.1414156122,
+        -9.511116655,
+        -7.35718569256
+      ],
+      "primary_hyg_id": "119492",
+      "proper": "Procyon Sector-86",
+      "quality_flags": [],
+      "retained": false,
+      "system_key": "hyg:119492"
+    },
+    {
+      "dist_ly": 24.32799166710513,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 2016,
+      "is_named": false,
+      "max_member_offset_ly": 0.0,
+      "member_count": 1,
+      "member_hyg_ids": [
+        "2016"
+      ],
+      "member_names": [],
+      "point": [
+        5.33352143652,
+        0.6018132665199999,
+        -23.728517619799998
+      ],
+      "primary_hyg_id": "2016",
+      "proper": "Arcturon Expanse-58",
+      "quality_flags": [],
+      "retained": true,
+      "system_key": "hyg:2016"
+    },
+    {
+      "dist_ly": 24.494535629440037,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 12748,
+      "is_named": false,
+      "max_member_offset_ly": 0.0,
+      "member_count": 1,
+      "member_hyg_ids": [
+        "12748"
+      ],
+      "member_names": [],
+      "point": [
+        16.66581491808,
+        14.520403150359998,
+        10.554183112359999
+      ],
+      "primary_hyg_id": "12748",
+      "proper": "Draxis Sector-42",
+      "quality_flags": [],
+      "retained": true,
+      "system_key": "hyg:12748"
+    },
+    {
+      "dist_ly": 24.523181087065172,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 117987,
+      "is_named": false,
+      "max_member_offset_ly": 0.0,
+      "member_count": 1,
+      "member_hyg_ids": [
+        "117987"
+      ],
+      "member_names": [],
+      "point": [
+        21.69489582108,
+        2.3473903938399996,
+        -11.189623062479999
+      ],
+      "primary_hyg_id": "117987",
+      "proper": "Luyten Verge-41",
+      "quality_flags": [],
+      "retained": false,
+      "system_key": "hyg:117987"
+    },
+    {
+      "dist_ly": 24.554327363052877,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 62752,
+      "is_named": false,
+      "max_member_offset_ly": 0.0,
+      "member_count": 1,
+      "member_hyg_ids": [
+        "62752"
+      ],
+      "member_names": [],
+      "point": [
+        -22.70336691152,
+        -5.448272901999999,
+        -7.60187118532
+      ],
+      "primary_hyg_id": "62752",
+      "proper": "Serpentis Reach-58",
+      "quality_flags": [],
+      "retained": false,
+      "system_key": "hyg:62752"
+    },
+    {
+      "dist_ly": 24.5663889909552,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 7966,
+      "is_named": false,
+      "max_member_offset_ly": 0.0,
+      "member_count": 1,
+      "member_hyg_ids": [
+        "7966"
+      ],
+      "member_names": [],
+      "point": [
+        20.77875949424,
+        9.96622169116,
+        8.510290661199999
+      ],
+      "primary_hyg_id": "7966",
+      "proper": "Nomad Arc-15",
+      "quality_flags": [],
+      "retained": true,
+      "system_key": "hyg:7966"
+    },
+    {
+      "dist_ly": 24.578466651604277,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 119199,
+      "is_named": false,
+      "max_member_offset_ly": 0.0,
+      "member_count": 1,
+      "member_hyg_ids": [
+        "119199"
+      ],
+      "member_names": [],
+      "point": [
+        0.77800273772,
+        -23.61756913328,
+        -6.7606333223199995
+      ],
+      "primary_hyg_id": "119199",
+      "proper": "Nadir Sector-98",
+      "quality_flags": [],
+      "retained": true,
+      "system_key": "hyg:119199"
+    },
+    {
+      "dist_ly": 24.634961535564866,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 5325,
+      "is_named": false,
+      "max_member_offset_ly": 0.0008977469820616498,
+      "member_count": 2,
+      "member_hyg_ids": [
+        "5325",
+        "118043"
+      ],
+      "member_names": [],
+      "point": [
+        13.53449227044,
+        4.15556011912,
+        20.160113316559997
+      ],
+      "primary_hyg_id": "5325",
+      "proper": "Arcturon Expanse-67",
+      "quality_flags": [],
+      "retained": true,
+      "system_key": "hyg:5325"
+    },
+    {
+      "dist_ly": 24.671417250465566,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 118405,
+      "is_named": false,
+      "max_member_offset_ly": 0.0,
+      "member_count": 1,
+      "member_hyg_ids": [
+        "118405"
+      ],
+      "member_names": [],
+      "point": [
+        -0.06318294031999999,
+        12.484048164359999,
+        21.27964704812
+      ],
+      "primary_hyg_id": "118405",
+      "proper": "Aurigon Arc-74",
+      "quality_flags": [],
+      "retained": false,
+      "system_key": "hyg:118405"
+    },
+    {
+      "dist_ly": 24.818123091372627,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 112923,
+      "is_named": false,
+      "max_member_offset_ly": 0.0,
+      "member_count": 1,
+      "member_hyg_ids": [
+        "112923"
+      ],
+      "member_names": [],
+      "point": [
+        20.33707577748,
+        -5.7930850252,
+        -12.991641485599999
+      ],
+      "primary_hyg_id": "112923",
+      "proper": "Epsara Sector-75",
+      "quality_flags": [],
+      "retained": false,
+      "system_key": "hyg:112923"
+    },
+    {
+      "dist_ly": 24.89744277415723,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 119616,
+      "is_named": false,
+      "max_member_offset_ly": 0.0,
+      "member_count": 1,
+      "member_hyg_ids": [
+        "119616"
+      ],
+      "member_names": [],
+      "point": [
+        16.7362711372,
+        17.00709151024,
+        -7.109059254
+      ],
+      "primary_hyg_id": "119616",
+      "proper": "Koros Arc-62",
+      "quality_flags": [],
+      "retained": false,
+      "system_key": "hyg:119616"
+    },
+    {
+      "dist_ly": 24.897443332143116,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 118187,
+      "is_named": false,
+      "max_member_offset_ly": 0.0,
+      "member_count": 1,
+      "member_hyg_ids": [
+        "118187"
+      ],
+      "member_names": [],
+      "point": [
+        16.73649292328,
+        17.007045848399997,
+        -7.1086482974399985
+      ],
+      "primary_hyg_id": "118187",
+      "proper": "Tauven Verge-45",
+      "quality_flags": [
+        "secondary_component_without_cataloged_primary_companion"
+      ],
+      "retained": false,
+      "system_key": "hyg:118187"
+    },
+    {
+      "dist_ly": 24.97026905546339,
+      "grouping_basis": "hyg_comp_primary",
+      "id": 65653,
+      "is_named": false,
+      "max_member_offset_ly": 0.0,
+      "member_count": 1,
+      "member_hyg_ids": [
+        "65653"
+      ],
+      "member_names": [],
+      "point": [
+        -22.69232653092,
+        -9.39905597652,
+        4.4978217024
+      ],
+      "primary_hyg_id": "65653",
+      "proper": "Cygnera Cluster-40",
+      "quality_flags": [],
+      "retained": true,
+      "system_key": "hyg:65653"
+    }
+  ]
+}

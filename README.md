@@ -6,7 +6,7 @@ The generator starts humanity at the dawn of slow interstellar travel. Earth-bas
 
 ## Current state
 
-The BASIC runtime is an early UI and utility prototype, not a playable game. Universe phases 0–2 have Python implementations and preserved outputs; their full validation is the next milestone. Historical simulation and game export are planned, not implemented.
+The BASIC runtime is an early UI and utility prototype, not a playable game. Phase 0 is [closed and accepted](docs/PHASE_0_CLOSEOUT.md): 99 connected stellar systems at 9.0 ly reach, with all named systems preserved. Phases 1–2 have existing implementations; Phase 1 review and validation is next. Historical simulation and game export are planned, not implemented.
 
 ## Start here
 
@@ -39,9 +39,9 @@ python3 -m unittest discover -s universe_builder/tests -v
 To generate a separate experimental world from the existing scripts:
 
 ```sh
-python3 -m universe_builder generate --config universe_builder/configs/baseline.json --output /tmp/cx16-world-001
+python3 -m universe_builder generate --config universe_builder/configs/grouped_systems.json --output /tmp/cx16-world-001 --through 0
 ```
 
-The output directory must not already exist. This command runs only phases 0–2 and never replaces the preserved baseline. The configuration records the former launch-script settings; exact reproduction of the saved outputs has not yet been established.
+The output directory must not already exist. This command applies grouping, named-system preference, reachability pruning, and display placement for Phase 0. It never replaces the historical baseline. See [the grouped result summary](docs/analysis/phase-0-grouped-results.md). Legacy `baseline.json` preserves the former launcher settings for comparison.
 
 Project code is under the existing [MIT license](LICENSE). See [third-party notices](THIRD_PARTY_NOTICES.md) for external data and local tools.

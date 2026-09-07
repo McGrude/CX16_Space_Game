@@ -1,47 +1,16 @@
 #!/usr/bin/env python3
 """
-Build a local star database for the game from a HYG-style star catalog.
+Build a local star database from HYG data.
 
-Behavior:
+Select valid nearby entries, always retain Sol, and prefer catalog proper names
+when a candidate count limit applies. Synthetic names do not confer preference.
+Map placement never removes entries: Sol anchors (50,50), then named stars and
+other entries receive their nearest free display cell. Physical x/y/z coordinates
+remain unchanged. A full display is an error, not a reason to discard stars.
 
-- Load a HYG CSV (e.g. HYG 4.x).
-- Filter stars within a given radius (in LIGHT-YEARS) from Sol.
-- Convert parsecs → light-years (1 pc ≈ 3.26156 ly).
-- Project (x_ly, y_ly) into a 2D 100×100 grid:
-    - grid_x = round(50 + x_ly / scale)
-    - grid_y = round(50 + y_ly / scale)
-  where `scale` = light-years per grid cell.
-
-- Stars whose projected grid_x/grid_y are outside [0, 99] are PRUNED.
-- If more than one star lands in the same grid cell:
-    - If Sol is in that cell, keep Sol and prune the rest.
-    - Otherwise:
-        1) Prefer stars with a non-empty proper name (from catalog).
-        2) Among that subset, keep the "largest" star (see below).
-        3) If none are named, pick the "largest" among all.
-
-  "Largest" is determined by:
-    1. lum (luminosity) if present (higher is brighter),
-    2. else mag (apparent magnitude; lower is brighter),
-    3. else fallback to distance.
-
-- ASCII map rules:
-    - Start as '.' everywhere.
-    - 'X' = Sol
-    - '*' = other stars (one per cell by construction)
-    - After placing stars, any cell that is still '.' and whose center
-      lies beyond the configured radius (in ly) becomes a space ' '.
-
-CSV OUTPUT (for game use):
-
-- Sorted by dist_ly ascending (Sol first).
-- Columns:
-    id, proper, dist_ly, grid_x, grid_y, spect
-- `id` is a monotonic integer starting at 0 for Sol.
-- `proper` is either:
-    - the catalog's real proper name, if present, OR
-    - a synthetic sector/cluster style name generated deterministically
-      from the original catalog id (or HIP / coords if no id).
+The compact CSV still exports id, proper, dist_ly, grid_x, grid_y, spect.
+Source IDs/3D coordinates and final reachability filtering remain a pending
+production-schema decision; the analysis tools work directly from HYG data.
 """
 
 import argparse
@@ -74,7 +43,7 @@ def parse_args() -> argparse.Namespace:
         "--max-stars",
         type=int,
         default=150,
-        help="Maximum number of stars to keep BEFORE projection (nearest first).",
+        help="Candidate limit before projection (Sol, catalog-named stars, then distance).",
     )
     parser.add_argument(
         "--scale",
@@ -187,155 +156,66 @@ def load_hyg_csv(path: str) -> List[Dict[str, Any]]:
     return stars
 
 
+def catalog_priority(star: Dict[str, Any]) -> tuple:
+    """Stable preference for Sol, actual proper names, then nearby entries."""
+    return (not star.get("is_sol", False), not bool(star.get("proper", "").strip()),
+            float(star["dist_ly"]), str(star.get("id", "")),
+            float(star["x_ly"]), float(star["y_ly"]), float(star["z_ly"]))
+
+
 def select_stars_within_radius(
     stars: List[Dict[str, Any]], radius_ly: float, max_stars: int
 ) -> List[Dict[str, Any]]:
-    """Filter stars within radius (LY) and limit count, always keeping the nearest (Sol)."""
-    within = [s for s in stars if s["dist_ly"] <= radius_ly]
-
-    if not within:
-        return []
-
-    # Sort by distance (nearest first)
-    within.sort(key=lambda s: s["dist_ly"])
-
-    if max_stars is not None and len(within) > max_stars:
-        sol = within[0]
-        others = within[1:max_stars]
-        result = [sol] + others
-    else:
-        result = within
-
-    # Tag the nearest as Sol explicitly
-    result[0]["is_sol"] = True
-    return result
-
-
-def _size_metric(star: Dict[str, Any]) -> Tuple[int, float, float]:
-    """
-    Compute a tuple used to select the "largest" star in a cell.
-
-    Priority:
-      1) Has valid lum → use that (higher is better)
-      2) Else has valid mag → use -mag (smaller mag = brighter)
-      3) Else → fall back to inverse distance as a weak tie-breaker.
-
-    Returns:
-      (has_lum_flag, metric1, metric2)
-
-    Comparison is lexicographic; higher tuple is considered "larger".
-    """
-    has_lum = 0
-    metric1 = -1e9
-    metric2 = -1e9
-
-    # Try luminosity
-    lum_str = star.get("lum", "")
-    if lum_str:
-        try:
-            lum_val = float(lum_str)
-            has_lum = 1
-            metric1 = lum_val
-            metric2 = 0.0
-            return (has_lum, metric1, metric2)
-        except ValueError:
-            pass
-
-    # Try magnitude
-    mag_str = star.get("mag", "")
-    if mag_str:
-        try:
-            mag_val = float(mag_str)
-            has_lum = 0
-            metric1 = -mag_val  # lower mag = brighter
-            metric2 = 0.0
-            return (has_lum, metric1, metric2)
-        except ValueError:
-            pass
-
-    # Fallback: inverse distance (closer "wins" as tie-break)
-    dist_ly = float(star.get("dist_ly", 1e9))
-    has_lum = 0
-    metric1 = 0.0
-    metric2 = -dist_ly
-    return (has_lum, metric1, metric2)
+    """Select a physical candidate pool, independently of display placement."""
+    if not math.isfinite(radius_ly) or radius_ly <= 0:
+        raise ValueError("radius_ly must be finite and positive")
+    if max_stars is not None and (type(max_stars) is not int or max_stars < 1):
+        raise ValueError("max_stars must be a positive integer or None")
+    within = [dict(s) for s in stars
+              if all(math.isfinite(float(s[k])) for k in ("dist_ly", "x_ly", "y_ly", "z_ly"))
+              and 0 <= s["dist_ly"] <= radius_ly]
+    sol = [s for s in within if s.get("proper", "").strip().lower() == "sol"
+           and s["dist_ly"] < 0.01
+           and math.sqrt(sum(s[k]**2 for k in ("x_ly", "y_ly", "z_ly"))) < 0.01]
+    if len(sol) != 1:
+        raise ValueError("Catalog must contain exactly one valid Sol entry at the origin")
+    for star in within:
+        star["is_sol"] = star is sol[0]
+    selected = sorted(within, key=catalog_priority)
+    if max_stars is not None:
+        selected = selected[:max_stars]
+    return sorted(selected, key=lambda s: (not s["is_sol"], s["dist_ly"], str(s["id"])))
 
 
 def project_to_grid(
     stars: List[Dict[str, Any]], scale: float
 ) -> List[Dict[str, Any]]:
+    """Assign nearest free display cells without pruning or changing geometry.
+
+    Even off-screen projections receive a cell near the edge. Equal-distance
+    display choices break ties by row, then column. Sol and named entries place
+    first. This is an approximate chart, never a source of travel distances.
     """
-    Map x_ly, y_ly → 100x100 grid centered on Sol at (50, 50).
-
-    scale = light-years per grid cell.
-
-    Stars whose projected position falls outside [0, 99] in either axis
-    are PRUNED.
-
-    If multiple stars land in the same (grid_x, grid_y):
-      - If one of them is Sol, keep Sol and drop the rest.
-      - Else:
-          1) Prefer stars with a non-empty proper name (from catalog).
-          2) Among those, keep the "largest" by _size_metric().
-          3) If none are named, keep the "largest" among all.
-    """
-    cell_map: Dict[Tuple[int, int], List[Dict[str, Any]]] = {}
-    off_map_count = 0
-
-    for s in stars:
-        x_ly = s["x_ly"]
-        y_ly = s["y_ly"]
-
-        gx = int(round(50.0 + (x_ly / scale)))
-        gy = int(round(50.0 + (y_ly / scale)))
-
-        if gx < 0 or gx > 99 or gy < 0 or gy > 99:
-            off_map_count += 1
-            continue
-
-        s["grid_x"] = gx
-        s["grid_y"] = gy
-
-        key = (gx, gy)
-        cell_map.setdefault(key, []).append(s)
-
-    if off_map_count:
-        print(
-            f"Pruned {off_map_count} stars that projected outside the 100x100 grid.",
-            file=sys.stderr,
-        )
-
-    survivors: List[Dict[str, Any]] = []
-    pruned_collisions = 0
-
-    for (gx, gy), cell_stars in cell_map.items():
-        if not cell_stars:
-            continue
-
-        # If Sol is in this cell, it wins automatically
-        sol_in_cell = [s for s in cell_stars if s.get("is_sol")]
-        if sol_in_cell:
-            chosen = sol_in_cell[0]
+    if not math.isfinite(scale) or scale <= 0:
+        raise ValueError("scale must be finite and positive")
+    if len(stars) > 10000:
+        raise ValueError("100x100 display cannot fit all entries; choose another layout")
+    free = {(x, y) for y in range(100) for x in range(100)}
+    shifted = 0
+    for star in sorted(stars, key=catalog_priority):
+        if star.get("is_sol"):
+            target = (50, 50)
         else:
-            # Prefer stars with catalog proper names (not synthetic)
-            named = [s for s in cell_stars if (s.get("proper") or "").strip() != ""]
-            if named:
-                chosen = max(named, key=_size_metric)
-            else:
-                chosen = max(cell_stars, key=_size_metric)
-
-        survivors.append(chosen)
-        pruned_here = len(cell_stars) - 1
-        pruned_collisions += max(0, pruned_here)
-
-    if pruned_collisions:
-        print(
-            f"Pruned {pruned_collisions} stars due to grid cell collisions "
-            f"(one star per cell retained, preferring catalog-named stars).",
-            file=sys.stderr,
-        )
-
-    return survivors
+            target = (int(round(50 + star["x_ly"] / scale)),
+                      int(round(50 + star["y_ly"] / scale)))
+        cell = target if target in free else min(
+            free, key=lambda c: ((c[0]-target[0])**2 + (c[1]-target[1])**2, c[1], c[0]))
+        star["grid_x"], star["grid_y"] = cell
+        free.remove(cell)
+        shifted += cell != target
+    if shifted:
+        print(f"Moved {shifted} display symbols to free cells; no stars removed.", file=sys.stderr)
+    return stars
 
 
 # ---------- Synthetic naming helpers ----------
@@ -449,7 +329,7 @@ def write_star_csv(stars: List[Dict[str, Any]], path: Optional[str]) -> None:
     ]
 
     # Sort by distance from Sol
-    stars_sorted = sorted(stars, key=lambda s: float(s["dist_ly"]))
+    stars_sorted = sorted(stars, key=lambda s: (not s.get("is_sol", False), float(s["dist_ly"]), str(s.get("id", ""))))
 
     out_file = None
     if path:
@@ -483,7 +363,7 @@ def write_star_csv(stars: List[Dict[str, Any]], path: Optional[str]) -> None:
 
 
 def write_ascii_map(
-    stars: List[Dict[str, Any]], path: str, scale: float, radius_ly: float
+    stars: List[Dict[str, Any]], path: str, scale: float, radius_ly: float, shape: str = "sphere"
 ) -> None:
     """
     Create a 100x100 ASCII map.
@@ -536,7 +416,7 @@ def write_ascii_map(
             dy_cells = gy - sol_y
             # Distance (in ly) from Sol based on cell offset and scale
             dist_ly = math.sqrt(dx_cells * dx_cells + dy_cells * dy_cells) * scale
-            if dist_ly > radius_ly:
+            if shape == "sphere" and dist_ly > radius_ly:
                 grid[gy][gx] = " "
 
     # Write file
@@ -577,20 +457,12 @@ def main() -> None:
 
     print(
         f"Projecting to 100x100 grid with scale {args.scale} ly/cell, "
-        f"pruning off-map stars and enforcing 1 star per cell (real catalog names preferred)...",
+        f"assigning free display cells without removing stars...",
         file=sys.stderr,
     )
     stars = project_to_grid(stars, args.scale)
 
-    if not stars:
-        print(
-            "ERROR: All stars were pruned during projection and collision pruning. "
-            "Your --radius-ly and --scale combination leaves nothing on the map.",
-            file=sys.stderr,
-        )
-        sys.exit(1)
-
-    print(f"{len(stars)} stars remain after projection and pruning.", file=sys.stderr)
+    print(f"All {len(stars)} selected stars retained after display placement.", file=sys.stderr)
 
     if args.csv_out:
         print(f"Writing star catalog CSV to {args.csv_out} ...", file=sys.stderr)

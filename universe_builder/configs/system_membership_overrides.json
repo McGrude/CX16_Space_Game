@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "groups": [
+    {
+      "primary_hyg_id": "71456",
+      "member_hyg_ids": ["71456", "71453", "70666"],
+      "name": "Alpha Centauri",
+      "reason": "HYG links Alpha Centauri A/B but lists Proxima separately; the three constitute one gravitationally bound stellar system.",
+      "source_url": "https://www.eso.org/public/ireland/announcements/ann16089/"
+    }
+  ]
+}

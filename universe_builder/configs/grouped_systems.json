@@ -1,0 +1,14 @@
+{
+  "schema_version": 2,
+  "source_catalog": "../data/source/hygdata_v42.csv",
+  "phase_0": {
+    "radius_ly": 25.0,
+    "max_stars": 300,
+    "scale": 0.5,
+    "membership_overrides": "system_membership_overrides.json",
+    "reach_candidates_ly": [7.0, 7.5, 8.0, 8.5, 9.0, 9.1, 9.2, 9.3, 9.4, 9.5, 9.6, 9.7, 9.8, 9.9, 10.0, 10.3],
+    "pruning_trials": 8
+  },
+  "phase_1": {"max_objects_per_system": 5, "seed": 42},
+  "phase_2": {"artifact_rate": 0.03, "seed": 1}
+}

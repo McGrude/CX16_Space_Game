@@ -1,0 +1,765 @@
+{
+  "status": "experimental; Phase 1 not accepted",
+  "seed": 42,
+  "systems": 99,
+  "objects": 161,
+  "mean_objects": 1.6262626262626263,
+  "distribution_all_systems": {
+    "0": 8,
+    "1": 43,
+    "2": 31,
+    "3": 12,
+    "4": 5,
+    "5": 0
+  },
+  "distribution_excluding_sol": {
+    "0": 8,
+    "1": 43,
+    "2": 31,
+    "3": 12,
+    "4": 4,
+    "5": 0
+  },
+  "ordinary_systems": 98,
+  "class_counts": {
+    "AS": 7,
+    "DP": 16,
+    "GG": 14,
+    "IC": 16,
+    "IM": 5,
+    "RM": 24,
+    "RP": 79
+  },
+  "planets": 125,
+  "moons": 29,
+  "asteroids": 7,
+  "existing_generator_objects": 308,
+  "existing_generator_distribution": {
+    "0": 8,
+    "1": 21,
+    "2": 18,
+    "3": 16,
+    "4": 8,
+    "5": 13,
+    "6": 6,
+    "7": 4,
+    "8": 4,
+    "10": 1
+  },
+  "empty_systems": [
+    "Van Maanen's Star",
+    "Nomad Reach-18",
+    "Luyten Reach-14",
+    "Velarn Reach-09",
+    "Tauven Cluster-71",
+    "Nomad Expanse-80",
+    "Nomad Sector-62",
+    "Draxis Sector-42"
+  ],
+  "coordinate_collision_system_ids": [
+    91484,
+    118447
+  ],
+  "per_system": [
+    {
+      "system_id": 0,
+      "name": "Sol",
+      "objects": 4,
+      "moons": 1,
+      "existing_generator_objects": 4
+    },
+    {
+      "system_id": 71456,
+      "name": "Alpha Centauri",
+      "objects": 3,
+      "moons": 0,
+      "existing_generator_objects": 5
+    },
+    {
+      "system_id": 87665,
+      "name": "Barnard's Star",
+      "objects": 1,
+      "moons": 0,
+      "existing_generator_objects": 1
+    },
+    {
+      "system_id": 118720,
+      "name": "Wolf 359",
+      "objects": 2,
+      "moons": 1,
+      "existing_generator_objects": 5
+    },
+    {
+      "system_id": 53879,
+      "name": "Lalande 21185",
+      "objects": 3,
+      "moons": 1,
+      "existing_generator_objects": 6
+    },
+    {
+      "system_id": 32263,
+      "name": "Sirius",
+      "objects": 1,
+      "moons": 0,
+      "existing_generator_objects": 1
+    },
+    {
+      "system_id": 92115,
+      "name": "Ross 154",
+      "objects": 1,
+      "moons": 0,
+      "existing_generator_objects": 3
+    },
+    {
+      "system_id": 119585,
+      "name": "Ross 248",
+      "objects": 1,
+      "moons": 0,
+      "existing_generator_objects": 3
+    },
+    {
+      "system_id": 16496,
+      "name": "Ran",
+      "objects": 2,
+      "moons": 0,
+      "existing_generator_objects": 3
+    },
+    {
+      "system_id": 113687,
+      "name": "Lacaille 9352",
+      "objects": 1,
+      "moons": 0,
+      "existing_generator_objects": 2
+    },
+    {
+      "system_id": 57375,
+      "name": "Ross 128",
+      "objects": 2,
+      "moons": 0,
+      "existing_generator_objects": 5
+    },
+    {
+      "system_id": 119518,
+      "name": "EZ Aqr",
+      "objects": 1,
+      "moons": 0,
+      "existing_generator_objects": 2
+    },
+    {
+      "system_id": 37173,
+      "name": "Procyon",
+      "objects": 2,
+      "moons": 0,
+      "existing_generator_objects": 5
+    },
+    {
+      "system_id": 91484,
+      "name": "Struve 2398",
+      "objects": 2,
+      "moons": 1,
+      "existing_generator_objects": 7
+    },
+    {
+      "system_id": 1472,
+      "name": "Groombridge 34",
+      "objects": 1,
+      "moons": 0,
+      "existing_generator_objects": 2
+    },
+    {
+      "system_id": 5632,
+      "name": "Talios Belt-14",
+      "objects": 3,
+      "moons": 2,
+      "existing_generator_objects": 5
+    },
+    {
+      "system_id": 82472,
+      "name": "Koros Reach-10",
+      "objects": 1,
+      "moons": 0,
+      "existing_generator_objects": 4
+    },
+    {
+      "system_id": 36107,
+      "name": "Luyten's Star",
+      "objects": 1,
+      "moons": 0,
+      "existing_generator_objects": 1
+    },
+    {
+      "system_id": 24129,
+      "name": "Kapteyn's Star",
+      "objects": 4,
+      "moons": 1,
+      "existing_generator_objects": 7
+    },
+    {
+      "system_id": 104751,
+      "name": "Lacaille 8760",
+      "objects": 2,
+      "moons": 1,
+      "existing_generator_objects": 3
+    },
+    {
+      "system_id": 110547,
+      "name": "Kruger 60",
+      "objects": 1,
+      "moons": 0,
+      "existing_generator_objects": 2
+    },
+    {
+      "system_id": 30847,
+      "name": "Ross 614",
+      "objects": 3,
+      "moons": 1,
+      "existing_generator_objects": 5
+    },
+    {
+      "system_id": 82473,
+      "name": "Nomad Reach-26",
+      "objects": 1,
+      "moons": 0,
+      "existing_generator_objects": 2
+    },
+    {
+      "system_id": 3820,
+      "name": "Van Maanen's Star",
+      "objects": 0,
+      "moons": 0,
+      "existing_generator_objects": 0
+    },
+    {
+      "system_id": 118236,
+      "name": "Meridian Sector-40",
+      "objects": 1,
+      "moons": 0,
+      "existing_generator_objects": 1
+    },
+    {
+      "system_id": 80579,
+      "name": "Wolf 1061",
+      "objects": 1,
+      "moons": 0,
+      "existing_generator_objects": 2
+    },
+    {
+      "system_id": 118100,
+      "name": "Pioneer Arc-18",
+      "objects": 1,
+      "moons": 0,
+      "existing_generator_objects": 1
+    },
+    {
+      "system_id": 118704,
+      "name": "Epsara Expanse-45",
+      "objects": 1,
+      "moons": 0,
+      "existing_generator_objects": 1
+    },
+    {
+      "system_id": 118707,
+      "name": "Vegaine Sector-02",
+      "objects": 2,
+      "moons": 1,
+      "existing_generator_objects": 3
+    },
+    {
+      "system_id": 57194,
+      "name": "Cygnera Sector-34",
+      "objects": 2,
+      "moons": 0,
+      "existing_generator_objects": 2
+    },
+    {
+      "system_id": 54052,
+      "name": "Vegaine Arc-98",
+      "objects": 1,
+      "moons": 0,
+      "existing_generator_objects": 1
+    },
+    {
+      "system_id": 49767,
+      "name": "Talios Cluster-75",
+      "objects": 2,
+      "moons": 1,
+      "existing_generator_objects": 5
+    },
+    {
+      "system_id": 19799,
+      "name": "Keid",
+      "objects": 3,
+      "moons": 1,
+      "existing_generator_objects": 5
+    },
+    {
+      "system_id": 1240,
+      "name": "Khoras Arc-46",
+      "objects": 2,
+      "moons": 1,
+      "existing_generator_objects": 3
+    },
+    {
+      "system_id": 88327,
+      "name": "Triarch Verge-49",
+      "objects": 3,
+      "moons": 1,
+      "existing_generator_objects": 8
+    },
+    {
+      "system_id": 97338,
+      "name": "Altair",
+      "objects": 2,
+      "moons": 1,
+      "existing_generator_objects": 4
+    },
+    {
+      "system_id": 118578,
+      "name": "Tauven Arc-87",
+      "objects": 2,
+      "moons": 1,
+      "existing_generator_objects": 5
+    },
+    {
+      "system_id": 67380,
+      "name": "Sigmar Cluster-51",
+      "objects": 1,
+      "moons": 0,
+      "existing_generator_objects": 1
+    },
+    {
+      "system_id": 57371,
+      "name": "Procyon Arc-47",
+      "objects": 1,
+      "moons": 0,
+      "existing_generator_objects": 1
+    },
+    {
+      "system_id": 66943,
+      "name": "Tauven Expanse-52",
+      "objects": 2,
+      "moons": 1,
+      "existing_generator_objects": 3
+    },
+    {
+      "system_id": 58735,
+      "name": "Khoras Cluster-30",
+      "objects": 3,
+      "moons": 1,
+      "existing_generator_objects": 6
+    },
+    {
+      "system_id": 33139,
+      "name": "Pioneer Expanse-53",
+      "objects": 1,
+      "moons": 0,
+      "existing_generator_objects": 2
+    },
+    {
+      "system_id": 102708,
+      "name": "Pioneer Sector-05",
+      "objects": 1,
+      "moons": 0,
+      "existing_generator_objects": 4
+    },
+    {
+      "system_id": 95799,
+      "name": "Alsafi",
+      "objects": 2,
+      "moons": 0,
+      "existing_generator_objects": 3
+    },
+    {
+      "system_id": 118447,
+      "name": "Vegaine Expanse-27",
+      "objects": 3,
+      "moons": 1,
+      "existing_generator_objects": 6
+    },
+    {
+      "system_id": 45211,
+      "name": "Tauven Arc-16",
+      "objects": 1,
+      "moons": 0,
+      "existing_generator_objects": 2
+    },
+    {
+      "system_id": 26792,
+      "name": "Aurigon Sector-88",
+      "objects": 1,
+      "moons": 0,
+      "existing_generator_objects": 2
+    },
+    {
+      "system_id": 86722,
+      "name": "Nomad Reach-18",
+      "objects": 0,
+      "moons": 0,
+      "existing_generator_objects": 0
+    },
+    {
+      "system_id": 94466,
+      "name": "Luyten Reach-14",
+      "objects": 0,
+      "moons": 0,
+      "existing_generator_objects": 0
+    },
+    {
+      "system_id": 118532,
+      "name": "Serpentis Belt-03",
+      "objects": 1,
+      "moons": 0,
+      "existing_generator_objects": 3
+    },
+    {
+      "system_id": 75841,
+      "name": "Velarn Arc-12",
+      "objects": 1,
+      "moons": 0,
+      "existing_generator_objects": 2
+    },
+    {
+      "system_id": 84147,
+      "name": "Guniibuu",
+      "objects": 2,
+      "moons": 0,
+      "existing_generator_objects": 3
+    },
+    {
+      "system_id": 3814,
+      "name": "Achird",
+      "objects": 4,
+      "moons": 1,
+      "existing_generator_objects": 10
+    },
+    {
+      "system_id": 37659,
+      "name": "Procyon Reach-01",
+      "objects": 1,
+      "moons": 0,
+      "existing_generator_objects": 1
+    },
+    {
+      "system_id": 117106,
+      "name": "Meridian Sector-01",
+      "objects": 2,
+      "moons": 0,
+      "existing_generator_objects": 4
+    },
+    {
+      "system_id": 83882,
+      "name": "Luyten Cluster-30",
+      "objects": 2,
+      "moons": 1,
+      "existing_generator_objects": 5
+    },
+    {
+      "system_id": 99143,
+      "name": "Zethys Belt-34",
+      "objects": 1,
+      "moons": 0,
+      "existing_generator_objects": 1
+    },
+    {
+      "system_id": 15471,
+      "name": "82 G. Eri",
+      "objects": 1,
+      "moons": 0,
+      "existing_generator_objects": 2
+    },
+    {
+      "system_id": 71027,
+      "name": "Serpentis Belt-44",
+      "objects": 2,
+      "moons": 0,
+      "existing_generator_objects": 6
+    },
+    {
+      "system_id": 98924,
+      "name": "Velarn Reach-04",
+      "objects": 1,
+      "moons": 0,
+      "existing_generator_objects": 2
+    },
+    {
+      "system_id": 118344,
+      "name": "Frontier Verge-85",
+      "objects": 1,
+      "moons": 0,
+      "existing_generator_objects": 1
+    },
+    {
+      "system_id": 119184,
+      "name": "Arcturon Verge-55",
+      "objects": 1,
+      "moons": 0,
+      "existing_generator_objects": 1
+    },
+    {
+      "system_id": 115766,
+      "name": "Velarn Reach-09",
+      "objects": 0,
+      "moons": 0,
+      "existing_generator_objects": 0
+    },
+    {
+      "system_id": 82565,
+      "name": "Nomad Expanse-11",
+      "objects": 3,
+      "moons": 0,
+      "existing_generator_objects": 4
+    },
+    {
+      "system_id": 99382,
+      "name": "Vegaine Cluster-25",
+      "objects": 1,
+      "moons": 0,
+      "existing_generator_objects": 2
+    },
+    {
+      "system_id": 118644,
+      "name": "Talios Cluster-80",
+      "objects": 2,
+      "moons": 1,
+      "existing_generator_objects": 7
+    },
+    {
+      "system_id": 118995,
+      "name": "Aurigon Sector-11",
+      "objects": 2,
+      "moons": 0,
+      "existing_generator_objects": 5
+    },
+    {
+      "system_id": 74766,
+      "name": "Khoras Expanse-43",
+      "objects": 4,
+      "moons": 1,
+      "existing_generator_objects": 8
+    },
+    {
+      "system_id": 34511,
+      "name": "Velarn Sector-80",
+      "objects": 1,
+      "moons": 0,
+      "existing_generator_objects": 1
+    },
+    {
+      "system_id": 118865,
+      "name": "Arcturon Sector-12",
+      "objects": 1,
+      "moons": 0,
+      "existing_generator_objects": 2
+    },
+    {
+      "system_id": 118399,
+      "name": "Meridian Reach-13",
+      "objects": 1,
+      "moons": 0,
+      "existing_generator_objects": 1
+    },
+    {
+      "system_id": 80218,
+      "name": "Velarn Expanse-33",
+      "objects": 1,
+      "moons": 0,
+      "existing_generator_objects": 1
+    },
+    {
+      "system_id": 118812,
+      "name": "Luyten Arc-42",
+      "objects": 1,
+      "moons": 0,
+      "existing_generator_objects": 1
+    },
+    {
+      "system_id": 114260,
+      "name": "Khoras Verge-37",
+      "objects": 2,
+      "moons": 1,
+      "existing_generator_objects": 3
+    },
+    {
+      "system_id": 53612,
+      "name": "Altaris Reach-40",
+      "objects": 2,
+      "moons": 0,
+      "existing_generator_objects": 3
+    },
+    {
+      "system_id": 105765,
+      "name": "Tauven Belt-32",
+      "objects": 2,
+      "moons": 0,
+      "existing_generator_objects": 3
+    },
+    {
+      "system_id": 72432,
+      "name": "Tauven Cluster-71",
+      "objects": 0,
+      "moons": 0,
+      "existing_generator_objects": 0
+    },
+    {
+      "system_id": 82557,
+      "name": "Cygnera Belt-38",
+      "objects": 2,
+      "moons": 0,
+      "existing_generator_objects": 5
+    },
+    {
+      "system_id": 118530,
+      "name": "Nomad Verge-04",
+      "objects": 2,
+      "moons": 0,
+      "existing_generator_objects": 3
+    },
+    {
+      "system_id": 52866,
+      "name": "Nomad Expanse-80",
+      "objects": 0,
+      "moons": 0,
+      "existing_generator_objects": 0
+    },
+    {
+      "system_id": 119513,
+      "name": "Helion Belt-47",
+      "objects": 1,
+      "moons": 0,
+      "existing_generator_objects": 1
+    },
+    {
+      "system_id": 85345,
+      "name": "Draxis Sector-51",
+      "objects": 2,
+      "moons": 0,
+      "existing_generator_objects": 4
+    },
+    {
+      "system_id": 84451,
+      "name": "Nomad Sector-62",
+      "objects": 0,
+      "moons": 0,
+      "existing_generator_objects": 0
+    },
+    {
+      "system_id": 112936,
+      "name": "Procyon Cluster-29",
+      "objects": 3,
+      "moons": 0,
+      "existing_generator_objects": 6
+    },
+    {
+      "system_id": 118510,
+      "name": "Khoras Belt-04",
+      "objects": 1,
+      "moons": 0,
+      "existing_generator_objects": 2
+    },
+    {
+      "system_id": 102765,
+      "name": "Arcturon Sector-81",
+      "objects": 4,
+      "moons": 1,
+      "existing_generator_objects": 8
+    },
+    {
+      "system_id": 51172,
+      "name": "Talios Cluster-62",
+      "objects": 2,
+      "moons": 0,
+      "existing_generator_objects": 4
+    },
+    {
+      "system_id": 12082,
+      "name": "268 G. Cet",
+      "objects": 2,
+      "moons": 1,
+      "existing_generator_objects": 8
+    },
+    {
+      "system_id": 119571,
+      "name": "Meridian Expanse-62",
+      "objects": 2,
+      "moons": 1,
+      "existing_generator_objects": 5
+    },
+    {
+      "system_id": 119212,
+      "name": "Talios Arc-20",
+      "objects": 1,
+      "moons": 0,
+      "existing_generator_objects": 3
+    },
+    {
+      "system_id": 119229,
+      "name": "Talios Verge-81",
+      "objects": 1,
+      "moons": 0,
+      "existing_generator_objects": 1
+    },
+    {
+      "system_id": 83688,
+      "name": "Luyten Reach-02",
+      "objects": 3,
+      "moons": 1,
+      "existing_generator_objects": 7
+    },
+    {
+      "system_id": 3759,
+      "name": "96 G. Psc",
+      "objects": 2,
+      "moons": 0,
+      "existing_generator_objects": 3
+    },
+    {
+      "system_id": 2016,
+      "name": "Arcturon Expanse-58",
+      "objects": 2,
+      "moons": 0,
+      "existing_generator_objects": 2
+    },
+    {
+      "system_id": 12748,
+      "name": "Draxis Sector-42",
+      "objects": 0,
+      "moons": 0,
+      "existing_generator_objects": 0
+    },
+    {
+      "system_id": 7966,
+      "name": "Nomad Arc-15",
+      "objects": 1,
+      "moons": 0,
+      "existing_generator_objects": 1
+    },
+    {
+      "system_id": 119199,
+      "name": "Nadir Sector-98",
+      "objects": 3,
+      "moons": 1,
+      "existing_generator_objects": 6
+    },
+    {
+      "system_id": 5325,
+      "name": "Arcturon Expanse-67",
+      "objects": 1,
+      "moons": 0,
+      "existing_generator_objects": 1
+    },
+    {
+      "system_id": 65653,
+      "name": "Cygnera Cluster-40",
+      "objects": 1,
+      "moons": 0,
+      "existing_generator_objects": 2
+    }
+  ],
+  "assumptions": [
+    "Total budget includes represented moons and their parent bodies.",
+    "Sol retains Earth, Luna, Mars, Ceres outside the random draw.",
+    "Planet types, attributes and moon probabilities reuse existing logic; moon count clipped to remaining slots.",
+    "Asteroid replacement only targets a moonless primary when at least two primaries exist.",
+    "Primary spectral type used; no per-member stellar orbits, artificial satellites or civilization."
+  ]
+}

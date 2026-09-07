@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "input_catalog": "../results/grouped-phase0-cube-v2/phase_0/star_catalog.csv",
+  "seed": 42,
+  "total_body_weights": [
+    [
+      0,
+      10
+    ],
+    [
+      1,
+      35
+    ],
+    [
+      2,
+      35
+    ],
+    [
+      3,
+      15
+    ],
+    [
+      4,
+      4
+    ],
+    [
+      5,
+      1
+    ]
+  ],
+  "sol_policy": "existing_earth_luna_mars_ceres"
+}
