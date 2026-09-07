@@ -5,7 +5,7 @@ Complete milestones in order. Every milestone ends with evidence and an updated 
 | Milestone | Status | Deliverable and completion gate |
 |---|---|---|
 | M0 — Repository foundation | Complete | Separate game/generator/docs; preserve prior files; document phases, decisions, license scope, and commands; verify organization and runner plumbing |
-| M1 — Validate physical universe | In progress: Phases 0–1 complete; Phase 2 next | Audit phases 0–2 against contracts; validate schemas, IDs, references, ranges, Sol behavior, artifact eligibility and pass-through; establish replay results and explain every baseline difference |
+| M1 — Validate physical universe | Complete: phases 0–2 accepted | Audit phases 0–2 against contracts; validate schemas, IDs, references, ranges, Sol behavior, artifact eligibility and pass-through; establish replay results and explain every baseline difference |
 | M2 — Initial Earth scenario | Planned | Phase 3: versioned initial factions, cultures, assets, knowledge, configuration, and schema; resolve epoch/identities with user; deterministic initialization tests |
 | M3 — First interstellar settlements | Planned | Phase 4 foundation: clock, faction decisions, exploration, expeditions, arrival, supplies, settlement survival; a small scenario yields an explainable chronology |
 | M4 — Research and delayed knowledge | Planned | Propulsion research, construction/refits, message transport, dated local knowledge, discoveries; no actor reacts before learning; old/new ships coexist |
@@ -21,11 +21,11 @@ Complete milestones in order. Every milestone ends with evidence and an updated 
 |---|---|---|
 | 0 — Stellar systems and travel graph | **Accepted: cube v2** | 170 destinations, 210 cataloged members, 38/39 named destinations, fixed reach 9.0 ly; [results](analysis/phase-0-cube-results.md) |
 | 1 — Natural system objects | **Closed: production v1** | 274 Spobs; [closeout](PHASE_1_CLOSEOUT.md) |
-| 2 — Ancient artifacts | **Next: production integration and validation** | Approved Mars origin, eight technology sites with ≥3-jump separation, 32 archaeological sites; promote and close out |
+| 2 — Ancient artifacts | **Closed: production v1** | Eight technology sites, 32 archaeology sites; [closeout](PHASE_2_CLOSEOUT.md) |
 
-Phases 0 and 1 are accepted for the current physical-world scope. The standard production run is `physical-phase1-v1`; prior cube and spherical artifacts remain preserved. Phase 1 uses the primary-spectral approximation, total natural-body budget and fixed Sol set. See the Phase 1 closeout for evidence.
+Phases 0–2 are accepted; M1 is complete. Current physical-world input is `universe_builder/results/physical-phase2-v1/`. All earlier artifacts remain preserved. See [Phase 2 closeout](PHASE_2_CLOSEOUT.md) for validation evidence and the annotated developer map.
 
-Next promote the approved Phase 2 placement model into the standard pipeline, add reusable output validation, verify replay/pass-through/spacing, and record acceptance against the Phase 1 artifact. M1 remains open until Phase 2 passes; Phase 3 follows M1. Early runtime identity export does not imply full Phase 6 completion.
+Next: M2 / Phase 3 initial Earth scenario. Discuss epoch, factions, cultures, initial settlements/assets, capacities and access to Sol's derived technology before implementation. Research effects and ongoing history belong to Phase 4. Early runtime ID export is not full Phase 6 completion.
 
 ## M1 validation checklist
 

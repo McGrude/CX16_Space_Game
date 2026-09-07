@@ -11,9 +11,9 @@ import sys
 ROOT = Path(__file__).resolve().parent.parent
 PACKAGE = ROOT / "universe_builder"
 PHASES = (
-    ("star_catalog", "closed — accepted grouped v1"),
-    ("system_objects", "existing; validation pending"),
-    ("alien_artifacts", "existing; validation pending"),
+    ("star_catalog", "closed — accepted cube v2"),
+    ("system_objects", "closed — accepted production v1"),
+    ("alien_artifacts", "closed — accepted production v1"),
     ("initial_scenario", "planned — M2"),
     ("history_simulation", "planned — M3–M6"),
     ("world_snapshot", "planned — M7"),
@@ -61,14 +61,20 @@ def load_config(path):
         validate_weights(config["phase_1"]["total_body_weights"])
         p1keys.append("total_body_weights")
     exact_keys(config["phase_1"], p1keys, "phase_1")
-    exact_keys(config["phase_2"], ("artifact_rate", "seed"), "phase_2")
+    if "model" in config["phase_2"]:
+        from universe_builder.phases.phase_2_artifact_sites import validate_settings
+        validate_settings(config["phase_2"])
+        if config["schema_version"] != 2:raise ValueError("Spaced sites require grouped schema 2")
+    else:
+        exact_keys(config["phase_2"], ("artifact_rate", "seed"), "phase_2")
     for key in (extent_key, "scale"):
         number(config["phase_0"][key], f"phase_0.{key}", 0)
         if config["phase_0"][key] == 0:
             raise ValueError(f"phase_0.{key} must be positive")
     number(config["phase_0"]["max_stars"], "phase_0.max_stars", 1, integer=True)
     number(config["phase_1"]["max_objects_per_system"], "phase_1.max_objects_per_system", 0, 5, integer=True)
-    number(config["phase_2"]["artifact_rate"], "phase_2.artifact_rate", 0, 1)
+    if "artifact_rate" in config["phase_2"]:
+        number(config["phase_2"]["artifact_rate"], "phase_2.artifact_rate", 0, 1)
     for phase in ("phase_1", "phase_2"):
         number(config[phase]["seed"], f"{phase}.seed", 0, 2**32 - 1, integer=True)
     if not isinstance(config["source_catalog"], str) or not config["source_catalog"]:
@@ -118,7 +124,7 @@ def commands(config, source, output, through):
          "--max-objects-per-system", str(p1["max_objects_per_system"]), "--seed", str(p1["seed"])],
         ["--input-objects", str(output / "phase_1/system_objects.csv"),
          "--output-objects", str(output / "phase_2/system_objects.csv"),
-         "--artifact-rate", str(p2["artifact_rate"]), "--seed", str(p2["seed"])],
+         "--artifact-rate", str(p2.get("artifact_rate",0)), "--seed", str(p2["seed"])],
     ]
     jobs = [
         [sys.executable, str(PACKAGE / "phases" / f"phase_{i}_{PHASES[i][0]}.py"), *args[i]]
@@ -134,6 +140,8 @@ def commands(config, source, output, through):
                    *map(str, p0["reach_candidates_ly"])]
     if through >= 1 and "total_body_weights" in p1:
         jobs[1] += ["--total-body-weights", *[str(w) for _, w in p1["total_body_weights"]]]
+    if through >= 2 and p2.get("model") == "spaced_sites_v1":
+        jobs[2] = [sys.executable, str(PACKAGE/"phases/phase_2_artifact_sites.py"), "--run-directory", str(output)]
     return jobs
 
 
@@ -182,6 +190,8 @@ def generate(config_path, output, through=2):
             expected = ("star_catalog.csv", "star_map.txt") if i == 0 else ("system_objects.csv",)
             if i == 0 and config["schema_version"] == 2:
                 expected += ("routes.csv", "stellar_members.json", "candidate_systems.json", "selection_summary.json")
+            if i == 2 and config["phase_2"].get("model") == "spaced_sites_v1":
+                expected += ("star_map.txt", "summary.json", "technologies.json", "initial_scenario_handoff.json")
             for name in expected:
                 path = phase_dir / name
                 manifest["outputs"][str(path.relative_to(output))] = digest(path)

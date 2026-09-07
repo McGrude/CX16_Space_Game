@@ -1,0 +1,75 @@
+{
+  "categories": {
+    "archaeology": 32,
+    "technology": 8
+  },
+  "map_symbols": {
+    "*": 133,
+    "A": 29,
+    "T": 7,
+    "X": 1
+  },
+  "map_visibility": "omniscient developer review; not actor knowledge",
+  "minimum_technology_hops": 3,
+  "spobs": 274,
+  "systems": 170,
+  "systems_with_sites": 37,
+  "technology_sites": [
+    {
+      "object_id": 2,
+      "object_name": "Mars",
+      "system_id": 0,
+      "system_name": "Sol",
+      "technology_id": "interstellar_propulsion"
+    },
+    {
+      "object_id": 1,
+      "object_name": "Luyten Reach-27 II",
+      "system_id": 72957,
+      "system_name": "Luyten Reach-27",
+      "technology_id": "closed_ecology"
+    },
+    {
+      "object_id": 1,
+      "object_name": "Achird II",
+      "system_id": 3814,
+      "system_name": "Achird",
+      "technology_id": "advanced_materials"
+    },
+    {
+      "object_id": 1,
+      "object_name": "268 G. Cet I-a",
+      "system_id": 12082,
+      "system_name": "268 G. Cet",
+      "technology_id": "ftl_communications"
+    },
+    {
+      "object_id": 0,
+      "object_name": "Helion Arc-87 I",
+      "system_id": 80105,
+      "system_name": "Helion Arc-87",
+      "technology_id": "automated_industry"
+    },
+    {
+      "object_id": 0,
+      "object_name": "Pioneer Cluster-09 I",
+      "system_id": 84462,
+      "system_name": "Pioneer Cluster-09",
+      "technology_id": "advanced_propulsion"
+    },
+    {
+      "object_id": 0,
+      "object_name": "Pioneer Arc-34 I",
+      "system_id": 13368,
+      "system_name": "Pioneer Arc-34",
+      "technology_id": "advanced_power"
+    },
+    {
+      "object_id": 1,
+      "object_name": "Koros Reach-04 I-a",
+      "system_id": 118993,
+      "system_name": "Koros Reach-04",
+      "technology_id": "advanced_sensors"
+    }
+  ]
+}

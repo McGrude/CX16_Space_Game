@@ -8,6 +8,8 @@ Create an explicit starting state at the dawn of interstellar travel. Future pol
 
 ## Inputs
 
+Accepted physical data: `universe_builder/results/physical-phase2-v1/`. Read its `phase_2/initial_scenario_handoff.json` for Mars’s pre-epoch role and explicitly unresolved starting beneficiaries. The artifact text map is omniscient and must not be imported as actor knowledge.
+
 Validated phase 0–2 data; versioned scenario configuration with epoch, seed, initial Earth powers, starting settlements/assets, cultures/languages, and initial technology. Resolve exact identities, date, and Sol infrastructure with the user before defining the scenario.
 
 ## Proposed output

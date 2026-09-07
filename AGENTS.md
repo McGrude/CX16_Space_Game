@@ -6,7 +6,7 @@ Build a Commander X16 BASIC space RPG and an offline deterministic Python histor
 
 ## Scope and workflow
 
-- Phases 0–1 are accepted for the current scope. Read `docs/PHASE_1_CLOSEOUT.md`; current standard output is `universe_builder/results/physical-phase1-v1/`. Phase 2 discussion and validation is next. Preserve all previous artifacts; do not silently regenerate or migrate them. Phase 3 follows M1.
+- Phases 0–2 and M1 are complete for physical-world generation. Read `docs/PHASE_2_CLOSEOUT.md`; current accepted input is `universe_builder/results/physical-phase2-v1/`. Phase 3 initial-scenario discussion is next. Preserve all prior datasets and their manifests. The annotated artifact map is omniscient developer output, never actor knowledge.
 - Future phase documents are specifications, not claims of working code. Do not fabricate implementations, outputs, test results, or completion statuses.
 - Ask about material simulation choices when they become necessary; record decisions in `docs/DECISIONS.md`. Resolve routine engineering choices independently.
 - Keep changes reviewable; do not commit, push, publish, or send messages unless requested.

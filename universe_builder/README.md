@@ -19,3 +19,7 @@ Exports byte indexes, source mappings, translated diagnostic CSVs, packed neighb
 ## Accepted Phase 1 production run
 
 The main generator now uses the curated total-body model (moons included in the cap), with explicit weights in `configs/grouped_systems_cube.json`. Accepted output: `results/physical-phase1-v1/`. Generate with `python3 -m universe_builder generate --config universe_builder/configs/grouped_systems_cube.json --output /tmp/new-world --through 1`; validate with `python3 -m universe_builder.validation.phase1 universe_builder/results/physical-phase1-v1`. See `docs/PHASE_1_CLOSEOUT.md`.
+
+## Accepted Phase 2 and developer map
+
+Current physical-world artifact: `results/physical-phase2-v1/`. The standard cube configuration generates spaced technology sites and archaeology with `--through 2`. Validate using `python3 -m universe_builder.validation.phase2 universe_builder/results/physical-phase2-v1`. The annotated map is `results/physical-phase2-v1/phase_2/star_map.txt`: X Sol, T technology, A archaeology, * other system, with X/T/A priority. This reveals hidden sites for developer inspection only.

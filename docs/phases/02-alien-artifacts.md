@@ -1,45 +1,43 @@
 # Phase 2 — Ancient artifacts
 
-Status: major-artifact trial generated for review; Phase 2 acceptance pending (M1). The standard implementation below remains the legacy probability model.
-Implementation: `universe_builder/phases/phase_2_alien_artifacts.py`.
+Status: **closed — accepted production v1** for physical placement, completing M1. See [closeout](../PHASE_2_CLOSEOUT.md). Phase 3 initial-scenario design is next.
 
-## Inputs and configuration
+Implementation: `universe_builder/phases/phase_2_artifact_sites.py`. The standard cube configuration uses `model: spaced_sites_v1`. The former probability model remains available only through historical configurations; it is not the current placement policy.
 
-Accepted input: `universe_builder/results/physical-phase1-v1/phase_1/system_objects.csv`. Phase 2 design discussion is next; no artifact run has been accepted for this dataset.
+## Accepted rules
 
-Phase 1 objects. Artifact rate is a probability in [0,1], not a guaranteed fraction or exact count. Preserved launcher settings: rate 0.03 and seed 1; script defaults are rate 0.02 and seed 0.
+Input is validated Phase 1 natural Spobs plus the fixed Phase 0 travel graph. Preserve every input field and source-based `(system_id,object_id)` identity.
 
-## Output and algorithm
+- Eight technology-associated sites, each associated with one distinct technology path; Mars `(0,2)` is the fixed initial interstellar-propulsion site.
+- Other technology sites are outside Sol, in distinct systems at least three shortest-path jumps apart, including separation from Sol. Technology changes speed, never physical reach.
+- Select eligible Spobs in deterministic seeded hash order, accepting each only if it meets separation from all selected sites. This is blue-noise-inspired graph exclusion, not optimal uniform coverage. More eligible Spobs give a system more selection opportunities. Fail if the greedy pass cannot meet the exact quota; do not silently relax spacing or counts.
+- Place 32 additional archaeological sites without replacement among remaining eligible Spobs, using independent seeded hash ranking. No archaeology separation or per-system cap; several sites may share a system on different bodies.
+- Eligible: RP, DP, IC, RM, IM, AS. Gas giants excluded. One site per Spob. No new Spobs or orbital stations are generated. Archaeological forms: ARC relic, RUI ruins, FAC facility on the host body, BEA beacon. Technology sites use TEC.
 
-`phase_2/system_objects.csv` preserves all phase 1 fields and adds:
+Every technology can also be developed independently. Sites may accelerate research, not monopolize access. The configured eight names describe research associations; quantitative effects and dependencies remain Phase 4 design work.
 
-```text
-artifact_flag,artifact_type
+## Outputs
+
+`phase_2/system_objects.csv` adds `artifact_flag,artifact_type,artifact_category,technology_id,artifact_site_id`. Category is technology, archaeology or empty. No-site rows have flag 0 and empty other added fields. Site identity is `site:<source-system-id>:<local-object-id>`.
+
+Also emit `technologies.json`, `summary.json`, `initial_scenario_handoff.json` and `star_map.txt`. The parent run manifest records all output hashes and generator/configuration provenance.
+
+The handoff records the Mars site as discovered and exploited before the simulation epoch. It does not invent a discoverer, date or initial beneficiaries. Other sites are hidden until explicit discovery and knowledge propagation. No placement record gives factions knowledge, deployed equipment or research bonuses automatically.
+
+## Developer review map
+
+100×100 text map, using Phase 0 display cells and background. X = Sol; T = a system with a technology site; A = a system with archaeological sites and no technology site; * = another system. Priority is X, then T, then A. One symbol represents a system, not each individual site. This omniscient review artifact is not a player/faction knowledge map.
+
+Current symbols: 1 X, 7 T, 29 A, 133 *. Mars's technology is represented by Sol's X. Some archaeological sites share systems, so A symbols do not count individual sites.
+
+## Verification and reproduction
+
+```sh
+python3 -m universe_builder generate --config universe_builder/configs/grouped_systems_cube.json --output /tmp/new-physical-world --through 2
+python3 -m universe_builder.validation.phase2 universe_builder/results/physical-phase2-v1
+python3 -m unittest discover -s universe_builder/tests -v
 ```
 
-Eligible classes: RP, DP, IC, RM, IM, AS. Gas giants excluded.
-Types/weights: ARC relic/crystal 40; RUI ruins 25; FAC abandoned facility 15; BEA beacon 10; ENG energy node 7; TEC technology cache 3.
+Use a new output directory. Independent validation checks Phase 0/1, checksums, full input pass-through, identities, eligibility, quotas, origin, unique technology associations, graph separation, map contents, summary, definitions and scenario handoff. The accepted Phase 2 CSV matches the approved spacing trial exactly. Full reproduction matches all twelve Phase 0–2 output files. All 63 tests pass.
 
-The current code hashes `f"{seed}:{system_id}:{object_id}:artifact"` with SHA-256. The first four bytes determine presence; the next four select the weighted type. A no-artifact row has flag 0 and an empty type.
-
-## Visibility and later interpretation
-
-Placement is hidden physical truth. A flag does not imply anybody has discovered, accessed, decoded, or exploited a site. Phase 4 must explicitly model discovery and the arrival of news. No living alien factions exist.
-
-## Validation gate
-
-Check pass-through equality with phase 1, rates 0/1, gas-giant exclusion, valid types, repeatability, independence from row ordering, changed seeds, malformed inputs, and actual baseline differences. Do not fail a run simply because a small sample's artifact percentage differs from the configured probability.
-
-## Current design direction and trial
-
-Artifacts are a major force in history. Sol must have an origin artifact that enabled interstellar travel before the simulation begins. The user proposed 7–8 discoverable technologies and 3–5 times as many archaeological finds. [Trial v1](../analysis/phase-2-major-artifacts-trial.md) interprets this as 8 unique technology sites (including Sol) plus 32 archaeological sites, producing 40 sites across 36 systems. Mars, the eight technology names, unique-source placement and exact quotas are trial assumptions for discussion, not final accepted design. Discovery and exploitation remain separate from physical placement.
-
-## Independent research and artifact acceleration
-
-Every artifact-associated technology can also be developed through independent research. Sites can accelerate progress toward that technology; they are not exclusive sources or mandatory prerequisites. Discovery alone does not automatically grant mastery, deployment or shared faction knowledge. The magnitude and mechanism of acceleration remain to be designed.
-
-The trial’s one-site-per-technology placement counts research opportunities, not exclusive sources of technology. Sol’s artifact historically accelerated the development of interstellar propulsion before the simulation epoch; it was the catalyst in this scenario, not the only theoretically possible route to interstellar travel. Existing trial placements and versioned artifacts remain unchanged.
-
-## Technology-site spacing experiment
-
-The user confirmed Mars, eight technology-associated sites and scattering, then requested a blue-noise-inspired trial. [Three-jump trial](../analysis/phase-2-blue-noise-trial.md) places all eight technology sites at least three travel-graph jumps apart, including Sol, while keeping 32 archaeological sites loosely scattered. All 32 tested seeds satisfy the rule; the current seed has 40 sites across 37 systems. The user approved the spacing direction after review; production promotion and final validation remain.
+The previous runtime export remains a separate physical-ID subset; artifact data and this omniscient map have not been silently added to runtime/player data. A complete X16 snapshot and loader belong to Phase 6.

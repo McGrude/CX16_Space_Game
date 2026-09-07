@@ -1,0 +1,188 @@
+{
+  "commands": [
+    [
+      "/Library/Developer/CommandLineTools/usr/bin/python3",
+      "/Users/hogsett/Documents/REPOS/CX16_Space_Game/universe_builder/phases/phase_0_stellar_systems.py",
+      "--input-csv",
+      "/Users/hogsett/Documents/REPOS/CX16_Space_Game/universe_builder/data/source/hygdata_v42.csv",
+      "--membership-overrides",
+      "/Users/hogsett/Documents/REPOS/CX16_Space_Game/universe_builder/configs/system_membership_overrides.json",
+      "--radius-ly",
+      "25.0",
+      "--max-stars",
+      "300",
+      "--scale",
+      "0.5",
+      "--output-dir",
+      "/Users/hogsett/Documents/REPOS/CX16_Space_Game/universe_builder/results/physical-phase2-v1/phase_0",
+      "--shape",
+      "cube",
+      "--trials",
+      "8",
+      "--reach-candidates",
+      "9.0"
+    ],
+    [
+      "/Library/Developer/CommandLineTools/usr/bin/python3",
+      "/Users/hogsett/Documents/REPOS/CX16_Space_Game/universe_builder/phases/phase_1_system_objects.py",
+      "--input-stars",
+      "/Users/hogsett/Documents/REPOS/CX16_Space_Game/universe_builder/results/physical-phase2-v1/phase_0/star_catalog.csv",
+      "--output-objects",
+      "/Users/hogsett/Documents/REPOS/CX16_Space_Game/universe_builder/results/physical-phase2-v1/phase_1/system_objects.csv",
+      "--max-objects-per-system",
+      "5",
+      "--seed",
+      "42",
+      "--total-body-weights",
+      "10",
+      "35",
+      "35",
+      "15",
+      "4",
+      "1"
+    ],
+    [
+      "/Library/Developer/CommandLineTools/usr/bin/python3",
+      "/Users/hogsett/Documents/REPOS/CX16_Space_Game/universe_builder/phases/phase_2_artifact_sites.py",
+      "--run-directory",
+      "/Users/hogsett/Documents/REPOS/CX16_Space_Game/universe_builder/results/physical-phase2-v1"
+    ]
+  ],
+  "completed_phases": [
+    0,
+    1,
+    2
+  ],
+  "config": {
+    "phase_0": {
+      "half_extent_ly": 25.0,
+      "max_stars": 300,
+      "membership_overrides": "/Users/hogsett/Documents/REPOS/CX16_Space_Game/universe_builder/configs/system_membership_overrides.json",
+      "pruning_trials": 8,
+      "reach_candidates_ly": [
+        9.0
+      ],
+      "scale": 0.5,
+      "shape": "cube"
+    },
+    "phase_1": {
+      "max_objects_per_system": 5,
+      "seed": 42,
+      "total_body_weights": [
+        [
+          0,
+          10
+        ],
+        [
+          1,
+          35
+        ],
+        [
+          2,
+          35
+        ],
+        [
+          3,
+          15
+        ],
+        [
+          4,
+          4
+        ],
+        [
+          5,
+          1
+        ]
+      ]
+    },
+    "phase_2": {
+      "archaeological_sites": 32,
+      "model": "spaced_sites_v1",
+      "origin_site": {
+        "object_id": 2,
+        "system_id": 0
+      },
+      "seed": 1,
+      "technologies": [
+        {
+          "id": "interstellar_propulsion",
+          "name": "Interstellar propulsion",
+          "role": "Enables the initial interstellar era; does not alter the fixed route graph."
+        },
+        {
+          "id": "advanced_propulsion",
+          "name": "Advanced propulsion",
+          "role": "Reduces travel time along existing routes."
+        },
+        {
+          "id": "ftl_communications",
+          "name": "FTL communications",
+          "role": "Enables communication faster than courier ships; requires later infrastructure rules."
+        },
+        {
+          "id": "advanced_power",
+          "name": "Advanced power generation",
+          "role": "Supports greater industrial and settlement capacity."
+        },
+        {
+          "id": "advanced_materials",
+          "name": "Advanced materials",
+          "role": "Improves construction and durability."
+        },
+        {
+          "id": "closed_ecology",
+          "name": "Closed ecological systems",
+          "role": "Supports settlements in otherwise difficult environments."
+        },
+        {
+          "id": "advanced_sensors",
+          "name": "Advanced sensors",
+          "role": "Improves exploration and site detection; does not confer undiscovered knowledge."
+        },
+        {
+          "id": "automated_industry",
+          "name": "Automated industry",
+          "role": "Improves production capacity, subject to resources and infrastructure."
+        }
+      ],
+      "technology_min_hops": 3
+    },
+    "schema_version": 2,
+    "source_catalog": "../data/source/hygdata_v42.csv"
+  },
+  "implementations": {
+    "universe_builder/analysis/pruning.py": "4d69770b71515f6178698da68411493e4d841c706f097e4ee56771492dd64603",
+    "universe_builder/phases/phase_0_star_catalog.py": "ff50b74ef250df4ef27ed24cf83cc12c1c021105a286f104f5d161e9388df17e",
+    "universe_builder/phases/phase_0_stellar_systems.py": "21d7f4f9ffab2c3f427089862928b24cd06b44f9cec943667b5d0afe56092ed0",
+    "universe_builder/phases/phase_1_system_objects.py": "c737fe69a82643082e37294c9e97d2987e727ff734287d7ae7489c27152a3421",
+    "universe_builder/phases/phase_2_artifact_sites.py": "0074c701315f9bb1572e8e959ad3440c5da1a0078ee9d42f40d32b61ee55f42a",
+    "universe_builder/phases/system_grouping.py": "aa0dcabe97d04a282ae86b5d77159699d9c7d65b65998e46ffb58cece59ad3ff"
+  },
+  "membership_overrides": {
+    "path": "/Users/hogsett/Documents/REPOS/CX16_Space_Game/universe_builder/configs/system_membership_overrides.json",
+    "sha256": "4849f9c1289a13ee789369d4c472d83994db6ec73529a2a4809a547a589efae7"
+  },
+  "outputs": {
+    "phase_0/candidate_systems.json": "3eacb049f73ea96753403a016d369bddf2f394c6ccb01dc7eb77b2032cd75c7e",
+    "phase_0/routes.csv": "d17dab12458bf8c6a09bc4e5d11c09949a99ba9665bb2f3cbab271e8b9649ddd",
+    "phase_0/selection_summary.json": "32e454a9bee0d4a233ff3c780d4854c0da235386d918fe8e39466c58a0de5015",
+    "phase_0/star_catalog.csv": "44d4edb1d5a3788df7806822661b5a09483100adffe73170ccac55cda656d391",
+    "phase_0/star_map.txt": "dfdf37b254f3fd3a85166f0213b3a24ccccd28709260b8ba85664c555d8803b4",
+    "phase_0/stellar_members.json": "81babba79cc3e6202003f291556796657b9f75c1efc8f6b28e13787f9a514638",
+    "phase_1/system_objects.csv": "f59c4f9369f28a04a2b088a01f7635bf43a1c8dd6e44da26ec52385e954298e8",
+    "phase_2/initial_scenario_handoff.json": "f13681d4d99b4dc63c42bef97a94ab05e5b1e44a36bcfb08c1ddbc244211c287",
+    "phase_2/star_map.txt": "46137c9be6f3831616ff008ec75318bf3560202dfcf6646d154c58ee236c039c",
+    "phase_2/summary.json": "3503a1fb497c348399041d7ea431f5e91f34ee427d6ee4d20a20ffde4387e403",
+    "phase_2/system_objects.csv": "960c30bc8df34c0157709f9fb0d2fb216523896f4c73607760b064470e39380d",
+    "phase_2/technologies.json": "0bceec85fa3bf9446904b029c0c6ffdbaf6a398dc467d37f3c08237643002e62"
+  },
+  "python_version": "3.9.6",
+  "runner_sha256": "cb92825086f84009397f8fdbf32cab3d99bf73f60dd63d99ea16b5610b35f05b",
+  "schema_version": 1,
+  "source": {
+    "path": "/Users/hogsett/Documents/REPOS/CX16_Space_Game/universe_builder/data/source/hygdata_v42.csv",
+    "sha256": "b2983a8d934e4f031cdb67bdd6c3437f8c5143cd6606a9573a9a9ac4b6375fd2"
+  },
+  "status": "complete",
+  "through_phase": 2
+}

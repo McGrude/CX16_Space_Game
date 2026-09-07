@@ -72,3 +72,7 @@ Cube Phase 1 v3 contains the same 274 Spobs as v2, with only three moon coordina
 ## Phase 1 production acceptance
 
 See [Phase 1 closeout](PHASE_1_CLOSEOUT.md). All 55 tests passed; independent Phase 1 artifact validation passed; production output equals corrected trial v3; all seven Phase 0/1 outputs match independent replay. Cube Phase 0 data and five preserved source/baseline files remain unchanged. Phase 2 is next.
+
+## Phase 2 production acceptance
+
+See [closeout](PHASE_2_CLOSEOUT.md): 63 tests pass; independent Phase 2 artifact validation passes; CSV matches approved spacing trial; twelve files match full replay and seven Phase 0/1 files match accepted input. Map symbols independently checked: X=1, T=7, A=29, *=133. M1 complete.
