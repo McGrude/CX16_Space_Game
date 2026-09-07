@@ -1,0 +1,7 @@
+{
+  "schema_version": 1,
+  "source_catalog": "../data/source/hygdata_v42.csv",
+  "phase_0": {"radius_ly": 25.0, "max_stars": 300, "scale": 0.5},
+  "phase_1": {"max_objects_per_system": 5, "seed": 42},
+  "phase_2": {"artifact_rate": 0.03, "seed": 1}
+}

@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "description": "Preserved pre-reorganization files; hashes establish preservation, not generator reproducibility.",
+  "files": [
+    {
+      "old_path": "universe_builder/phase_0_star_catalog/star_catalog.csv",
+      "path": "universe_builder/data/baseline/phase_0/star_catalog.csv",
+      "sha256": "9a7b3b9880c3c08eaae244ecf47bea9f2b3d02145b44b7deef8ff20ac9f61030"
+    },
+    {
+      "old_path": "universe_builder/phase_0_star_catalog/star_map.txt",
+      "path": "universe_builder/data/baseline/phase_0/star_map.txt",
+      "sha256": "d5ce3527580c108f4d084e7e7fd00c7673711699ce1311922ddf1a0fe9ee3464"
+    },
+    {
+      "old_path": "universe_builder/phase_1_system_objects/system_objects.csv",
+      "path": "universe_builder/data/baseline/phase_1/system_objects.csv",
+      "sha256": "ee8ed1db05360cffeb751e69c44a9cf8a350dceb647b433142c64c945ff361ab"
+    },
+    {
+      "old_path": "universe_builder/phase_2_alien_artifacts/system_objects.csv",
+      "path": "universe_builder/data/baseline/phase_2/system_objects.csv",
+      "sha256": "5babf1c3c01f43c3032025ed851159bf9e7258cc8155b05f77df3da775944e9d"
+    },
+    {
+      "old_path": "universe_builder/phase_0_star_catalog/hygdata_v42.csv",
+      "path": "universe_builder/data/source/hygdata_v42.csv",
+      "sha256": "b2983a8d934e4f031cdb67bdd6c3437f8c5143cd6606a9573a9a9ac4b6375fd2"
+    }
+  ]
+}

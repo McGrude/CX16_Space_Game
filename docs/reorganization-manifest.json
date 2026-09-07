@@ -1,0 +1,267 @@
+[
+  {
+    "old_path": "SRC/52000-52999-TIME-MGR.BAS",
+    "path": "game/src/52000-52999-TIME-MGR.BAS",
+    "sha256": "24e49a2d00bbe2031573c1fca02b550234b6078be44cf0be9f623ff2745b835c"
+  },
+  {
+    "old_path": "SRC/DATE-STR-LIB.BAS",
+    "path": "game/src/DATE-STR-LIB.BAS",
+    "sha256": "0be6e0ae02eeb02264141ce943e87d4fd42c96ece12179f00f9c671db4ee1526"
+  },
+  {
+    "old_path": "SRC/51000-51999-WINFRAME.BAS",
+    "path": "game/src/51000-51999-WINFRAME.BAS",
+    "sha256": "cae0d4953620ba71aad172208e5b9abe79c191a8990c7f56ac36264d65899c5a"
+  },
+  {
+    "old_path": "SRC/DATE-STR-TEST.BAS",
+    "path": "game/src/DATE-STR-TEST.BAS",
+    "sha256": "f1767ccac317e2c07be14beb7f4590f26727df89a5cdbc1e89630c6b548b68c4"
+  },
+  {
+    "old_path": "SRC/50000-50999-ERROR-MGR.BAS",
+    "path": "game/src/50000-50999-ERROR-MGR.BAS",
+    "sha256": "add75bd2a6bea2db0952236e66ac63560aecc1d3de778c329be25fc7ac76cd52"
+  },
+  {
+    "old_path": "SRC/00000-49999-MAIN-SRC.BAS",
+    "path": "game/src/00000-49999-MAIN-SRC.BAS",
+    "sha256": "f93e5345fe11b220d8113017ef828eeb512fa00b00ef0ea6f110910bf4baba49"
+  },
+  {
+    "old_path": "TESTS/DATETEST.BAS",
+    "path": "game/tests/DATETEST.BAS",
+    "sha256": "7273648e6a9499d9de8d7c769b56427ea83c9fc40840200c490308400969f64d"
+  },
+  {
+    "old_path": "TESTS/DBUF.BAS",
+    "path": "game/tests/DBUF.BAS",
+    "sha256": "1e1a6abf6ff051981ad724b42f8ea8388883baca4d1beb6288a1d17c18e9b18d"
+  },
+  {
+    "old_path": "TESTS/ERROR-MGR-TEST.BAS",
+    "path": "game/tests/ERROR-MGR-TEST.BAS",
+    "sha256": "4d78edfbdd534040dc3e7f9d64ba0a80cd27ccc240812a5fc6d049462d4cb67c"
+  },
+  {
+    "old_path": "DATA/systems.csv",
+    "path": "game/data/legacy/systems.csv",
+    "sha256": "40924be8c71171127638f541feedfdf84d26abf2cae947b07e8715d6c2694f90"
+  },
+  {
+    "old_path": "DATA/ports.csv",
+    "path": "game/data/legacy/ports.csv",
+    "sha256": "533ea1ab3ca2ea9862f8fc11638a3d4ed5d861ad753e77ea32f1cefd1266ea52"
+  },
+  {
+    "old_path": "DATA/ships.csv",
+    "path": "game/data/legacy/ships.csv",
+    "sha256": "17d0b6c113081be35f5693a323fb05e47b8f31a01335287558099058c414a2f4"
+  },
+  {
+    "old_path": "DATA/commodities.csv",
+    "path": "game/data/legacy/commodities.csv",
+    "sha256": "14827813297baee6563af468cfa2b358871ef73325d78c510102554ebf6df12e"
+  },
+  {
+    "old_path": "DATA/equipment.csv",
+    "path": "game/data/legacy/equipment.csv",
+    "sha256": "9d5263cecdc7c2105671e07621bc2c1e84eb5c92ed82e6f4b3cb0b52b90af34d"
+  },
+  {
+    "old_path": "DATA/factions.csv",
+    "path": "game/data/legacy/factions.csv",
+    "sha256": "6528d2b871dba02b1fc63d70da0a939b6de9a72f8f8f04f9acd7c72abebcce17"
+  },
+  {
+    "old_path": "OLD/51000-51999-WINFRAME.BAS.backup",
+    "path": "game/archive/source/51000-51999-WINFRAME.BAS.backup",
+    "sha256": "7df042d047a935742ca0e721e06dfa833bb1a3ac5180c69a4bd0c03b83535015"
+  },
+  {
+    "old_path": "OLD/WINFRAME-SRC.bas",
+    "path": "game/archive/source/WINFRAME-SRC.bas",
+    "sha256": "485ed9cb4e6fe4ec4a061ad346a435bd77af0ae32ea3d1b8aeab7988a9bdd254"
+  },
+  {
+    "old_path": "OUT/WINFRAME.BAS",
+    "path": "game/archive/output/WINFRAME.BAS",
+    "sha256": "ac0ec194242c33172f89ab6eb9d07ef6b1596d87542c482c7466f75a16382a2b"
+  },
+  {
+    "old_path": "UI/.gitkeep",
+    "path": "game/ui/.gitkeep",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "old_path": "Interfaces.graffle",
+    "path": "game/ui/Interfaces.graffle",
+    "sha256": "8de3ddc39ec121e94518f984417f0c17247957edafcdf6b528dcb951c433900f"
+  },
+  {
+    "old_path": "DESIGN-NOTES/Universe_Simulation.txt",
+    "path": "docs/archive/game-design/Universe_Simulation.txt",
+    "sha256": "afb24f21cc26442f812643a459b8938341ac9a405910f30c783b8c539c13d79c"
+  },
+  {
+    "old_path": "DESIGN-NOTES/GameState_Master.md",
+    "path": "docs/archive/game-design/GameState_Master.md",
+    "sha256": "a14682aa0d0590695d9a311af0441e52780c371c453db75c1f32c449ae76d98c"
+  },
+  {
+    "old_path": "DESIGN-NOTES/ShipIdentity_Spec.md",
+    "path": "docs/archive/game-design/ShipIdentity_Spec.md",
+    "sha256": "c05a50a1c980aa5624cb6de50b56e04b712c35003cc6f0b4ca27cfb22c307dd4"
+  },
+  {
+    "old_path": "DESIGN-NOTES/CommanderX16_GameState_Full.md",
+    "path": "docs/archive/game-design/CommanderX16_GameState_Full.md",
+    "sha256": "b20c515adfb3776f62d95a9fc79a5012e5f6fb292725f98bc0aa65387d88635b"
+  },
+  {
+    "old_path": "DESIGN-NOTES/space-trader-design-notes.md",
+    "path": "docs/archive/game-design/space-trader-design-notes.md",
+    "sha256": "90219cb2749fe5c7991d0eaf550bb4e43d22a891605b4a4e2ab20e81f0289a5e"
+  },
+  {
+    "old_path": "DESIGN-NOTES/EquipmentModel_Spec.md",
+    "path": "docs/archive/game-design/EquipmentModel_Spec.md",
+    "sha256": "35d9a57ca357685ca2827919a778b062927fe8f1773a3a14897a7b2166182a40"
+  },
+  {
+    "old_path": "DESIGN-NOTES/game_world_state.md",
+    "path": "docs/archive/game-design/game_world_state.md",
+    "sha256": "2c9c0fb069953e473b60dff588943db4e0fa4b59ec86450a306c4e91adb19dac"
+  },
+  {
+    "old_path": "DESIGN-NOTES/CrewModel_Spec.md",
+    "path": "docs/archive/game-design/CrewModel_Spec.md",
+    "sha256": "b54e94bb3d2ecc1346719e1d5046a78e277ba35b31e445504b46f1fcee15e37d"
+  },
+  {
+    "old_path": "DESIGN-NOTES/window.txt",
+    "path": "docs/archive/game-design/window.txt",
+    "sha256": "28591b04da8ea943d68eaef965d8fc81543918e7fa8ff4c7d39e1c715975da31"
+  },
+  {
+    "old_path": "DESIGN-NOTES/IntegrationGuide_Spec.md",
+    "path": "docs/archive/game-design/IntegrationGuide_Spec.md",
+    "sha256": "7a48c2c95e40eb88d8dccbfebc7428d179b66a026205d00c3ec15b4c85ae9fec"
+  },
+  {
+    "old_path": "DESIGN-NOTES/player_skill_system.md",
+    "path": "docs/archive/game-design/player_skill_system.md",
+    "sha256": "998567232d98e74642124b05b34e2699c6068618016fefb7d19f615bb4c497b1"
+  },
+  {
+    "old_path": "DESIGN-NOTES/prompts/preamble.txt",
+    "path": "docs/archive/game-design/prompts/preamble.txt",
+    "sha256": "031000d81e4706c181c1496a164f029cf227d38dace90faf09436eee05e114d5"
+  },
+  {
+    "old_path": "DESIGN-NOTES/prompts/calendar.txt",
+    "path": "docs/archive/game-design/prompts/calendar.txt",
+    "sha256": "486c8075d126a410520ddd4bb56b8196c5260fedd454f8ceb41e0402c15937e9"
+  },
+  {
+    "old_path": "DESIGN-NOTES/prompts/Window-SubRoutine-Spec-to-ChatGPT.txt",
+    "path": "docs/archive/game-design/prompts/Window-SubRoutine-Spec-to-ChatGPT.txt",
+    "sha256": "1d7c36b4f997d12b70c4f6e9fea102024f0dbb49ff5ba747f92cbfc202e035d6"
+  },
+  {
+    "old_path": "universe_builder/notes/PROJECT_SPEC.md",
+    "path": "docs/archive/universe-design/PROJECT_SPEC.md",
+    "sha256": "36f999c9f2f522938064ec38794fcbcc658120703125af28fa752dc24a960b91"
+  },
+  {
+    "old_path": "universe_builder/notes/BOOTSTRAP_PROMPT.md",
+    "path": "docs/archive/universe-design/BOOTSTRAP_PROMPT.md",
+    "sha256": "0849bd188675cd9d857dd5e9c1cba036f3a3907819c8c8b210b3256c079386dc"
+  },
+  {
+    "old_path": "universe_builder/notes/CIVILIZATION_EXPANSION_MODEL.md",
+    "path": "docs/archive/universe-design/CIVILIZATION_EXPANSION_MODEL.md",
+    "sha256": "a9838889ffe8a1ad49eee5d7bb8990378c8fbb4fa38bc236350dcf2d0b623795"
+  },
+  {
+    "old_path": "universe_builder/notes/artificial_space_object_list.txt",
+    "path": "docs/archive/universe-design/artificial_space_object_list.txt",
+    "sha256": "50d1319d571c00d9d36cb1fd4d7287e8be6ce57a8069f972d3919520c3e8f86a"
+  },
+  {
+    "old_path": "universe_builder/phase_3_civilization_expansion/PHASE_3_CIVILIZATION_EXPANSION.md",
+    "path": "docs/archive/universe-design/PHASE_3_CIVILIZATION_EXPANSION.md",
+    "sha256": "801dc6f22307c6152f62e6482e1d85d6576e53e3857d862074a30a74b924532b"
+  },
+  {
+    "old_path": "universe_builder/phase_0_star_catalog/phase_0_star_catalog.py",
+    "path": "universe_builder/phases/phase_0_star_catalog.py",
+    "sha256": "5ab323d4187df7b51e821a8748aff727474a2b4060c78db90cbaa5b74ee522ff"
+  },
+  {
+    "old_path": "universe_builder/phase_0_star_catalog/run.sh",
+    "path": "docs/archive/universe-design/phase_0_run.sh",
+    "sha256": "b8536f64e2ae20977786a4698e0c4406d4736b9be93ab4b3fd9beb260a22950b"
+  },
+  {
+    "old_path": "universe_builder/phase_0_star_catalog/PHASE_0_STAR_CATALOG.md",
+    "path": "docs/archive/universe-design/PHASE_0_STAR_CATALOG.md",
+    "sha256": "4f233b78d8e69791f682be082b066106d2783e5c11f3f7e2e5b85c0f0d0c9fa2"
+  },
+  {
+    "old_path": "universe_builder/phase_0_star_catalog/star_catalog.csv",
+    "path": "universe_builder/data/baseline/phase_0/star_catalog.csv",
+    "sha256": "9a7b3b9880c3c08eaae244ecf47bea9f2b3d02145b44b7deef8ff20ac9f61030"
+  },
+  {
+    "old_path": "universe_builder/phase_0_star_catalog/star_map.txt",
+    "path": "universe_builder/data/baseline/phase_0/star_map.txt",
+    "sha256": "d5ce3527580c108f4d084e7e7fd00c7673711699ce1311922ddf1a0fe9ee3464"
+  },
+  {
+    "old_path": "universe_builder/phase_1_system_objects/phase_1_system_objects.py",
+    "path": "universe_builder/phases/phase_1_system_objects.py",
+    "sha256": "eeaf92d816f4ade55ced3c7a9cd0dbd83a3551158e26793ad6e798d23fb7dff9"
+  },
+  {
+    "old_path": "universe_builder/phase_1_system_objects/run.sh",
+    "path": "docs/archive/universe-design/phase_1_run.sh",
+    "sha256": "71341a1d51e17651fab85f968ff045b8888310b07624cfaa6d04b033af2d80c5"
+  },
+  {
+    "old_path": "universe_builder/phase_1_system_objects/PHASE_1_SYSTEM_OBJECTS.md",
+    "path": "docs/archive/universe-design/PHASE_1_SYSTEM_OBJECTS.md",
+    "sha256": "bf38c8f95815a634d9783e67e01253fabd0c5ea63ae49f11d9630eaa22e91e86"
+  },
+  {
+    "old_path": "universe_builder/phase_1_system_objects/system_objects.csv",
+    "path": "universe_builder/data/baseline/phase_1/system_objects.csv",
+    "sha256": "ee8ed1db05360cffeb751e69c44a9cf8a350dceb647b433142c64c945ff361ab"
+  },
+  {
+    "old_path": "universe_builder/phase_2_alien_artifacts/phase_2_alien_artifacts.py",
+    "path": "universe_builder/phases/phase_2_alien_artifacts.py",
+    "sha256": "315b2bc79c6beee5756e336011794fa19c56dbebdbceb80011f6c0974ace6b09"
+  },
+  {
+    "old_path": "universe_builder/phase_2_alien_artifacts/run.sh",
+    "path": "docs/archive/universe-design/phase_2_run.sh",
+    "sha256": "11ca570300269f8415de876bfeb72dcd8af75dd88cf8cec9222c76e1849d4fb8"
+  },
+  {
+    "old_path": "universe_builder/phase_2_alien_artifacts/phase_2_alien_artifacts.md",
+    "path": "docs/archive/universe-design/phase_2_alien_artifacts.md",
+    "sha256": "cb646f53a0c42f3f84346243f1d0b0302f71fde06914fb71adedb7c1c4a4097c"
+  },
+  {
+    "old_path": "universe_builder/phase_2_alien_artifacts/system_objects.csv",
+    "path": "universe_builder/data/baseline/phase_2/system_objects.csv",
+    "sha256": "5babf1c3c01f43c3032025ed851159bf9e7258cc8155b05f77df3da775944e9d"
+  },
+  {
+    "old_path": "universe_builder/phase_0_star_catalog/hygdata_v42.csv",
+    "path": "universe_builder/data/source/hygdata_v42.csv",
+    "sha256": "b2983a8d934e4f031cdb67bdd6c3437f8c5143cd6606a9573a9a9ac4b6375fd2"
+  }
+]

@@ -1,7 +1,11 @@
 .DS_Store
 *~
-x16emu_macos_m1-r49
-emu
-BUILD/*.BAS
-BUILD/*.PRG
-BUILD/*.BIN
+__pycache__/
+*.py[cod]
+.venv/
+/EMU/
+/emu/
+/x16emu_macos_m1-r49/
+/BUILD/
+/game/build/
+/universe_builder/runs/
