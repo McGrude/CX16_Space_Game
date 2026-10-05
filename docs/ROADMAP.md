@@ -6,7 +6,7 @@ Complete milestones in order. Every milestone ends with evidence and an updated 
 |---|---|---|
 | M0 — Repository foundation | Complete | Separate game/generator/docs; preserve prior files; document phases, decisions, license scope, and commands; verify organization and runner plumbing |
 | M1 — Validate physical universe | Complete: phases 0–2 accepted | Audit phases 0–2 against contracts; validate schemas, IDs, references, ranges, Sol behavior, artifact eligibility and pass-through; establish replay results and explain every baseline difference |
-| M2 — Initial Earth scenario | Planned | Phase 3: versioned initial factions, cultures, assets, knowledge, configuration, and schema; resolve epoch/identities with user; deterministic initialization tests |
+| M2 — Initial Earth scenario | Design in progress; no implementation | Phase 3: versioned initial factions, cultures, assets, knowledge, configuration, and schema; resolve remaining starting assumptions with user; deterministic initialization tests |
 | M3 — First interstellar settlements | Planned | Phase 4 foundation: clock, faction decisions, exploration, expeditions, arrival, supplies, settlement survival; a small scenario yields an explainable chronology |
 | M4 — Research and delayed knowledge | Planned | Propulsion research, construction/refits, message transport, dated local knowledge, discoveries; no actor reacts before learning; old/new ships coexist |
 | M5 — Political change | Planned | Satisfaction, autonomy, alliances, conflict, secession, merger and extinction with resource costs and inertia; settlements survive ownership transitions; adverse scenarios tested |
@@ -25,7 +25,7 @@ Complete milestones in order. Every milestone ends with evidence and an updated 
 
 Phases 0–2 are accepted; M1 is complete. Current physical-world input is `universe_builder/results/physical-phase2-v1/`. All earlier artifacts remain preserved. See [Phase 2 closeout](PHASE_2_CLOSEOUT.md) for validation evidence and the annotated developer map.
 
-Next: M2 / Phase 3 initial Earth scenario. Discuss epoch, factions, cultures, initial settlements/assets, capacities and access to Sol's derived technology before implementation. Research effects and ongoing history belong to Phase 4. Early runtime ID export is not full Phase 6 completion.
+Current: M2 / Phase 3 initial Earth scenario design. The revised eight-bloc map and preserved discovery-to-launch timeline are recorded in `docs/phases/03-initial-scenario.md` and `docs/DECISIONS.md`. Atlantic, Sino and Indo-Pacific are the accepted joint-colony sponsors and co-discoverers. The discovery starts secret, with Atlantic making the first prototype announcement. Atlantic presents it as a domestic breakthrough while the artifact stays secret. Government profiles, population allocations and qualitative technology-access paths are already accepted. Next resolve the starting Sol facilities and destinations, then calibrate civilian fleets, production/stocks and the remaining relationship, community and knowledge records. See the remaining initial-state work review in the Phase 3 contract; detailed ongoing political rules belong to later milestones. Research effects and ongoing history belong to Phase 4. Early runtime ID export is not full Phase 6 completion.
 
 ## M1 validation checklist
 

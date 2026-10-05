@@ -9,13 +9,33 @@ Status: current direction agreed during repository planning, September 2026.
 
 The simulator runs on a development computer. The X16 consumes a compact exported starting state and relevant historical information. Continuing the full historical simulation during gameplay is not currently a requirement.
 
+## Game interface direction
+
+The game interface is text-only, resembling a vintage terminal console. No sprites are planned. The proposed palette is eight base colors with a bold/bright bit for sixteen color variants. Game text is expected to use 7-bit ASCII; borders and similar interface decoration may use platform-specific character glyphs.
+
+On Commander X16, use available character glyphs for borders and other text-cell decoration. Possible Mac/PC terminal versions may use a custom font or a CP437-like glyph repertoire; exact encoding, font and terminal mappings remain undecided. Keep ASCII content distinct from platform-specific decorative glyph rendering. This is future interface direction, not a new implementation task or a change to the physical-world datasets.
+
+### Planned port menu
+
+After the history simulation, the playable game should present a simple text port menu with these service interfaces:
+
+- Trade Goods Market: commodity trading.
+- Ship Services: ships, ship upgrades and repairs.
+- Mission Board: available jobs.
+- Possible Trade Union interface: purpose and organization remain to be defined.
+- Possible Faction interface: faction missions.
+- Possible Black Market interface: access follows the accepted local-contact or criminal-reputation requirement where a black market exists.
+
+The last three interfaces are tentative. This describes future game presentation, not a simulation interface or an implemented screen. Keep the menu simple; exact layout, service availability and how hidden services are revealed remain open. A proposed trade union interface does not establish a new faction or equate that organization with the Belt Workers' Commonwealth.
+
 ## Accepted simulation direction
 
-- Begin on Earth at an epoch when interstellar travel is just becoming practical. Initial political powers are analogous to major Earth powers; exact identities and date remain open.
+- Begin on April 5, 2148, with the joint Mars artifact discovery and eight Earth political blocs. First operational interstellar ships are targeted around 2153. The current map is Atlantic Union, Eurasian Directorate, Sino Cooperative Sphere, Indo-Pacific Compact, Indian Confederation, West Asian League, African Union and Southern Commonwealth. See `docs/phases/03-initial-scenario.md` for current affiliations; Atlantic, Sino and Indo-Pacific jointly sponsor Luna/Mars and co-discover the artifact; dates and development timing are preserved. Detailed starting assets remain under design.
 - Slow early travel constrains settlement, trade, military reach, and political control. Research and discoveries increase speed and reduce travel times; they do not increase reach. The physical reachability network remains fixed as propulsion technology advances.
-- Initially messages travel aboard ships. Faster-than-light communication can be unlocked by research or an alien artifact; it is distinct from propulsion capability.
+- Initial communication includes ship-carried information and ordinary light-speed radio reports from survey probes. Probe findings reach remote sponsors only after propagation delay. Faster-than-light communication requires its own research/artifact development and infrastructure; propulsion improvements do not automatically speed radio.
+- Initial actors also include loosely affiliated criminal groups sometimes used by blocs, the Belt Workers' Commonwealth controlling Ceres, the decentralized Mesh (also called the Null Collective), and two named commercial shipping firms, Meridian and KVI, alongside hundreds of other operators represented in aggregate. The named firms are intended as recognizable game actors and may also be modeled during history generation. Additional companies may emerge in simulation; no initial religious factions are planned. Organization membership and relationships are distinct from territorial government.
 - Factions explore, establish outposts and colonies, develop technology, forge and break alliances, merge, split, and become extinct. The factions present at game start are outputs, not a fixed roster.
-- Every artifact-associated technology is independently researchable. Artifact study may accelerate development; no technology requires exclusive access to a site. Sol’s pre-epoch find was the historical catalyst for initial interstellar capability.
+- Every artifact-associated technology is independently researchable. Artifact study may accelerate development; no technology requires exclusive access to a site. The Mars find at the scenario start catalyzes initial interstellar capability. This later scenario decision supersedes the preserved Phase 2 handoff's pre-epoch timing.
 - No living aliens. Ancient artifacts exist physically before discovery, but actors must discover and learn about them before acting on them.
 - Cultures and languages influence names and institutions. Culture is distinct from political ownership and can persist through conquest or independence. Avoid assigning fixed behavior from ancestry or language alone.
 - Place names have historical authorship: who named a place, when, and why. Original, official, local, and foreign names can coexist.

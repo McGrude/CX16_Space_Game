@@ -9,6 +9,8 @@ Outputs: a versioned `world_snapshot.json`, human-readable `history.md`, balance
 
 ## Responsibilities
 
+Each visitable location has one controller or is explicitly unclaimed, matching the history simulation. Preserve rival claims separately from control. Cities, facilities and other factions' local presence do not divide one destination into separately controlled settlements. Luna and Mars each use their joint colonial administration as the location controller. Earth uses a shared port authority as its destination controller, with the eight blocs preserved as separate political actors.
+
 Expose why settlements exist, who owns them, what they need, which relationships are disputed, and which sites are abandoned. Preserve old names and extinct factions in records. Differentiate author inspection (may show all truth) from player-visible knowledge. Do not reveal every hidden artifact through an exported public gazetteer.
 
 A shortage may seed a delivery opportunity; a contested claim may seed a diplomatic or salvage mission. Do not invent causally unrelated wars, ruins, or arbitrary mission locations to decorate the world. Detailed prices and mission mechanics depend on the eventual runtime; this phase supplies grounded state and opportunities.

@@ -9,6 +9,8 @@ Output: a manifest plus compact game tables for systems, places, factions, names
 
 ## Responsibilities
 
+The planned full export must preserve one controller per visitable location, or an explicit unclaimed state, as supplied by the simulation and snapshot. Do not resolve multiple settlement owners into a controller only at export time. Joint colonial administrations on Luna and Mars are single controllers; their sponsors and rival claims remain distinct political relationships. Controller encoding is not yet specified or implemented in the physical-world runtime identity profile. Earth’s destination uses a shared port authority as its single controller without collapsing the eight blocs into one political actor.
+
 Map simulator IDs to stable game IDs through an explicit mapping table. Preserve enough historical context for exploration without requiring the X16 to run the offline simulator. Separate static data from mutable save state. Resolve simulation dates versus the prototype's 12×28 calendar. Respect source-data license attribution in exported catalog-derived materials.
 
 Do not merge `game/data/legacy/` directly: it uses different system IDs, faction definitions, and schemas.
